@@ -16,7 +16,12 @@
   fonts = 字体 + fonts
 
   // 2.  正式渲染
-  pagebreak(weak: true, to: if twoside { "odd" })
+  pagebreak(
+    weak: true,
+    to: if twoside {
+      "odd"
+    },
+  )
 
   v(25pt)
 
@@ -26,26 +31,66 @@
       font: fonts.黑体,
       size: 字号.四号,
       weight: "bold",
-      "南京大学学位论文原创性声明",
+      "中国科学院大学 \n 学位论文原创性声明",
     ),
   )
 
-  v(46pt)
+  v(20pt)
 
   block[
     #set text(font: fonts.宋体, size: 字号.小四)
     #set par(justify: true, first-line-indent: 2em, leading: 1.2em)
 
-    #indent 本人郑重声明，所提交的学位论文是本人在导师指导下独立进行科学研究工作所取得的成果。除本论文中已经注明引用的内容外，本论文不包含其他个人或集体已经发表或撰写过的研究成果，也不包含为获得南京大学或其他教育机构的学位证书而使用过的材料。对本文的研究做出重要贡献的个人和集体，均已在论文的致谢部分明确标明。本人郑重申明愿承担本声明的法律责任。    
+    #indent 本人郑重声明：所呈交的学位论文是本人在导师的指导下独立进行研究工作所取得的成果。
+    承诺除文中已经注明引用的内容外，本论文不包含任何其他个人或集体享有著作权的研究成果，
+    未在以往任何学位申请中全部或部分提交。对本论文所涉及的研究工作做出贡献的其他个人或集体，
+    均已在文中以明确方式标明或致谢。本人完全意识到本声明的法律结果由本人承担。
   ]
 
-  v(143pt)
+  v(20pt)
 
-  align(right)[
-    #set text(font: fonts.黑体, size: 字号.小四)
-    
-    研究生签名：#h(5.8em)
+  align(center)[
+    #set text(font: fonts.宋体, size: 字号.小四)
 
-    日期：#h(5.8em)
+    #h(6em)作者签名：#h(5.8em)
+
+    #h(6em)日#h(2em)期：#h(5.8em)
+  ]
+
+  v(100pt)
+
+  align(
+    center,
+    text(
+      font: fonts.黑体,
+      size: 字号.四号,
+      weight: "bold",
+      "中国科学院大学 \n 学位论文授权使用声明",
+    ),
+  )
+
+  v(20pt)
+
+  block[
+    #set text(font: fonts.宋体, size: 字号.小四)
+    #set par(justify: true, first-line-indent: 2em, leading: 1.2em)
+
+    #indent 本人完全了解并同意遵守中国科学院大学有关收集、保存和使用学位论文
+    的规定，即中国科学院大学有权按照学术研究公开原则和保护知识产权的原则，
+    保留并向国家指定或中国科学院指定机构送交学位论文的电子版和印刷版文件，
+    且电子版与印刷版内容应完全相同，允许该论文被检索、查阅和借阅，公布本学
+    位论文的全部或部分内容，可以采用扫描、影印、缩印等复制手段以及其他法律
+    许可的方式保存、汇编本学位论文。
+
+    涉密及延迟公开的学位论文在解密或延迟期后适用本声明。
+  ]
+  v(20pt)
+
+  align(center)[
+    #set text(font: fonts.宋体, size: 字号.小四)
+
+    作者签名：#h(10em) 导师签名：#h(6em)
+
+    日#h(2em)期：#h(10em) 日#h(2em)期：#h(6em)
   ]
 }

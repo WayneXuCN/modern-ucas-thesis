@@ -36,11 +36,11 @@
   // 1.  默认参数
   fonts = 字体 + fonts
   info = (
-    title: ("基于 Typst 的", "南京大学学位论文"),
+    title: ("基于 Typst 的", "中国科学院大学学位论文"),
     grade: "20XX",
     student-id: "1234567890",
     author: "张三",
-    department: "某学院",
+    department: "某研究所",
     major: "某专业",
     supervisor: ("李四", "教授"),
     submit-date: datetime.today(),
@@ -55,8 +55,8 @@
     info.title-en = info.title-en.split("\n")
   }
   // 2.2 根据 min-title-lines 和 min-reviewer-lines 填充标题和评阅人
-  info.title = info.title + range(min-title-lines - info.title.len()).map((it) => "　")
-  info.reviewer = info.reviewer + range(min-reviewer-lines - info.reviewer.len()).map((it) => "　")
+  info.title = info.title + range(min-title-lines - info.title.len()).map(it => "　")
+  info.reviewer = info.reviewer + range(min-reviewer-lines - info.reviewer.len()).map(it => "　")
   // 2.3 处理日期
   assert(type(info.submit-date) == datetime, message: "submit-date must be datetime.")
   if type(info.defend-date) == datetime {
@@ -80,15 +80,27 @@
   // 3.  内置辅助函数
   let info-key(body, info-inset: info-inset, is-meta: false) = {
     set text(
-      font: if is-meta { fonts.宋体 } else { fonts.楷体 },
-      size: if is-meta { 字号.小五 } else { 字号.三号 },
-      weight: if is-meta { "regular" } else { "bold" },
+      font: if is-meta {
+        fonts.宋体
+      } else {
+        fonts.楷体
+      },
+      size: if is-meta {
+        字号.小五
+      } else {
+        字号.三号
+      },
+      weight: if is-meta {
+        "regular"
+      } else {
+        "bold"
+      },
     )
     rect(
       width: 100%,
       inset: info-inset,
       stroke: none,
-      justify-text(with-tail: is-meta, body)
+      justify-text(with-tail: is-meta, body),
     )
   }
 
@@ -97,13 +109,29 @@
     rect(
       width: 100%,
       inset: info-inset,
-      stroke: if no-stroke { none } else { (bottom: stoke-width + black) },
+      stroke: if no-stroke {
+        none
+      } else {
+        (bottom: stoke-width + black)
+      },
       text(
-        font: if is-meta { fonts.宋体 } else { fonts.楷体 },
-        size: if is-meta { 字号.小五 } else { 字号.三号 },
+        font: if is-meta {
+          fonts.宋体
+        } else {
+          fonts.楷体
+        },
+        size: if is-meta {
+          字号.小五
+        } else {
+          字号.三号
+        },
         bottom-edge: "descender",
         if (anonymous and (key in anonymous-info-keys)) {
-          if is-meta { "█████" } else { "██████████" }
+          if is-meta {
+            "█████"
+          } else {
+            "██████████"
+          }
         } else {
           body
         },
@@ -123,26 +151,17 @@
   let meta-info-value = info-value.with(info-inset: meta-info-inset, is-meta: true)
   let defence-info-key = info-key.with(info-inset: defence-info-inset)
   let defence-info-value = info-value.with(info-inset: defence-info-inset)
-  
+
 
   // 4.  正式渲染
-  pagebreak(weak: true, to: if twoside { "odd" })
+  pagebreak(
+    weak: true,
+    to: if twoside {
+      "odd"
+    },
+  )
 
-  block(width: 70pt, inset: meta-block-inset, grid(
-    columns: (meta-info-key-width, 1fr),
-    column-gutter: meta-info-column-gutter,
-    row-gutter: meta-info-row-gutter,
-    meta-info-key("学校代码"),
-    meta-info-value("school-code", info.school-code),
-    meta-info-key("分类号"),
-    meta-info-value("clc", info.clc),
-    meta-info-key("密级"),
-    meta-info-value("secret-level", info.secret-level),
-    meta-info-key("UDC"),
-    meta-info-value("udc", info.udc),
-    meta-info-key("学号"),
-    meta-info-value("student-id", info.student-id),
-  ))
+  v(48pt)
 
   // 居中对齐
   set align(center)
@@ -152,81 +171,128 @@
     v(70pt)
   } else {
     // 封面图标
-    v(6pt)
-    image("../assets/vi/nju-emblem.svg", width: 1.42cm)
+    v(40pt)
+    image("../assets/vi/ucas-logo-H-standard.svg", width: 10cm)
     // 调整一下左边的间距
-    pad(image("../assets/vi/nju-name.svg", width: 4cm))
-    v(34pt)
+    //pad(image("../assets/vi/nju-name.svg", width: 4cm))
+    v(48pt)
   }
 
   // 将中文之间的空格间隙从 0.25 em 调整到 0.5 em
-  text(size: 28pt, font: fonts.宋体, spacing: 200%, weight: "bold",
-    if doctype == "doctor" { "博 士 学 位 论 文" } else { "硕 士 学 位 论 文" },
+  text(
+    size: 28pt,
+    font: fonts.黑体,
+    spacing: 200%,
+    weight: "bold",
+    if doctype == "doctor" {
+      "博士学位论文"
+    } else {
+      "硕士学位论文"
+    },
   )
-  
+
+  v(10pt)
+
+  text(
+    size: 16pt,
+    font: fonts.黑体,
+    spacing: 100%,
+    weight: "bold",
+    [基于 Typst 的中国科学院大学学位论文模板],
+  )
+
   if (anonymous) {
     v(132pt)
   } else {
     v(30pt)
   }
 
-  block(width: 294pt, grid(
-    columns: (info-key-width, 1fr),
-    column-gutter: info-column-gutter,
-    row-gutter: info-row-gutter,
-    info-key("论文题目"),
-    ..info.title.map((s) => info-value("title", s)).intersperse(info-key("　")),
-    info-key("作者姓名"),
-    info-value("author", info.author),
-    ..(if degree == "professional" {(
-      {
-        set text(font: fonts.楷体, size: 字号.三号, weight: "bold")
-        move(dy: 0.3em, scale(x: 55%, box(width: 10em, "专业学位类别（领域）")))
-      },
-      info-value("major", info.degree + "（" + info.major + "）"),
-    )} else {(
-      info-key("专业名称"),
-      info-value("major", info.major),
-    )}),
-    info-key("研究方向"),
-    info-value("field", info.field),
-    info-key("导师姓名"),
-    info-value("supervisor", info.supervisor.intersperse(" ").sum()),
-    ..(if info.supervisor-ii != () {(
-      info-key("　"),
-      info-value("supervisor-ii", info.supervisor-ii.intersperse(" ").sum()),
-    )} else { () })
-  ))
+  block(
+    width: 294pt,
+    grid(
+      columns: (info-key-width, 1fr),
+      column-gutter: info-column-gutter,
+      row-gutter: info-row-gutter,
+      info-key("论文题目"),
+      ..info.title.map(s => info-value("title", s)).intersperse(info-key("　")),
+      info-key("作者姓名"),
+      info-value("author", info.author),
+      ..(
+        if degree == "professional" {
+          (
+            {
+              set text(font: fonts.楷体, size: 字号.三号, weight: "bold")
+              move(dy: 0.3em, scale(x: 55%, box(width: 10em, "专业学位类别（领域）")))
+            },
+            info-value("major", info.degree + "（" + info.major + "）"),
+          )
+        } else {
+          (
+            info-key("专业名称"),
+            info-value("major", info.major),
+          )
+        }
+      ),
+      info-key("研究方向"),
+      info-value("field", info.field),
+      info-key("导师姓名"),
+      info-value("supervisor", info.supervisor.intersperse(" ").sum()),
+      ..(
+        if info.supervisor-ii != () {
+          (
+            info-key("　"),
+            info-value("supervisor-ii", info.supervisor-ii.intersperse(" ").sum()),
+          )
+        } else {
+          ()
+        }
+      )
+    ),
+  )
 
   v(50pt)
 
   text(font: fonts.楷体, size: 字号.三号, datetime-display(info.submit-date))
-
 
   // 第二页
   pagebreak(weak: true)
 
   v(161pt)
 
-  block(width: 284pt, grid(
-    columns: (defence-info-key-width, 1fr),
-    column-gutter: defence-info-column-gutter,
-    row-gutter: defence-info-row-gutter,
-    defence-info-key("答辩委员会主席"),
-    defence-info-value("chairman", info.chairman),
-    defence-info-key("评阅人"),
-    ..info.reviewer.map((s) => defence-info-value("reviewer", s)).intersperse(defence-info-key("　")),
-    defence-info-key("论文答辩日期"),
-    defence-info-value("defend-date", info.defend-date, no-stroke: true),
-  ))
+  block(
+    width: 284pt,
+    grid(
+      columns: (defence-info-key-width, 1fr),
+      column-gutter: defence-info-column-gutter,
+      row-gutter: defence-info-row-gutter,
+      defence-info-key("答辩委员会主席"),
+      defence-info-value("chairman", info.chairman),
+      defence-info-key("评阅人"),
+      ..info.reviewer.map(s => defence-info-value("reviewer", s)).intersperse(defence-info-key("　")),
+      defence-info-key("论文答辩日期"),
+      defence-info-value("defend-date", info.defend-date, no-stroke: true),
+    ),
+  )
 
   v(216pt)
 
-  align(left, box(width: 7.3em, text(font: fonts.楷体, size: 字号.三号, weight: "bold", justify-text(with-tail: true, "研究生签名"))))
+  align(
+    left,
+    box(
+      width: 7.3em,
+      text(font: fonts.楷体, size: 字号.三号, weight: "bold", justify-text(with-tail: true, "研究生签名")),
+    ),
+  )
 
   v(7pt)
 
-  align(left, box(width: 7.3em, text(font: fonts.楷体, size: 字号.三号, weight: "bold", justify-text(with-tail: true, "导师签名"))))
+  align(
+    left,
+    box(
+      width: 7.3em,
+      text(font: fonts.楷体, size: 字号.三号, weight: "bold", justify-text(with-tail: true, "导师签名")),
+    ),
+  )
 
   // 第三页英文封面页
   pagebreak(weak: true)
@@ -235,70 +301,56 @@
   set par(leading: 1.3em)
 
   v(45pt)
-  
-  text(font: fonts.黑体, size: 字号.二号, weight: "bold", info.title-en.intersperse("\n").sum())
 
-  v(36pt)
-
-  text(size: 字号.四号)[by]
-
-  v(-6pt)
-
-  text(font: fonts.黑体, size: 字号.四号, weight: "bold", anonymous-text("author-en", info.author-en))
-
-  v(11pt)
-
-  text(size: 字号.四号)[Supervised by]
-
-  v(-6pt)
-
-  text(font: fonts.黑体, size: 字号.四号, anonymous-text("supervisor-en", info.supervisor-en))
+  text(font: fonts.黑体, size: 字号.二号, weight: "bold", underline(evade: true)[#info.title-en.intersperse("\n").sum()])
 
   if info.supervisor-ii-en != "" {
     v(-4pt)
-    
+
     text(font: fonts.黑体, size: 字号.四号, anonymous-text("supervisor-ii-en", info.supervisor-ii-en))
 
     v(-9pt)
   }
 
-  v(26pt)
+  v(40pt)
 
-  [
-    A dissertation submitted to  \
-    the graduate school of #(if not anonymous { "Nanjing University" })  \
-    in partial fulfilment of the requirements for the degree of  \
+  strong[
+    A dissertation submitted to \
+    #(
+      if not anonymous {
+        "University of Chinese Academy of Sciences"
+      }
+    ) \
+    in partial fulfillment of the requirement \ for the degree of \
   ]
 
-  v(6pt)
+  if doctype == "doctor" {
+    strong[Doctor of Phlosophy]
 
-  smallcaps(if doctype == "doctor" { "Doctor of phlosophy" } else { "Master" })
-
-  v(6pt)
-
-  [in]
-
-  v(6pt)
-
-  info.major-en
-  
-  v(46pt)
-
-  if not anonymous {
-    image("../assets/vi/nju-emblem.svg", width: 2.14cm)
+  } else {
+    strong[Master]
   }
+  strong[\ in ]
+  strong[#info.major-en]
 
-  v(28pt)
+  strong[
+    \ By \ #text(anonymous-text("author-en", info.author-en)) \
+    Supervisor: #text(anonymous-text("supervisor-en", info.supervisor-en)) \
+  ]
+  v(6pt)
 
-  info.department-en
+
+  v(80pt)
+
+  strong[#info.department-en]
 
   v(2pt)
 
   if not anonymous {
-    [Nanjing University]
+    strong[University of Chinese Academy of Sciences]
   }
 
   v(28pt)
 
-  datetime-en-display(info.submit-date)
+  strong[#datetime-en-display(info.submit-date)]
 }

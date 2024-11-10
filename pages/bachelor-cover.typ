@@ -25,7 +25,7 @@
   // 1.  默认参数
   fonts = 字体 + fonts
   info = (
-    title: ("基于 Typst 的", "南京大学学位论文"),
+    title: ("基于 Typst 的", "中国科学院大学学位论文"),
     grade: "20XX",
     student-id: "1234567890",
     author: "张三",
@@ -115,10 +115,10 @@
   } else {
     // 封面图标
     v(6pt)
-    image("../assets/vi/nju-emblem.svg", width: 2.38cm)
+    image("../assets/vi/ucas-logo-H-standard.svg", width: 2.38cm)
     v(22pt)
     // 调整一下左边的间距
-    pad(image("../assets/vi/nju-name.svg", width: 10.5cm), left: 0.4cm)
+    //pad(image("../assets/vi/nju-name.svg", width: 10.5cm), left: 0.4cm)
     v(2pt)
   }
 

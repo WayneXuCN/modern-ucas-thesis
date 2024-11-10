@@ -1,6 +1,6 @@
-// 南京大学学位论文模板 modern-nju-thesis
-// Author: https://github.com/OrangeX4
-// Repo: https://github.com/nju-lug/modern-nju-thesis
+// 中国科学院大学学位论文模板 typst-ucas-thesis
+// Author: https://github.com/WenjieXuCN
+// Repo: https://github.com/WenjieXuCN/typst-ucas-thesis
 // 在线模板可能不会更新得很及时，如果需要最新版本，请关注 Repo
 
 #import "@preview/anti-matter:0.0.2": anti-inner-end as mainmatter-end
@@ -21,7 +21,8 @@
 #import "pages/list-of-figures.typ": list-of-figures
 #import "pages/list-of-tables.typ": list-of-tables
 #import "pages/notation.typ": notation
-#import "pages/acknowledgement.typ": acknowledgement
+#import "pages/acknowledgement.typ": acknowledgement // 致谢部分
+#import "pages/backmatter.typ": backmatter // 致谢部分
 #import "utils/custom-cuti.typ": *
 #import "utils/bilingual-bibliography.typ": bilingual-bibliography
 #import "utils/custom-numbering.typ": custom-numbering
@@ -44,8 +45,8 @@
   // 默认参数
   fonts = 字体 + fonts
   info = (
-    title: ("基于 Typst 的", "南京大学学位论文"),
-    title-en: "NJU Thesis Template for Typst",
+    title: ("基于 Typst 的", "中国科学院大学学位论文"),
+    title-en: "UCAS Thesis Template for Typst",
     grade: "20XX",
     student-id: "1234567890",
     author: "张三",
@@ -70,9 +71,9 @@
     clc: "O643.12",
     udc: "544.4",
     secret-level: "公开",
-    supervisor-contact: "南京大学 江苏省南京市栖霞区仙林大道163号",
-    email: "xyz@smail.nju.edu.cn",
-    school-code: "10284",
+    supervisor-contact: "中国科学院大学 北京市海淀区中关村东路80号",
+    email: "xyz@mails.ucas.ac.cn",
+    school-code: "14430",
     degree: auto,
     degree-en: auto,
   ) + info
@@ -182,7 +183,7 @@
         )
       }
     },
-    
+
     // 中文摘要页，通过 type 分发到不同函数
     abstract: (..args) => {
       if doctype == "master" or doctype == "doctor" {
@@ -279,6 +280,15 @@
     // 致谢页
     acknowledgement: (..args) => {
       acknowledgement(
+        anonymous: anonymous,
+        twoside: twoside,
+        ..args,
+      )
+    },
+
+    // 个人信息页
+    backmatter: (..args) => {
+      backmatter(
         anonymous: anonymous,
         twoside: twoside,
         ..args,

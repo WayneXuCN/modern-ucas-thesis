@@ -1,6 +1,6 @@
 // 中国科学院大学学位论文模板 typst-ucas-thesis
-// Author: https://github.com/WenjieXuCN
-// Repo: https://github.com/WenjieXuCN/typst-ucas-thesis
+// Author: https://github.com/WayneHsuCN
+// Repo: https://github.com/WayneHsuCN/typst-ucas-thesis
 // 在线模板可能不会更新得很及时，如果需要最新版本，请关注 Repo
 
 #import "@preview/anti-matter:0.0.2": anti-inner-end as mainmatter-end
@@ -33,30 +33,31 @@
 
 // 使用函数闭包特性，通过 `documentclass` 函数类进行全局信息配置，然后暴露出拥有了全局配置的、具体的 `layouts` 和 `templates` 内部函数。
 #let documentclass(
-  doctype: "bachelor",  // "bachelor" | "master" | "doctor" | "postdoc"，文档类型，默认为本科生 bachelor
-  degree: "academic",  // "academic" | "professional"，学位类型，默认为学术型 academic
-  nl-cover: false,  // TODO: 是否使用国家图书馆封面，默认关闭
-  twoside: false,  // 双面模式，会加入空白页，便于打印
-  anonymous: false,  // 盲审模式
-  bibliography: none,  // 原来的参考文献函数
-  fonts: (:),  // 字体，应传入「宋体」、「黑体」、「楷体」、「仿宋」、「等宽」
+  doctype: "doctor", // "bachelor" | "master" | "doctor" | "postdoc"，文档类型，默认为博士生 doctor
+  degree: "academic", // "academic" | "professional"，学位类型，默认为学术型 academic
+  nl-cover: false, // TODO: 是否使用国家图书馆封面，默认关闭
+  twoside: false, // 双面模式，会加入空白页，便于打印
+  anonymous: false, // 盲审模式
+  bibliography: none, // 原来的参考文献函数
+  fonts: (:), // 字体，应传入「宋体」、「黑体」、「楷体」、「仿宋」、「等宽」
   info: (:),
 ) = {
   // 默认参数
   fonts = 字体 + fonts
   info = (
+    // 一般信息
     title: ("基于 Typst 的", "中国科学院大学学位论文"),
     title-en: "UCAS Thesis Template for Typst",
     grade: "20XX",
     student-id: "1234567890",
     author: "张三",
     author-en: "Zhang San",
-    department: "某学院",
-    department-en: "XX Department",
-    major: "某专业",
-    major-en: "XX Major",
-    field: "某方向",
-    field-en: "XX Field",
+    department: "某研究所",
+    department-en: "XX Institute",
+    major: "xx 专业",
+    major-en: "xx major",
+    category: "学科门类或专业学位类别",
+    category-en: "XX category",
     supervisor: ("李四", "教授"),
     supervisor-en: "Professor Li Si",
     supervisor-ii: (),
@@ -77,7 +78,6 @@
     degree: auto,
     degree-en: auto,
   ) + info
-
   (
     // 将传入参数再导出
     doctype: doctype,
@@ -117,16 +117,11 @@
       }
     },
     mainmatter-end: (..args) => {
-      mainmatter-end(
-        ..args,
-      )
+      mainmatter-end(..args)
     },
     appendix: (..args) => {
-      appendix(
-        ..args,
-      )
+      appendix(..args)
     },
-
     // 字体展示页
     fonts-display-page: (..args) => {
       fonts-display-page(
@@ -135,7 +130,6 @@
         fonts: fonts + args.named().at("fonts", default: (:)),
       )
     },
-
     // 封面页，通过 type 分发到不同函数
     cover: (..args) => {
       if doctype == "master" or doctype == "doctor" {
@@ -161,7 +155,6 @@
         )
       }
     },
-
     // 声明页，通过 type 分发到不同函数
     decl-page: (..args) => {
       if doctype == "master" or doctype == "doctor" {
@@ -183,7 +176,6 @@
         )
       }
     },
-
     // 中文摘要页，通过 type 分发到不同函数
     abstract: (..args) => {
       if doctype == "master" or doctype == "doctor" {
@@ -208,7 +200,6 @@
         )
       }
     },
-
     // 英文摘要页，通过 type 分发到不同函数
     abstract-en: (..args) => {
       if doctype == "master" or doctype == "doctor" {
@@ -233,7 +224,6 @@
         )
       }
     },
-
     // 目录页
     outline-page: (..args) => {
       bachelor-outline-page(
@@ -242,7 +232,6 @@
         fonts: fonts + args.named().at("fonts", default: (:)),
       )
     },
-
     // 插图目录页
     list-of-figures: (..args) => {
       list-of-figures(
@@ -251,7 +240,6 @@
         fonts: fonts + args.named().at("fonts", default: (:)),
       )
     },
-
     // 表格目录页
     list-of-tables: (..args) => {
       list-of-tables(
@@ -260,7 +248,6 @@
         fonts: fonts + args.named().at("fonts", default: (:)),
       )
     },
-
     // 符号表页
     notation: (..args) => {
       notation(
@@ -268,7 +255,6 @@
         ..args,
       )
     },
-
     // 参考文献页
     bilingual-bibliography: (..args) => {
       bilingual-bibliography(
@@ -276,7 +262,6 @@
         ..args,
       )
     },
-
     // 致谢页
     acknowledgement: (..args) => {
       acknowledgement(
@@ -285,7 +270,6 @@
         ..args,
       )
     },
-
     // 个人信息页
     backmatter: (..args) => {
       backmatter(

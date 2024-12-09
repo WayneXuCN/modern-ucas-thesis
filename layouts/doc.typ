@@ -3,9 +3,11 @@
   // documentclass 传入参数
   info: (:),
   // 其他参数
-  fallback: false,  // 字体缺失时使用 fallback，不显示豆腐块
+  fallback: false, // 字体缺失时使用 fallback，不显示豆腐块
   lang: "zh",
-  margin: (x: 89pt),
+  // top: 72pt 和 bottom: 72pt 设置了上下边距为 72pt（即 2.54厘米）。
+  // x: 90pt 设置了左右边距为 90pt（即 3.17厘米）。
+  margin: (top: 72pt, bottom: 72pt, x: 90pt),
   it,
 ) = {
   // 1.  默认参数
@@ -26,7 +28,7 @@
 
   // 4.  PDF 元信息
   set document(
-    title: (("",)+ info.title).sum(),
+    title: (("",) + info.title).sum(),
     author: info.author,
   )
 

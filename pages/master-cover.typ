@@ -13,25 +13,36 @@
   fonts: (:),
   info: (:),
   // 其他参数
-  stoke-width: 0.5pt,
-  min-title-lines: 2,
-  min-reviewer-lines: 5,
-  info-inset: (x: 0pt, bottom: 0.5pt),
-  info-key-width: 86pt,
-  info-column-gutter: 18pt,
-  info-row-gutter: 12pt,
-  meta-block-inset: (left: -15pt),
-  meta-info-inset: (x: 0pt, bottom: 2pt),
-  meta-info-key-width: 35pt,
-  meta-info-column-gutter: 10pt,
-  meta-info-row-gutter: 1pt,
-  defence-info-inset: (x: 0pt, bottom: 0pt),
-  defence-info-key-width: 110pt,
-  defence-info-column-gutter: 2pt,
-  defence-info-row-gutter: 12pt,
-  anonymous-info-keys: ("student-id", "author", "author-en", "supervisor", "supervisor-en", "supervisor-ii", "supervisor-ii-en", "chairman", "reviewer"),
-  datetime-display: datetime-display,
-  datetime-en-display: datetime-en-display,
+  stoke-width: 0.5pt, // 控制元素边框（如框架、分隔线等）的线宽度。
+  min-title-lines: 2, // 控制标题行数的最小值。
+  min-reviewer-lines: 5, // 控制评审人区域的最小行数。
+  info-inset: (x: 0pt, bottom: 0.5pt), // 控制信息区域的内边距。x 左右间距，bottom 底部间距
+  info-key-width: 70pt, // 控制信息标签（如“论文题目”、“作者姓名”）的宽度。
+  info-column-gutter: 18pt, // 控制信息列之间的间距。
+  info-row-gutter: 12pt, // 控制信息行之间的间距。
+  meta-block-inset: (left: -15pt), // 控制元数据块的内边距。
+  meta-info-inset: (x: 0pt, bottom: 2pt), // 控制元信息区域的内边距。
+  meta-info-key-width: 35pt, // 控制元信息标签的宽度（如“学位”、“提交日期”）。
+  meta-info-column-gutter: 10pt, // 控制元信息列之间的间距。
+  meta-info-row-gutter: 1pt, // 控制元信息行之间的间距。
+  defence-info-inset: (x: 0pt, bottom: 0pt), // 控制答辩信息区域的内边距。
+  defence-info-key-width: 110pt, // 控制答辩信息标签的宽度。
+  defence-info-column-gutter: 2pt, // 控制答辩信息列之间的间距。
+  defence-info-row-gutter: 12pt, // 控制答辩信息区域行与行之间的间距。
+  anonymous-info-keys: (
+    // 控制需要匿名化处理的字段。
+    "student-id",
+    "author",
+    "author-en",
+    "supervisor",
+    "supervisor-en",
+    "supervisor-ii",
+    "supervisor-ii-en",
+    "chairman",
+    "reviewer",
+  ),
+  datetime-display: datetime-display, // 用于格式化日期显示。
+  datetime-en-display: datetime-en-display, // 用于格式化英文日期显示。
 ) = {
   // 1.  默认参数
   fonts = 字体 + fonts
@@ -40,7 +51,7 @@
     grade: "20XX",
     student-id: "1234567890",
     author: "张三",
-    department: "某研究所",
+    department: "XX 研究所",
     major: "某专业",
     supervisor: ("李四", "教授"),
     submit-date: datetime.today(),
@@ -83,12 +94,12 @@
       font: if is-meta {
         fonts.宋体
       } else {
-        fonts.楷体
+        fonts.宋体
       },
       size: if is-meta {
         字号.小五
       } else {
-        字号.三号
+        字号.四号
       },
       weight: if is-meta {
         "regular"
@@ -118,12 +129,17 @@
         font: if is-meta {
           fonts.宋体
         } else {
-          fonts.楷体
+          fonts.宋体
+        },
+        weight: if is-meta {
+          "regular"
+        } else {
+          "bold"
         },
         size: if is-meta {
           字号.小五
         } else {
-          字号.三号
+          字号.四号
         },
         bottom-edge: "descender",
         if (anonymous and (key in anonymous-info-keys)) {
@@ -154,33 +170,26 @@
 
 
   // 4.  正式渲染
-  pagebreak(
-    weak: true,
-    to: if twoside {
-      "odd"
-    },
-  )
+  pagebreak(weak: true)
 
-  v(48pt)
+  v(80pt)
 
   // 居中对齐
   set align(center)
 
   // 匿名化处理去掉封面标识
   if (anonymous) {
-    v(70pt)
+    v(93.5pt)
   } else {
     // 封面图标
-    v(40pt)
-    image("../assets/vi/ucas-logo-H-standard.svg", width: 10cm)
-    // 调整一下左边的间距
-    //pad(image("../assets/vi/nju-name.svg", width: 4cm))
-    v(48pt)
+    image("../assets/vi/ucas-logo-H-standard.svg", height: 2.2cm)
   }
+
+  v(26pt)
 
   // 将中文之间的空格间隙从 0.25 em 调整到 0.5 em
   text(
-    size: 28pt,
+    size: 字号.一号,
     font: fonts.黑体,
     spacing: 200%,
     weight: "bold",
@@ -191,52 +200,50 @@
     },
   )
 
-  v(10pt)
+  v(28pt)
 
   text(
-    size: 16pt,
+    size: 字号.小三,
     font: fonts.黑体,
     spacing: 100%,
     weight: "bold",
-    [基于 Typst 的中国科学院大学学位论文模板],
+    underline(offset: .4em, stroke: .05em, evade: false)[基于 Typst 的中国科学院大学学位论文模板],
   )
 
-  if (anonymous) {
-    v(132pt)
-  } else {
-    v(30pt)
-  }
+  v(56pt)
 
   block(
-    width: 294pt,
+    // width: 294pt, 限制宽度
     grid(
       columns: (info-key-width, 1fr),
       column-gutter: info-column-gutter,
       row-gutter: info-row-gutter,
-      info-key("论文题目"),
+      info-key("论文作者："),
       ..info.title.map(s => info-value("title", s)).intersperse(info-key("　")),
-      info-key("作者姓名"),
+      info-key("作者姓名："),
       info-value("author", info.author),
+      info-key("指导教师："),
+      info-value("supervisor", info.supervisor.intersperse(" ").sum()),
+      info-key("学位类别："),
+      info-value("category", info.category),
       ..(
         if degree == "professional" {
           (
             {
-              set text(font: fonts.楷体, size: 字号.三号, weight: "bold")
+              set text(font: fonts.楷体, size: 字号.四号, weight: "bold")
               move(dy: 0.3em, scale(x: 55%, box(width: 10em, "专业学位类别（领域）")))
             },
             info-value("major", info.degree + "（" + info.major + "）"),
           )
         } else {
           (
-            info-key("专业名称"),
+            info-key("学科专业："),
             info-value("major", info.major),
           )
         }
       ),
-      info-key("研究方向"),
-      info-value("field", info.field),
-      info-key("导师姓名"),
-      info-value("supervisor", info.supervisor.intersperse(" ").sum()),
+      info-key("培养单位："),
+      info-value("department", info.department),
       ..(
         if info.supervisor-ii != () {
           (
@@ -250,59 +257,32 @@
     ),
   )
 
-  v(50pt)
+  v(42pt)
 
-  text(font: fonts.楷体, size: 字号.三号, datetime-display(info.submit-date))
+  text(font: fonts.宋体, size: 字号.四号, weight: "bold", datetime-display(info.submit-date))
 
   // 第二页
-  pagebreak(weak: true)
-
-  v(161pt)
-
-  block(
-    width: 284pt,
-    grid(
-      columns: (defence-info-key-width, 1fr),
-      column-gutter: defence-info-column-gutter,
-      row-gutter: defence-info-row-gutter,
-      defence-info-key("答辩委员会主席"),
-      defence-info-value("chairman", info.chairman),
-      defence-info-key("评阅人"),
-      ..info.reviewer.map(s => defence-info-value("reviewer", s)).intersperse(defence-info-key("　")),
-      defence-info-key("论文答辩日期"),
-      defence-info-value("defend-date", info.defend-date, no-stroke: true),
-    ),
-  )
-
-  v(216pt)
-
-  align(
-    left,
-    box(
-      width: 7.3em,
-      text(font: fonts.楷体, size: 字号.三号, weight: "bold", justify-text(with-tail: true, "研究生签名")),
-    ),
-  )
-
-  v(7pt)
-
-  align(
-    left,
-    box(
-      width: 7.3em,
-      text(font: fonts.楷体, size: 字号.三号, weight: "bold", justify-text(with-tail: true, "导师签名")),
-    ),
-  )
+  if twoside {
+    pagebreak(
+      weak: true,
+      to: "odd",
+    )
+  }
 
   // 第三页英文封面页
   pagebreak(weak: true)
 
-  set text(font: fonts.楷体, size: 字号.小四)
+  set text(font: fonts.楷体, size: 字号.四号)
   set par(leading: 1.3em)
 
-  v(45pt)
+  v(80pt)
 
-  text(font: fonts.黑体, size: 字号.二号, weight: "bold", underline(evade: true)[#info.title-en.intersperse("\n").sum()])
+  text(
+    font: "Times New Roman",
+    size: 字号.小三,
+    weight: "bold",
+    underline(offset: .4em, stroke: .05em, evade: false)[#info.title-en.intersperse("\n").sum()],
+  )
 
   if info.supervisor-ii-en != "" {
     v(-4pt)
@@ -312,7 +292,7 @@
     v(-9pt)
   }
 
-  v(40pt)
+  v(85pt)
 
   strong[
     A dissertation submitted to \
@@ -325,10 +305,9 @@
   ]
 
   if doctype == "doctor" {
-    strong[Doctor of Phlosophy]
-
+    strong[Doctor of #info.category-en]
   } else {
-    strong[Master]
+    strong[Master of #info.category-en]
   }
   strong[\ in ]
   strong[#info.major-en]
@@ -340,15 +319,12 @@
   v(6pt)
 
 
-  v(80pt)
-
-  strong[#info.department-en]
-
-  v(2pt)
+  v(90pt)
 
   if not anonymous {
-    strong[University of Chinese Academy of Sciences]
+    strong[#info.department-en, Chinese Academy of Sciences]
   }
+  else {v(26pt)}
 
   v(28pt)
 

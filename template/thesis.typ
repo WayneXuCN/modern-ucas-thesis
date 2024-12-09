@@ -1,32 +1,49 @@
 #import "../lib.typ": documentclass, indent
 
-// 你首先应该安装 https://github.com/nju-lug/modern-nju-thesis/tree/main/fonts/FangZheng 里的所有字体，
+// 你首先应该安装 fonts下的所有字体，
 // 如果是 Web App 上编辑，你应该手动上传这些字体文件，否则不能正常使用「楷体」和「仿宋」，导致显示错误。
 
 #let (
   // 布局函数
-  twoside, doc, preface, mainmatter, mainmatter-end, appendix,
+  twoside,
+  doc,
+  preface,
+  mainmatter,
+  mainmatter-end,
+  appendix,
   // 页面函数
-  fonts-display-page, cover, decl-page, abstract, abstract-en, bilingual-bibliography,
-  outline-page, list-of-figures, list-of-tables, notation,  acknowledgement, backmatter,
+  fonts-display-page,
+  cover,
+  decl-page,
+  abstract,
+  abstract-en,
+  bilingual-bibliography,
+  outline-page,
+  list-of-figures,
+  list-of-tables,
+  notation,
+  acknowledgement,
+  backmatter,
 ) = documentclass(
-  doctype: "doctor",  // "bachelor" | "master" | "doctor" | "postdoc", 文档类型，默认为本科生 bachelor
-  degree: "academic",  // "academic" | "professional", 学位类型，默认为学术型 academic
-  anonymous: false,  // 盲审模式
-  twoside: true,  // 双面模式，会加入空白页，便于打印
+  doctype: "doctor", // "bachelor" | "master" | "doctor" | "postdoc", 文档类型，默认为博士生 doctor
+  degree: "academic", // "academic" | "professional", 学位类型，默认为学术型 academic
+  anonymous: false, // 盲审模式
+  twoside: true, // 双面模式，会加入空白页，便于打印
   // 可自定义字体，先英文字体后中文字体，应传入「宋体」、「黑体」、「楷体」、「仿宋」、「等宽」
   // fonts: (楷体: ("Times New Roman", "FZKai-Z03S")),
   info: (
     title: ("基于 Typst 的", "中国科学院大学学位论文"),
-    title-en: "My Title in English",
+    title-en: "Typst Thesis Template of UCAS",
     grade: "20XX",
     student-id: "1234567890",
     author: "张三",
-    author-en: "Ming Xing",
-    department: "某研究所",
+    author-en: "Zhang San",
+    department: "中国科学院xxxx研究所",
     department-en: "Institutes of Science and Development",
-    major: "某专业",
-    major-en: "Computer Application Technology",
+    major: "管理科学与工程",
+    major-en: "Management Science and Engineering",
+    category: "管理学博士",
+    category-en: "Management Science",
     supervisor: ("李四", "教授"),
     supervisor-en: "Professor My Supervisor",
     // supervisor-ii: ("王五", "副教授"),
@@ -49,24 +66,20 @@
 // 声明页
 #decl-page()
 
-
 // 前言
 #show: preface
 
 // 中文摘要
 #abstract(keywords: ("中国科学院大学", "学问论文", "模板"))[
-  中文摘要、英文摘要、目录、论文正文、参考文献、附录、致谢、攻读学位期间
-  发表的学术论文与其他相关学术成果等均须由另页右页（奇数页）开始。
+  中文摘要、英文摘要、目录、论文正文、参考文献、附录、致谢、攻读学位期间 发表的学术论文与其他相关学术成果等均须由另页右页（奇数页）开始。
 ]
 
 // 英文摘要
 #abstract-en(keywords: ("University of Chinese Academy of Sciences", "Thesis", "Typst Template"))[
-  Chinese abstracts, English abstracts, table of contents, the main contents, references,
-  appendix, acknowledgments, author's resume and academic papers published
-  during the degree study and other relevant academic achievements must start with another
-  right page (odd-numbered page).
+  Chinese abstracts, English abstracts, table of contents, the main contents, references, appendix, acknowledgments,
+  author's resume and academic papers published during the degree study and other relevant academic achievements must
+  start with another right page (odd-numbered page).
 ]
-
 
 // 目录
 #outline-page()
@@ -99,7 +112,9 @@
 
 #link("https://typst.app/")[Typst]是一个现代化的排版工具，可以在主流的编辑器和编译环境中使用，如VSCode、Neovim和Emacs。Typst在设计上具备即时编译的特性，用户可以实时查看文档的渲染效果，非常适合学术和专业文档的编写。不同于LaTeX，Typst的语法更简单，学习曲线更平缓，因此推荐初学者和非专业排版用户使用Typst。
 
-推荐的编辑器和编译器环境见@tab:Typst_intro。请从各软件的官方网站下载安装，避免使用不明来源的程序。编辑器和Typst CLI分别安装成功后，即完成了Typst的系统配置，无需其他手动设置。对于大部分初学者而言，使用在线编辑器（如Typst Web App）是一种简单有效的方式。这种方式无需配置本地环境，只需将文件上传至网站即可进行编辑，同时支持多人、多地协作编辑文档。
+推荐的编辑器和编译器环境见@tab:Typst_intro。请从各软件的官方网站下载安装，避免使用不明来源的程序。编辑器和Typst
+CLI分别安装成功后，即完成了Typst的系统配置，无需其他手动设置。对于大部分初学者而言，使用在线编辑器（如Typst Web
+App）是一种简单有效的方式。这种方式无需配置本地环境，只需将文件上传至网站即可进行编辑，同时支持多人、多地协作编辑文档。
 
 本模板兼容多种操作系统，包括Windows、Linux、MacOS和Typst Web App。Typst不依赖传统的LaTeX编译引擎，而是基于wasm技术实现的即时渲染，具备跨平台和跨编辑器的高兼容性，适合大多数用户的需求。
 
@@ -121,7 +136,6 @@
 
 为了方便使用并更好地展示Typst的现代排版特性，本模板框架和文件结构经过精细设计，尽可能模块化各个功能和板块，以方便用户进行高效编辑。
 
-
 == 初步设置
 
 === 在线编辑
@@ -133,7 +147,8 @@
 === VS Code 本地编辑（推荐）
 
 1. 在VS Code中安装 #link("https://marketplace.visualstudio.com/items?itemName=myriad-dreamin.tinymist")[Tinymist Typst] 插件。可以实现语法高亮、错误检查和预览等功能。
-2. 按下 `Ctrl + Shift + P` 打开命令界面，输入 `Typst: Show available Typst templates (gallery) for picking up a template` 打开 Tinymist 提供的 Template Gallery，然后从里面找到 `typst-ucas-thesis`，点击 #emoji.heart 按钮进行收藏，以及点击 `+` 号，就可以创建对应的论文模板了。
+2. 按下 `Ctrl + Shift + P` 打开命令界面，输入 `Typst: Show available Typst templates (gallery) for picking up a template` 打开 Tinymist
+  提供的 Template Gallery，然后从里面找到 `typst-ucas-thesis`，点击 #emoji.heart 按钮进行收藏，以及点击 `+` 号，就可以创建对应的论文模板了。
 3. 最后用 VS Code 打开生成的目录，打开 `thesis.typ` 文件，并按下 `Ctrl + K V` 进行实时编辑和预览。
 
 == 文档目录简介
@@ -149,8 +164,6 @@
 - Linux或MacOS：在终端中运行 `typst compile thesis.typ` 来快速编译。
 
 在写作过程中，Typst支持实时预览，无需重复执行编译命令。
-
-
 
 == 功能介绍
 
@@ -200,9 +213,15 @@
           columns: 4,
           stroke: none,
           table.hline(),
-          [t], [1], [2], [3],
+          [t],
+          [1],
+          [2],
+          [3],
           table.hline(stroke: .5pt),
-          [y], [0.3s], [0.4s], [0.8s],
+          [y],
+          [0.3s],
+          [0.4s],
+          [0.8s],
           table.hline(),
         ),
         caption: [三线表],
@@ -211,11 +230,7 @@
   ),
 )
 
-#figure(
-  image("images/ucas-emblem.svg", width: 20%),
-  caption: [图片测试],
-) <nju-logo>
-
+#figure(image("images/ucas-emblem.svg", width: 20%), caption: [图片测试]) <nju-logo>
 
 === 数学公式
 
@@ -251,14 +266,15 @@ $ F_n = floor(1 / sqrt(5) phi.alt^n) $
   caption: [代码块],
 ) <code>
 
-
 = 中国科学院大学研究生学位论文撰写规范指导意见（节选）<chap:ucas>
 
 学位论文是研究生在掌握已有的科学知识的基础上，运用科学思维和一定的科学方法、技术与工具，面向特定的科学领域所存在的科学问题，开展创新性研究而产生的科学研究成果。
 
 学位论文是研究生科研工作成果的集中体现，是评判学位申请者学术水平、授予其学位的主要依据，是科研领域重要的文献资料。撰写学位论文是对研究生科学研究能力的基本训练，是研究生学业与研究成效的基本检验，也是科研与创新能力的重要体现。
 
-为提高研究生学位论文的撰写质量，促进学位论文在内容和格式上的规范化，参照《学位论文编写规则》（GB/T 7713.1—2006）、《信息与文献 参考文献著录规则》（GB/T 7714—2015）和《学术出版规范 期刊学术不端行为界定》（CY/T 174—2019）等国家有关标准，特制定本指导意见（2021年修订）。各学科群学位评定分委员会（以下简称各学科群分会）可结合本学科领域的特点，参考本指导意见，制订符合本学科领域特点与要求的学位论文撰写具体要求。
+为提高研究生学位论文的撰写质量，促进学位论文在内容和格式上的规范化，参照《学位论文编写规则》（GB/T 7713.1—2006）、《信息与文献 参考文献著录规则》（GB/T 7714—2015）和《学术出版规范
+期刊学术不端行为界定》（CY/T
+174—2019）等国家有关标准，特制定本指导意见（2021年修订）。各学科群学位评定分委员会（以下简称各学科群分会）可结合本学科领域的特点，参考本指导意见，制订符合本学科领域特点与要求的学位论文撰写具体要求。
 
 本指导意见从2023年冬季批次开始实施。
 
@@ -397,24 +413,24 @@ $ F_n = floor(1 / sqrt(5) phi.alt^n) $
 
 #strong[(1) 图]
 
-图片大小适当，图边界在页面范围内（图边界离页面边界距离大于页边距）。若图片中包含文字，文字大小不超过正文文字大小。
-图包括曲线图、构造图、示意图、框图、流程图、记录图、地图、照片等，宜插入正文适当位置。引用的图必须注明来源。具体要求如下：
+图片大小适当，图边界在页面范围内（图边界离页面边界距离大于页边距）。若图片中包含文字，文字大小不超过正文文字大小。 图包括曲线图、构造图、示意图、框图、流程图、记录图、地图、照片等，宜插入正文适当位置。引用的图必须注明来源。具体要求如下：
 
 - 图应具有“自明性”，即只看图、图题和图注，不阅读正文，就可理解图意。每一图应有简短确切的图题，连同图序置于图下居中。
 - 图中的符号标记、代码及实验条件等，可用最简练的文字横排于图框内或图框外的某一部位作为图注说明，全文统一。图题建议用中文及英文两种文字表达。
 - 照片图要求主要显示部分的轮廓鲜明，便于制版，如用放大、缩小的复制品，必须清晰，反差适中，照片上应有表示目的物尺寸的标尺。
 - 图片一般设为高6cm×宽8cm，但高、宽也可根据图片量及排版需要按比例缩放。中文（宋体）英文（Times New Roman）图注为五号字，1.25倍行距。
-- 文中尽量不用世界地图、全国地图！如果一定要用，凡涉国界图件（国内部分地区、全国、世界部分地区、全球）必须使用自然资源部标准地图底图（下载网址：http://bzdt.ch.mnr.gov.cn），所用底图边界要完全无修改（包括南海诸岛位置），为适应排版时图的缩放，比- 例尺一律用线段比例尺，而不用数字比例尺。并在图题下注明“注：该图基于自然资源部标准地图服务网站下载的审图号为GS(2021)××××号的标准地图制作，底图边界无修改。”
+- 文中尽量不用世界地图、全国地图！如果一定要用，凡涉国界图件（国内部分地区、全国、世界部分地区、全球）必须使用自然资源部标准地图底图（下载网址：http://bzdt.ch.mnr.gov.cn），所用底图边界要完全无修改（包括南海诸岛位置），为适应排版时图的缩放，比-
+  例尺一律用线段比例尺，而不用数字比例尺。并在图题下注明“注：该图基于自然资源部标准地图服务网站下载的审图号为GS(2021)××××号的标准地图制作，底图边界无修改。”
 
 #strong[(2) 表]
 
 表的编排一般是内容和测试项目由左至右横读，数据依序竖排，应有自明性，引用的表必须注明来源。具体要求如下：
 
 - 每一表应有简短确切的题名，连同表序置于表上居中。必要时，应将表中的符号、标记、代码及需说明的事项，以最简练的文字横排于表下作为表注。表题建议用中文及英文两种文字表达。
-- 表内同一栏数字必须上下对齐。表内不应用“同上”、“同左”等类似词及“″”符号，一律填入具体数字或文字，表内“空白”代表无此项，“—”或“…”（因“—”可能与代表阴性反应相混）代表未发现，“0”该表实测结果为零。表内未测出值可以用“N.D. ”表示。
+- 表内同一栏数字必须上下对齐。表内不应用“同上”、“同左”等类似词及“″”符号，一律填入具体数字或文字，表内“空白”代表无此项，“—”或“…”（因“—”可能与代表阴性反应相混）代表未发现，“0”该表实测结果为零。表内未测出值可以用“N.D.
+  ”表示。
 - 表格尽量用“三线表”，避免出现竖线，避免使用过大的表格，确有必要时可采用卧排表，正确方位应为“顶左底右”，即表顶朝左，表底朝右。表格太大需要转页时，需要在续表表头上方注明“续表”，表头也应重复排出。
 - 中文（宋体）英文（Times New Roman）表注为五号字，1.25倍行距。
-
 
 ==== 表达式
 
@@ -423,12 +439,11 @@ $ F_n = floor(1 / sqrt(5) phi.alt^n) $
 较长的表达式如必须转行，只能在+，-，×，÷，＜，＞等运算符之后转行，序号编于最后一行右顶格。
 
 === 参考文献
-参考文献格式规范参照《信息与文献 参考文献著录规则》（GB/T 7714—2015），或可参照国际刊物通行的参考文献格式。各学科群分会可根据本学科的一般规范制定相应的参考文献格式。文后参考文献和参考文献在正文中的标注方式可采用“顺序编码制”或“著者—出版年制”。确定采用某种方法后，文后参考文献和参考文献在正文中的标注方式要对应。
+参考文献格式规范参照《信息与文献 参考文献著录规则》（GB/T
+7714—2015），或可参照国际刊物通行的参考文献格式。各学科群分会可根据本学科的一般规范制定相应的参考文献格式。文后参考文献和参考文献在正文中的标注方式可采用“顺序编码制”或“著者—出版年制”。确定采用某种方法后，文后参考文献和参考文献在正文中的标注方式要对应。
 
 文后参考文献按“顺序编码制”组织时，各篇文献应按正文部分首次引用时标注的序号依次列出；文后参考文献按“著者—出版年制”组织时，条目不排序号，先按语种分类排列，语种顺序是：中文、日文、西文、俄文、其他文种；然后按著者字序和出版年排列。中文和日文按第一著者的姓氏笔画排序，中文也可按汉语拼音字母顺序排列，西文和俄文按第一著者姓氏字母顺序排列。当一个著者有多篇文献并为第一著者时，该著者单独署名的文献排在前面（并按出版年份的先后排列），接着排该著者与其他人合写的文献。
-文后参考文献加标题“参考文献”，并列入全文目录。
-凡正文里标注了参考文献的，其文献都必须列入文后参考文献。文后参考文献应集中著录于正文之后，不分章节著录。
-正文中未被引用但被阅读或具有补充信息的文献可集中列入附录中，其标题为“荐读书目”。
+文后参考文献加标题“参考文献”，并列入全文目录。 凡正文里标注了参考文献的，其文献都必须列入文后参考文献。文后参考文献应集中著录于正文之后，不分章节著录。 正文中未被引用但被阅读或具有补充信息的文献可集中列入附录中，其标题为“荐读书目”。
 
 详细内容请参考《中国科学院大学研究生学位论文撰写规范指导意见》。
 
@@ -449,7 +464,8 @@ $ F_n = floor(1 / sqrt(5) phi.alt^n) $
 )<tab:typo_and_print_require>
 
 === 印刷及装订要求
-论文封面使用中国科学院大学统一的封面格式。学位论文用A4标准纸（210 mm×297 mm）打印、印刷或复印，按顺序装订成册。自中文摘要起双面印刷，之前部分单面印刷。中文摘要、英文摘要、目录、论文正文、参考文献、附录、致谢、作者简历及攻读学位期间发表的学术论文与其他相关学术成果等，均须由另页右页（奇数页）开始。论文必须用线装或热胶装订，不使用钉子装订。封面用纸一般为150克花纹纸（需保证论文封面印刷质量，字迹清晰、不脱落），博士学位论文封面颜色为红色，硕士学位论文封面颜色为蓝色。
+论文封面使用中国科学院大学统一的封面格式。学位论文用A4标准纸（210 mm×297
+mm）打印、印刷或复印，按顺序装订成册。自中文摘要起双面印刷，之前部分单面印刷。中文摘要、英文摘要、目录、论文正文、参考文献、附录、致谢、作者简历及攻读学位期间发表的学术论文与其他相关学术成果等，均须由另页右页（奇数页）开始。论文必须用线装或热胶装订，不使用钉子装订。封面用纸一般为150克花纹纸（需保证论文封面印刷质量，字迹清晰、不脱落），博士学位论文封面颜色为红色，硕士学位论文封面颜色为蓝色。
 
 === 书脊
 学位论文的书脊用黑体，英文和阿拉伯数字用Times New Roman体，字号一般为小四号，可根据论文厚度适当调整。上方写论文题目，中间写作者姓名，下方写“中国科学院大学”，距上下边界均为3cm左右。
@@ -469,10 +485,7 @@ $ F_n = floor(1 / sqrt(5) phi.alt^n) $
 
 附录内容，这里也可以加入图片，例如@fig:appendix-img。
 
-#figure(
-  image("images/ucas-emblem.svg", width: 20%),
-  caption: [图片测试],
-) <appendix-img>
+#figure(image("images/ucas-emblem.svg", width: 20%), caption: [图片测试]) <appendix-img>
 
 // 致谢
 
@@ -487,33 +500,31 @@ $ F_n = floor(1 / sqrt(5) phi.alt^n) $
 
 #backmatter[
 
-#strong[作者简历:]\
+  #strong[作者简历:]\
 
-××××年××月——××××年××月，在××大学××院（系）获得学士学位。
+  ××××年××月——××××年××月，在××大学××院（系）获得学士学位。
 
-××××年××月——××××年××月，在××大学××院（系）获得硕士学位。
+  ××××年××月——××××年××月，在××大学××院（系）获得硕士学位。
 
-××××年××月——××××年××月，在中国科学院××研究所（或中国科学院大学××院系）攻读博士/硕士学位。
+  ××××年××月——××××年××月，在中国科学院××研究所（或中国科学院大学××院系）攻读博士/硕士学位。
 
-#strong[工作经历：]\
+  #strong[工作经历：]\
 
-\
+  \
 
-#strong[已发表（或正式接受）的学术论文：]\
+  #strong[已发表（或正式接受）的学术论文：]\
 
-已发表工作 1
-\
+  已发表工作 1 \
 
-#strong[申请或已获得的专利：]\
+  #strong[申请或已获得的专利：]\
 
-（无专利时此项不必列出）
+  （无专利时此项不必列出）
 
-#strong[参加的研究项目及获奖情况：]
+  #strong[参加的研究项目及获奖情况：]
 
-\
+  \
 
 ]
-
 
 // 手动分页
 #if twoside {

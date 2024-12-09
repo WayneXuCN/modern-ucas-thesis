@@ -2,10 +2,10 @@
 name = "typst-ucas-thesis"
 version = "0.0.1"
 entrypoint = "lib.typ"
-authors = ["WenjieXuCN"]
+authors = ["WayneHsuCN"]
 license = "MIT"
 description = "中国科学院大学学位论文模板。University of Chinese Academy of Sciences Thesis."
-repository = "https://github.com/WenjieXuCN/typst-ucas-thesis"
+repository = "https://github.com/WayneHsuCN/typst-ucas-thesis"
 keywords = ["University of Chinese Academy of Sciences", "UCAS", "thesis"]
 categories = ["thesis"]
 exclude = ["imgs"]

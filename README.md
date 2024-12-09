@@ -29,8 +29,6 @@
 - 感谢 [mohuangrui](https://github.com/mohuangrui) 开发的 [ucasthesis](https://github.com/mohuangrui/ucasthesis) LaTeX 模板，本模板大体结构都是参考 ucasthesis 的文档开发的。
 - 感谢 [HUST-typst-template](https://github.com/werifu/HUST-typst-template) 与 [sysu-thesis-typst](https://github.com/howardlau1999/sysu-thesis-typst) 等 Typst 中文论文模板。
 
-https://github.com/mohuangrui/ucasthesis
-
 ## License
 
 This project is licensed under the MIT License.

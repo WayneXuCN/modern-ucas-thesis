@@ -23,7 +23,7 @@
     },
   )
 
-  v(25pt)
+  v(48pt)
 
   align(
     center,
@@ -35,7 +35,7 @@
     ),
   )
 
-  v(20pt)
+  v(15pt)
 
   block[
     #set text(font: fonts.宋体, size: 字号.小四)
@@ -47,17 +47,17 @@
     均已在文中以明确方式标明或致谢。本人完全意识到本声明的法律结果由本人承担。
   ]
 
-  v(20pt)
+  v(12pt)
 
   align(center)[
     #set text(font: fonts.宋体, size: 字号.小四)
 
-    #h(6em)作者签名：#h(5.8em)
+    #h(8em)作者签名：#h(5.8em)
 
-    #h(6em)日#h(2em)期：#h(5.8em)
+    #h(8em)日#h(2em)期：#h(5.8em)
   ]
 
-  v(100pt)
+  v(48pt)
 
   align(
     center,
@@ -69,7 +69,7 @@
     ),
   )
 
-  v(20pt)
+  v(15pt)
 
   block[
     #set text(font: fonts.宋体, size: 字号.小四)
@@ -84,13 +84,13 @@
 
     涉密及延迟公开的学位论文在解密或延迟期后适用本声明。
   ]
-  v(20pt)
+  v(18pt)
 
   align(center)[
     #set text(font: fonts.宋体, size: 字号.小四)
 
-    作者签名：#h(10em) 导师签名：#h(6em)
+    #h(2.5em)作者签名：#h(10em) 导师签名：#h(6em)
 
-    日#h(2em)期：#h(10em) 日#h(2em)期：#h(6em)
+    #h(2.5em)日#h(2em)期：#h(10em) 日#h(2em)期：#h(6em)
   ]
 }

@@ -35,7 +35,8 @@
   }
 
   // 2.  正式渲染
-  pagebreak(weak: true, to: if twoside { "odd" })
+  pagebreak(weak: true)
+  // pagebreak(weak: true, to: if twoside { "odd" })
 
   // 默认显示的字体
   set text(font: font, size: size)
@@ -68,7 +69,9 @@
   i-figured.outline(target-kind: image, title: none)
 
   // 手动分页
+  /*
   if (twoside) {
     pagebreak() + " "
   }
+  */
 }

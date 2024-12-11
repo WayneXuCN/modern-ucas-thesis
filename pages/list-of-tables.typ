@@ -35,7 +35,8 @@
   }
 
   // 2.  正式渲染
-  pagebreak(weak: true, to: if twoside { "odd" })
+  pagebreak(weak: true)
+  //pagebreak(weak: true, to: if twoside { "odd" })
 
   // 默认显示的字体
   set text(font: font, size: size)
@@ -49,7 +50,9 @@
 
   v(title-vspace)
 
-  show outline.entry: outrageous.show-entry.with(
+  show outline.entry: outrageous
+    .show-entry
+    .with(
     // 保留 Typst 基础样式
     ..outrageous.presets.typst,
     body-transform: (level, it) => {
@@ -68,7 +71,9 @@
   i-figured.outline(target-kind: table, title: none)
 
   // 手动分页
+  /*
   if (twoside) {
     pagebreak() + " "
   }
+  */
 }

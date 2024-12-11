@@ -15,6 +15,7 @@
   // 其他参数
   stoke-width: 0.5pt, // 控制元素边框（如框架、分隔线等）的线宽度。
   min-title-lines: 2, // 控制标题行数的最小值。
+  min-supervisor-lines: 2, // 控制指导教师区域的最小行数。
   min-reviewer-lines: 5, // 控制评审人区域的最小行数。
   info-inset: (x: 0pt, bottom: 0.5pt), // 控制信息区域的内边距。x 左右间距，bottom 底部间距
   info-key-width: 70pt, // 控制信息标签（如“论文题目”、“作者姓名”）的宽度。
@@ -34,12 +35,13 @@
     "student-id",
     "author",
     "author-en",
-    "supervisor",
-    "supervisor-en",
+    "supervisors",
+    "supervisors-en",
     "supervisor-ii",
     "supervisor-ii-en",
     "chairman",
     "reviewer",
+    "department",
   ),
   datetime-display: datetime-display, // 用于格式化日期显示。
   datetime-en-display: datetime-en-display, // 用于格式化英文日期显示。
@@ -47,7 +49,10 @@
   // 1.  默认参数
   fonts = 字体 + fonts
   info = (
-    title: ("基于 Typst 的", "中国科学院大学学位论文"),
+    title: "基于 Typst 的中国科学院大学学位论文",
+    title-en: "Typst Thesis Template of UCAS",
+    supervisors: ("李四 教授", "王五 研究员"),
+    supervisors-en: ("Professor Si Li", "Professor Wu Wang"),
     grade: "20XX",
     student-id: "1234567890",
     author: "张三",
@@ -65,9 +70,16 @@
   if type(info.title-en) == str {
     info.title-en = info.title-en.split("\n")
   }
+  if type(info.supervisors) == str {
+    info.supervisors = info.supervisors.split("\n")
+  }
+  if type(info.supervisors-en) == str {
+    info.supervisors-en = info.supervisors-en.split("\n")
+  }
   // 2.2 根据 min-title-lines 和 min-reviewer-lines 填充标题和评阅人
   info.title = info.title + range(min-title-lines - info.title.len()).map(it => "　")
   info.reviewer = info.reviewer + range(min-reviewer-lines - info.reviewer.len()).map(it => "　")
+  info.supervisors = info.supervisors + range(min-supervisor-lines - info.supervisors.len()).map(it => "　")
   // 2.3 处理日期
   assert(type(info.submit-date) == datetime, message: "submit-date must be datetime.")
   if type(info.defend-date) == datetime {
@@ -218,12 +230,10 @@
       columns: (info-key-width, 1fr),
       column-gutter: info-column-gutter,
       row-gutter: info-row-gutter,
-      info-key("论文作者："),
-      ..info.title.map(s => info-value("title", s)).intersperse(info-key("　")),
       info-key("作者姓名："),
       info-value("author", info.author),
       info-key("指导教师："),
-      info-value("supervisor", info.supervisor.intersperse(" ").sum()),
+      ..info.supervisors.map(s => info-value("supervisors", s)).intersperse(info-key("　")),
       info-key("学位类别："),
       info-value("category", info.category),
       ..(
@@ -314,17 +324,32 @@
 
   strong[
     \ By \ #text(anonymous-text("author-en", info.author-en)) \
-    Supervisor: #text(anonymous-text("supervisor-en", info.supervisor-en)) \
   ]
-  v(6pt)
+  // 处理 info.supervisors-en
+  if type(info.supervisors-en) == str {
+    // 只有一个supervisor
+    text(
+      weight: "bold",
+      "Supervisor: " + anonymous-text("supervisors-en", info.supervisors-en),
+    )
+  } else {
+    // 多个supervisor
+    // 先把所有的supervisors转为匿名处理后的字符串列表
+    let supers = info.supervisors-en.map(s => anonymous-text("supervisors-en", s))
 
+    // 利用 intersperse 在各个supervisor之间加入换行和空格（缩进）
+    // TODO: 丑陋的实现，但效果还行，有时间再优化
+    text(
+      weight: "bold",
+      "Supervisors: " + supers.intersperse("\n                               ").sum(),
+    )
+  }
 
   v(90pt)
 
   if not anonymous {
     strong[#info.department-en, Chinese Academy of Sciences]
-  }
-  else {v(26pt)}
+  } else { v(26pt) }
 
   v(28pt)
 

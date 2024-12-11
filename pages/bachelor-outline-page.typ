@@ -20,8 +20,8 @@
   font: auto,
   size: (字号.四号, 字号.小四),
   // 垂直间距
-  vspace: (25pt, 14pt),
-  indent: (0pt, 18pt, 28pt),
+  vspace: (12pt, 8pt),
+  indent: (0pt, 10.488pt, 20.97pt),
   // 全都显示点号
   fill: (auto,),
   ..args,
@@ -29,15 +29,15 @@
   // 1.  默认参数
   fonts = 字体 + fonts
   if (title-text-args == auto) {
-    title-text-args = (font: fonts.宋体, size: 字号.三号, weight: "bold")
+    title-text-args = (font: fonts.黑体, size: 字号.四号, weight: "bold")
   }
   // 引用页数的字体，这里用于显示 Times New Roman
   if (reference-font == auto) {
-    reference-font = fonts.宋体
+    reference-font = fonts.黑体
   }
   // 字体与字号
   if (font == auto) {
-    font = (fonts.黑体, fonts.宋体)
+    font = (fonts.黑体, fonts.黑体)
   }
 
   // 2.  正式渲染
@@ -55,7 +55,9 @@
 
   v(title-vspace)
 
-  show outline.entry: outrageous.show-entry.with(
+  show outline.entry: outrageous
+    .show-entry
+    .with(
     // 保留 Typst 基础样式
     ..outrageous.presets.typst,
     body-transform: (level, it) => {
@@ -76,5 +78,4 @@
 
   // 显示目录
   outline(title: none, depth: depth)
-
 }

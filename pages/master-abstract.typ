@@ -85,18 +85,18 @@
   )
 
   [
-    #set text(font: fonts.楷体, size: 字号.四号)
+    #set text(font: fonts.宋体, size: 字号.小四)
     #set par(leading: leading, justify: true)
     #show par: set block(spacing: spacing)
 
     // 标记一个不可见的标题用于目录生成
     #invisible-heading(level: 1, outlined: outlined, outline-title)
 
-    #v(3pt)
+    #v(24pt)
 
-    #align(center, text(font: fonts.黑体, size: 字号.小三, weight: abstract-title-weight, strong[摘#h(1em)要]))
+    #align(center, text(font: fonts.黑体, size: 字号.四号, weight: abstract-title-weight, strong[摘#h(1em)要]))
 
-    #v(10pt)
+    #v(18pt)
 
     #set text(font: fonts.宋体, size: 字号.小四)
 
@@ -108,8 +108,8 @@
       #body
     ]
 
-    #v(10pt)
+    #v(15pt)
 
-    *关键词*：#(("",)+ keywords.intersperse("；")).sum()
+    *关键词*：#(("",)+ keywords.intersperse("，")).sum()
   ]
 }

@@ -25,14 +25,14 @@
   acknowledgement,
   backmatter,
 ) = documentclass(
-  doctype: "doctor", // "bachelor" | "master" | "doctor" | "postdoc", 文档类型，默认为博士生 doctor
+  doctype: "doctor", // "master" | "doctor" | "postdoc", 文档类型，默认为博士生 doctor
   degree: "academic", // "academic" | "professional", 学位类型，默认为学术型 academic
   anonymous: false, // 盲审模式
   twoside: true, // 双面模式，会加入空白页，便于打印
   // 可自定义字体，先英文字体后中文字体，应传入「宋体」、「黑体」、「楷体」、「仿宋」、「等宽」
   // fonts: (楷体: ("Times New Roman", "FZKai-Z03S")),
   info: (
-    title: ("基于 Typst 的中国科学院大学学位论文"),
+    title: ("基于 Typst 的", "中国科学院大学学位论文"),
     title-en: "Typst Thesis Template of UCAS",
     supervisors: ("李四 教授", "王五 研究员"),
     supervisors-en: ("Professor Si Li", "Professor Wu Wang"),
@@ -481,13 +481,58 @@ mm）打印、印刷或复印，按顺序装订成册。自中文摘要起双面
 
 = 附录
 
-== 附录子标题
+#align(center)[== 学位类别中英文对照表]
 
-=== 附录子子标题
+#let scd = [学术型\ 博士]
+#let scm = [学术型\ 硕士]
+#let pd = [专业学位\ 博士]
+#let pm = [专业学位\ 硕士]
+#let dp = [Doctor of Philosophy]
+#set par(leading: 0.65em)
+#table(
+  columns: (auto, auto, auto),
+  align: (center, center, center),
+  table.header([学位类别], [中文名称], [英文名称]),
+  table.cell(rowspan: 8, align: horizon, scd), [哲学博士], table.cell(rowspan: 8, align: horizon, dp),
+  [经济学博士],
+  [历史学博士],
+  [理学博士],
+  [工学博士],
+  [农学博士],
+  [医学博士],
+  [管理学博士],
+  table.cell(rowspan: 10, align: horizon, scm), [哲学硕士], [Master of Philosophy],
+  [经济学硕士], [Master of Economics],
+  [法学硕士], [Master of Law],
+  [文学硕士], [Master of Arts],
+  [历史学硕士], [Master of History],
+  [理学硕士], [Master of Natural Science],
+  [工学硕士], [Master of Science in Engineering],
+  [农学硕士], [Master of Agriculture],
+  [医学硕士], [Master of Medicine],
+  [管理学硕士], [Master of Management Science],
+  [专业学位\ 博士], [材料与化工博士\*], [Doctor of Materials and Chemical\ Engineering],
+  table.cell(rowspan: 17, align: horizon, pm),
+  [金融硕士], [Master of Finance],
+  [应用统计硕士], [Master of Applied Statistics],
+  [应用心理硕士], [Master of Applied Psychology],
+  [翻译硕士], [Master of Translation and Interpreting],
+  [工程硕士（调整前）\*], [Master of Engineering],
+  [电子信息硕士\*], [Master of Electronic and Information\ Engineering],
+  [机械硕士\*],[Master of Mechanical Engineering],
+  [材料与化工硕士\*], [Master of Materials and Chemical Engineering],
+  [资源与环境硕士\*], [Master of Resources and Environmental\ Engineering],
+  [能源动力硕士\*], [Master of Energy and Power Engineering],
+  [土木水利硕士\*], [Master of Civil and Hydraulic Engineering],
+  [生物与医药硕士\*], [Master of Biological and Pharmaceutical\ Engineering],
+  [农业硕士], [Master of Agriculture],
+  [药学硕士], [Master of Pharmacy],
+  [工商管理硕士], [Master of Business Administration],
+  [公共管理硕士], [Master of Public Administration],
+  [工程管理硕士], [Master of Engineering Management],
 
-附录内容，这里也可以加入图片，例如@fig:appendix-img。
+)
 
-#figure(image("images/ucas-emblem.svg", width: 20%), caption: [图片测试]) <appendix-img>
 
 // 致谢
 

@@ -5,14 +5,12 @@
   // 其他参数
   fallback: false, // 字体缺失时使用 fallback，不显示豆腐块
   lang: "zh",
-  // top: 72pt 和 bottom: 72pt 设置了上下边距为 72pt（即 2.54厘米）。
-  // x: 90pt 设置了左右边距为 90pt（即 3.17厘米）。
-  margin: (top: 72pt, bottom: 72pt, x: 90pt),
+  margin: (top: 2.54cm, bottom: 2.54cm, left: 3.17cm, right: 3.17cm),
   it,
 ) = {
   // 1.  默认参数
   info = (
-    title: ("基于 Typst 的", "南京大学学位论文"),
+    title: ("基于 Typst 的", "中国科学院大学学位论文"),
     author: "张三",
   ) + info
 
@@ -24,7 +22,12 @@
 
   // 3.  基本的样式设置
   set text(fallback: fallback, lang: lang)
-  set page(margin: margin)
+  set page(
+    paper: "a4",
+    margin: margin,
+    header-ascent: (2.54cm-1.5cm),
+    footer-descent: (2.54cm-1.5cm),
+  )
 
   // 4.  PDF 元信息
   set document(

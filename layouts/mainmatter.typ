@@ -1,5 +1,5 @@
 #import "@preview/i-figured:0.2.4"
-#import "../utils/style.typ": 字体, 字号
+#import "../utils/style.typ": get-fonts, 字号
 #import "../utils/custom-numbering.typ": custom-numbering
 #import "../utils/custom-heading.typ": (
   active-heading, current-heading, heading-display,
@@ -11,6 +11,7 @@
   twoside: false,
   info: (:),
   fonts: (:),
+  fontset: "mac",
   // 其他参数
   leading: 1.5 * 15.6pt - 0.7em,
   spacing: 1.5 * 15.6pt - 0.7em,
@@ -56,7 +57,7 @@
     )
       + info
   )
-  fonts = 字体 + fonts
+  fonts = get-fonts(fontset) + fonts
   if (text-args == auto) {
     text-args = (font: fonts.宋体, size: 字号.小四)
   }

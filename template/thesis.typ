@@ -1,8 +1,8 @@
 #import "../lib.typ": documentclass
 
-// 你首先应该安装 fonts下的所有字体，
-// 如果是 Web App 上编辑，你应该手动上传这些字体文件，否则不能正常使用「楷体」和「仿宋」，导致显示错误。
-
+// 你首先应该安装 fonts下的所有字体，或在编译的时候指定字体路径：
+// typst watch template/thesis.typ --font-path ./fonts
+// 如果是 Web App 上编辑，你应该手动上传所有字体文件，否则部分字体不能正常使用，导致显示错误。
 #let (
   // 布局函数
   twoside,
@@ -28,9 +28,12 @@
   degree: "academic", // "academic" | "professional", 学位类型，默认为学术型 academic
   anonymous: false, // 盲审模式
   twoside: true, // 双面模式，会加入空白页，便于打印
-  // 因为加入了很多不必要的 fallback 字体, 发现 Typst 将提示许多警告
-  // 可以自定义字体消除警告，先英文字体后中文字体，应传入「宋体」、「黑体」、「楷体」、「仿宋」、「等宽」
-  // fonts: (楷体: (name: "Times New Roman", covers: "latin-in-cjk"), "FZKai-Z03S")),
+  fontset: "mac", // 选择预定义的字体组："windows" | "mac" | "fandol" | "adobe"
+  // fonts参数可用于覆盖或补充fontset中的字体设置
+  // 例如：仅想更改某一种字体时，可以这样设置
+  // fonts: (楷体: ("Times New Roman", "FZKai-Z03S")),
+  // 或者需要自定义特定字体以解决警告和兼容性问题时
+  // fonts: (黑体: (name: "Times New Roman", covers: "latin-in-cjk"), "SimHei")),
   info: (
     title: ("基于 Typst 的", "中国科学院大学学位论文"),
     title-en: "Thesis/Dissertation of UCAS Based on Typst",
@@ -514,13 +517,8 @@ mm）打印、印刷或复印，按顺序装订成册。自中文摘要起双面
 
 // 致谢
 #acknowledgement[
-  感谢 typst-ucas-thesis，感谢 ucasthesis LaTeX 模板。
+  感谢 typst-ucas-thesis。
 ]
-
-// 手动分页
-#if twoside {
-  pagebreak() + " "
-}
 
 // 附录
 #show: appendix
@@ -584,10 +582,6 @@ mm）打印、印刷或复印，按顺序装订成册。自中文摘要起双面
   [工程管理硕士], [Master of Engineering Management],
 )
 
-// 手动分页
-#if twoside {
-  pagebreak() + " "
-}
 
 #backmatter[
 

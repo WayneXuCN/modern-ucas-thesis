@@ -1,5 +1,4 @@
 #import "@preview/cuti:0.3.0": show-cn-fakebold
-#import "../utils/globals.typ": fontset
 
 // 文稿设置，可以进行一些像页面边距这类的全局设置
 #let doc(
@@ -9,6 +8,7 @@
   fallback: false, // 字体缺失时使用 fallback，不显示豆腐块
   lang: "zh",
   margin: (top: 2.54cm, bottom: 2.54cm, left: 3.17cm, right: 3.17cm),
+  fontset: "mac", // 使用的字体组，从documentclass传入
   it,
 ) = {
   // 1.  默认参数
@@ -42,7 +42,15 @@
   )
 
   // 5.  中文伪加粗（针对没有粗体的字体）
-  show: show-cn-fakebold
-
-  it
+  // 根据fontset参数判断是否需要启用中文伪加粗
+  // - Fandol系字体自带粗体，因此不需要伪加粗
+  // - Windows、Mac和Adobe等字体组通常需要伪加粗以获得更好的显示效果
+  if fontset != "fandol" {
+    {
+      show: show-cn-fakebold
+      it
+    }
+  } else {
+    it
+  }
 }

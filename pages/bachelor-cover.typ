@@ -1,11 +1,12 @@
 #import "../utils/datetime-display.typ": datetime-display
-#import "../utils/style.typ": 字体, 字号
+#import "../utils/style.typ": get-fonts, 字号
 
 // 本科生封面
 #let bachelor-cover(
   // documentclass 传入的参数
   anonymous: false,
   twoside: false,
+  fontset: "mac",
   fonts: (:),
   info: (:),
   // 其他参数
@@ -29,7 +30,7 @@
   datetime-display: datetime-display,
 ) = {
   // 1.  默认参数
-  fonts = 字体 + fonts
+  fonts = get-fonts(fontset) + fonts
   info = (
     (
       title: ("基于 Typst 的", "中国科学院大学学位论文"),

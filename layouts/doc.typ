@@ -39,7 +39,13 @@
   )
 
   // 5.  中文伪加粗（针对没有粗体的字体）
-  show: show-cn-fakebold
-
-  it
+  // Fandol系字体自带粗体，因此不需要伪加粗
+  if fontset != "fandol" {
+    {
+      show: show-cn-fakebold
+      it
+    }
+  } else {
+    it
+  }
 }

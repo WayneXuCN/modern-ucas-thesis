@@ -1,3 +1,6 @@
+#import "@preview/cuti:0.3.0": show-cn-fakebold
+#import "../utils/globals.typ": fontset
+
 // 文稿设置，可以进行一些像页面边距这类的全局设置
 #let doc(
   // documentclass 传入参数
@@ -37,6 +40,9 @@
     title: (("",) + info.title).sum(),
     author: info.author,
   )
+
+  // 5.  中文伪加粗（针对没有粗体的字体）
+  show: show-cn-fakebold
 
   it
 }

@@ -1,4 +1,3 @@
-#import "../utils/custom-cuti.typ": fakebold
 #import "../utils/style.typ": 字体, 字号
 #import "../utils/double-underline.typ": double-underline
 #import "../utils/invisible-heading.typ": invisible-heading
@@ -61,7 +60,7 @@
 
       #v(1em)
 
-      #double-underline[#fakebold[中国科学院大学本科生毕业论文（设计、作品）英文摘要]]
+      #double-underline[*中国科学院大学本科生毕业论文（设计、作品）英文摘要*]
     ]
 
     #v(2pt)

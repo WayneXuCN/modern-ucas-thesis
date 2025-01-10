@@ -21,7 +21,6 @@
 #import "pages/notation.typ": notation
 #import "pages/acknowledgement.typ": acknowledgement // 致谢部分
 #import "pages/backmatter.typ": backmatter // 致谢部分
-#import "utils/custom-cuti.typ": *
 #import "utils/bilingual-bibliography.typ": bilingual-bibliography
 #import "utils/custom-numbering.typ": custom-numbering
 #import "utils/custom-heading.typ": active-heading, current-heading, heading-display

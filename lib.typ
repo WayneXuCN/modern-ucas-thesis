@@ -25,9 +25,10 @@
 #import "utils/custom-numbering.typ": custom-numbering
 #import "utils/custom-heading.typ": active-heading, current-heading, heading-display
 #import "@preview/i-figured:0.2.4": show-equation, show-figure
-#import "utils/style.typ": 字体, 字号
+#import "utils/style.typ": get-fonts, 字体组, 字号
 
 // 使用函数闭包特性，通过 `documentclass` 函数类进行全局信息配置，然后暴露出拥有了全局配置的、具体的 `layouts` 和 `templates` 内部函数。
+
 #let documentclass(
   doctype: "doctor", // "bachelor" | "master" | "doctor" | "postdoc"，文档类型，默认为博士生 doctor
   degree: "academic", // "academic" | "professional"，学位类型，默认为学术型 academic
@@ -35,11 +36,18 @@
   twoside: false, // 双面模式，会加入空白页，便于打印
   anonymous: false, // 盲审模式
   bibliography: none, // 参考文献函数
-  fonts: (:), // 字体，应传入「宋体」、「黑体」、「楷体」、「仿宋」、「等宽」
+  // 字体配置说明:
+  // - fontset参数用于选择预定义的字体组（windows、mac、fandol或adobe）
+  // - fonts参数用于覆盖或补充fontset中的字体设置，提供更精细的字体控制
+  // - 对大多数用户而言，只需设置fontset即可；对有特殊需求的用户，可使用fonts参数自定义
+  fontset: "mac", // "windows" | "mac" | "fandol" | "adobe"，选择预定义的字体组
+  fonts: (:), // 用于覆盖或补充fontset中的字体，可选择性覆盖
   info: (:),
 ) = {
   // 默认参数
-  fonts = 字体 + fonts
+  // 根据 fontset 参数选择对应的字体组
+  // 将用户自定义的fonts与预定义字体组合并，用户定义的字体会覆盖预定义字体
+  fonts = get-fonts(fontset) + fonts
   info = (
     (
       title: ("基于 Typst 的", "中国科学院大学学位论文"),
@@ -76,7 +84,7 @@
     )
       + info
   )
-  
+
   return (
     // 将传入参数再导出
     doctype: doctype,
@@ -90,6 +98,7 @@
     doc: (..args) => {
       doc(
         ..args,
+        fontset: fontset,
         info: info + args.named().at("info", default: (:)),
       )
     },
@@ -124,6 +133,7 @@
     fonts-display-page: (..args) => {
       fonts-display-page(
         twoside: twoside,
+        fontset: fontset,
         ..args,
         fonts: fonts + args.named().at("fonts", default: (:)),
       )
@@ -137,6 +147,7 @@
           nl-cover: nl-cover,
           anonymous: anonymous,
           twoside: twoside,
+          fontset: fontset,
           ..args,
           fonts: fonts + args.named().at("fonts", default: (:)),
           info: info + args.named().at("info", default: (:)),
@@ -147,6 +158,7 @@
         bachelor-cover(
           anonymous: anonymous,
           twoside: twoside,
+          fontset: fontset,
           ..args,
           fonts: fonts + args.named().at("fonts", default: (:)),
           info: info + args.named().at("info", default: (:)),
@@ -159,6 +171,7 @@
         master-decl-page(
           anonymous: anonymous,
           twoside: twoside,
+          fontset: fontset,
           ..args,
           fonts: fonts + args.named().at("fonts", default: (:)),
         )
@@ -168,6 +181,7 @@
         bachelor-decl-page(
           anonymous: anonymous,
           twoside: twoside,
+          fontset: fontset,
           ..args,
           fonts: fonts + args.named().at("fonts", default: (:)),
           info: info + args.named().at("info", default: (:)),
@@ -182,6 +196,7 @@
           degree: degree,
           anonymous: anonymous,
           twoside: twoside,
+          fontset: fontset,
           ..args,
           fonts: fonts + args.named().at("fonts", default: (:)),
           info: info + args.named().at("info", default: (:)),
@@ -192,6 +207,7 @@
         bachelor-abstract(
           anonymous: anonymous,
           twoside: twoside,
+          fontset: fontset,
           ..args,
           fonts: fonts + args.named().at("fonts", default: (:)),
           info: info + args.named().at("info", default: (:)),
@@ -206,6 +222,7 @@
           degree: degree,
           anonymous: anonymous,
           twoside: twoside,
+          fontset: fontset,
           ..args,
           fonts: fonts + args.named().at("fonts", default: (:)),
           info: info + args.named().at("info", default: (:)),
@@ -216,6 +233,7 @@
         bachelor-abstract-en(
           anonymous: anonymous,
           twoside: twoside,
+          fontset: fontset,
           ..args,
           fonts: fonts + args.named().at("fonts", default: (:)),
           info: info + args.named().at("info", default: (:)),
@@ -226,6 +244,7 @@
     outline-page: (..args) => {
       bachelor-outline-page(
         twoside: twoside,
+        fontset: fontset,
         ..args,
         fonts: fonts + args.named().at("fonts", default: (:)),
       )
@@ -234,6 +253,7 @@
     list-of-figures: (..args) => {
       list-of-figures(
         twoside: twoside,
+        fontset: fontset,
         ..args,
         fonts: fonts + args.named().at("fonts", default: (:)),
       )
@@ -242,6 +262,7 @@
     list-of-tables: (..args) => {
       list-of-tables(
         twoside: twoside,
+        fontset: fontset,
         ..args,
         fonts: fonts + args.named().at("fonts", default: (:)),
       )

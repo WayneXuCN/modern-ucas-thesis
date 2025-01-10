@@ -1,10 +1,11 @@
 #import "../utils/invisible-heading.typ": invisible-heading
-#import "../utils/style.typ": 字体, 字号
+#import "../utils/style.typ": get-fonts, 字号
 
 // 本科生目录生成
 #let bachelor-outline-page(
   // documentclass 传入参数
   twoside: false,
+  fontset: "mac",
   fonts: (:),
   // 其他参数
   depth: 4,
@@ -28,7 +29,7 @@
   ..args,
 ) = {
   // 1.  默认参数
-  fonts = 字体 + fonts
+  fonts = get-fonts(fontset) + fonts
   if title-text-args == auto {
     title-text-args = (font: fonts.宋体, size: 字号.三号, weight: "bold")
   }

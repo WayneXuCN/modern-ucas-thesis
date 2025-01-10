@@ -1,9 +1,10 @@
-#import "../utils/style.typ": 字体, 字号
+#import "../utils/style.typ": get-fonts, 字号
 
 // 研究生声明页
 #let master-decl-page(
   anonymous: false,
   twoside: false,
+  fontset: "mac",
   fonts: (:),
 ) = {
   // 0. 如果需要匿名则短路返回
@@ -12,7 +13,7 @@
   }
 
   // 1.  默认参数
-  fonts = 字体 + fonts
+  fonts = get-fonts(fontset) + fonts
 
   // 2.  正式渲染
   pagebreak(weak: true, to: if twoside {

@@ -1,9 +1,10 @@
-#import "../utils/style.typ": 字体, 字号
+#import "../utils/style.typ": get-fonts, 字号
 
 // 本科生声明页
 #let bachelor-decl-page(
   anonymous: false,
   twoside: false,
+  fontset: "mac",
   fonts: (:),
   info: (:),
 ) = {
@@ -13,7 +14,7 @@
   }
 
   // 1.  默认参数
-  fonts = 字体 + fonts
+  fonts = get-fonts(fontset) + fonts
   info = (
     (
       title: ("基于 Typst 的", "中国科学院大学学位论文"),
@@ -37,15 +38,12 @@
 
   v(-12pt)
 
-  align(
-    center,
-    text(
-      font: fonts.黑体,
-      size: 字号.小一,
-      weight: "bold",
-      "中国科学院大学本科毕业论文（设计）\n诚信承诺书",
-    ),
-  )
+  align(center, text(
+    font: fonts.黑体,
+    size: 字号.小一,
+    weight: "bold",
+    "中国科学院大学本科毕业论文（设计）\n诚信承诺书",
+  ))
 
   v(48pt)
 

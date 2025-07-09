@@ -24,15 +24,16 @@
   acknowledgement,
   backmatter,
 ) = documentclass(
-  doctype: "doctor", // "master" | "doctor" | "postdoc", 文档类型，默认为博士生 doctor
+  doctype: "doctor", // "bachelor" | "master" | "doctor" | "postdoc", 文档类型，默认为博士生 doctor
   degree: "academic", // "academic" | "professional", 学位类型，默认为学术型 academic
   anonymous: false, // 盲审模式
   twoside: true, // 双面模式，会加入空白页，便于打印
-  // 可自定义字体，先英文字体后中文字体，应传入「宋体」、「黑体」、「楷体」、「仿宋」、「等宽」
-  // fonts: (楷体: ("Times New Roman", "FZKai-Z03S")),
+  // 因为加入了很多不必要的 fallback 字体, 发现 Typst 将提示许多警告
+  // 可以自定义字体消除警告，先英文字体后中文字体，应传入「宋体」、「黑体」、「楷体」、「仿宋」、「等宽」
+  // fonts: (楷体: (name: "Times New Roman", covers: "latin-in-cjk"), "FZKai-Z03S")),
   info: (
     title: ("基于 Typst 的", "中国科学院大学学位论文"),
-    title-en: "Typst Thesis Template of UCAS",
+    title-en: "Thesis/Dissertation of UCAS Based on Typst",
     supervisors: ("李四 教授", "王五 研究员"),
     supervisors-en: ("Professor Si Li", "Professor Wu Wang"),
     grade: "20XX",
@@ -58,7 +59,7 @@
 #show: doc
 
 // 字体展示测试页
-//#fonts-display-page()
+#fonts-display-page()
 
 // 封面页
 #cover()
@@ -97,16 +98,65 @@
 // 正文
 #show: mainmatter
 
-// 符号表
-// #notation[
-//   / DFT: 密度泛函理论 (Density functional theory)
-//   / DMRG: 密度矩阵重正化群密度矩阵重正化群密度矩阵重正化群 (Density-Matrix Reformation-Group)
-// ]
+// 符号列表
+#notation(
+  title: "符号列表",
+)[
+
+  字符
+
+  #table(
+    columns: (auto, auto, auto),
+    align: (left, left, left),
+    stroke: none,
+    table.header()[*Symbol*][*Description*][*Unit*],
+    [$R$], [the gas constant], [$m^2 dot s^(-2) dot K^(-1)$],
+    [$C_v$], [specific heat capacity at constant volume], [$m^2 dot s^(-2) dot K^(-1)$],
+    [$C_p$], [specific heat capacity at constant pressure], [$m^2 dot s^(-2) dot K^(-1)$],
+    [$E$], [specific total energy], [$m^2 dot s^(-2)$],
+    [$e$], [specific internal energy], [$m^2 dot s^(-2)$],
+    [$h_T$], [specific total enthalpy], [$m^2 dot s^(-2)$],
+    [$h$], [specific enthalpy], [$m^2 dot s^(-2)$],
+    [$k$], [thermal conductivity], [$"kg" dot m dot s^(-3) dot K^(-1)$],
+    [$S_(i j)$], [deviatoric stress tensor], [$"kg" dot m^(-1) dot s^(-2)$],
+    [$tau_(i j)$], [viscous stress tensor], [$"kg" dot m^(-1) dot s^(-2)$],
+    [$delta_(i j)$], [Kronecker delta], [1],
+    [$I_(i j)$], [identity tensor], [1],
+  )
+
+  算子
+
+  #table(
+    columns: (auto, auto),
+    align: (left, left),
+    stroke: none,
+    table.header()[*Symbol*][*Description*],
+    [$Delta$], [difference],
+    [$nabla$], [gradient operator],
+    [$delta^(plus.minus)$], [upwind-biased interpolation scheme],
+  )
+
+  缩写
+
+  #table(
+    columns: (auto, auto),
+    align: (left, left),
+    stroke: none,
+    table.header()[*Symbol*][*Description*],
+    [CFD], [Computational Fluid Dynamics],
+    [CFL], [Courant-Friedrichs-Lewy],
+    [EOS], [Equation of State],
+    [JWL], [Jones-Wilkins-Lee],
+    [WENO], [Weighted Essentially Non-Oscillatory],
+    [ZND], [Zeldovich-von Neumann-Döring],
+  )
+]
+
 = 绪论<chap:introduction>
 
 == 背景
 
-2022年修订的《中国科学院大学研究生学位论文撰写规范和指导意见》（以下简称《指导意见》）从2023年冬季批次开始实施。为方便各位同学使用，特提供此模板。
+2022年修订的《中国科学院大学 研究生学位论文撰写规范和指导意见》（以下简称《指导意见》）从2023年冬季批次开始实施。为方便各位同学使用，特提供此模板。
 
 您在使用此模板进行学位论文撰写时，只需根据《指导意见》在相应章节填写具体内容即可。
 
@@ -194,7 +244,7 @@ App）是一种简单有效的方式。这种方式无需配置本地环境，�
 
 === 图表
 
-引用@tbl:timing，引用@tbl:timing-tlt，以及@fig:nju-logo。引用图表时，表格和图片分别需要加上 `tbl:`和`fig:` 前缀才能正常显示编号。
+引用@tbl:timing，引用@tbl:timing-tlt，以及@fig:ucas-logo。引用图表时，表格和图片分别需要加上 `tbl:`和`fig:` 前缀才能正常显示编号。
 
 #align(center, (
   stack(dir: ltr)[
@@ -231,7 +281,7 @@ App）是一种简单有效的方式。这种方式无需配置本地环境，�
   ]
 ))
 
-#figure(image("images/ucas-emblem.svg", width: 20%), caption: [图片测试]) <nju-logo>
+#figure(image("images/ucas-emblem.svg", width: 20%), caption: [图片测试]) <ucas-logo>
 
 === 数学公式
 

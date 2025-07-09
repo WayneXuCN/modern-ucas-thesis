@@ -1,8 +1,7 @@
-#import "@preview/pinit:0.1.3": pin, pinit-place
-#import "../utils/style.typ": 字号, 字体
-#import "../utils/indent.typ": fake-par
+#import "@preview/pinit:0.2.2": pin, pinit-place
+#import "../utils/style.typ": 字体, 字号
 #import "../utils/double-underline.typ": double-underline
-#import "../utils/custom-tablex.typ": gridx, colspanx
+#import "../utils/custom-tablex.typ": colspanx, gridx
 #import "../utils/invisible-heading.typ": invisible-heading
 
 // 研究生英文摘要页
@@ -34,12 +33,15 @@
   // 1.  默认参数
   fonts = 字体 + fonts
   info = (
-    title-en: "NJU Thesis Template for Typst",
-    author-en: "Zhang San",
-    department-en: "XX Department",
-    major-en: "XX Major",
-    supervisor-en: "Professor Li Si",
-  ) + info
+    (
+      title-en: "NJU Thesis Template for Typst",
+      author-en: "Zhang San",
+      department-en: "XX Department",
+      major-en: "XX Major",
+      supervisor-en: "Professor Li Si",
+    )
+      + info
+  )
 
   // 2.  对参数进行处理
   // 2.1 如果是字符串，则使用换行符将标题分隔为列表
@@ -49,30 +51,21 @@
 
   // 3.  内置辅助函数
   let info-key(body) = {
-    rect(
-      inset: info-inset,
-      stroke: none,
-      text(font: fonts.楷体, size: 字号.四号, body),
-    )
+    rect(inset: info-inset, stroke: none, text(font: fonts.楷体, size: 字号.四号, body))
   }
 
   let info-value(key, body) = {
     set align(info-value-align)
-    rect(
-      width: 100%,
-      inset: info-inset,
-      stroke: (bottom: stoke-width + black),
-      text(
-        font: fonts.楷体,
-        size: 字号.四号,
-        bottom-edge: "descender",
-        if (anonymous and (key in anonymous-info-keys)) {
-          "█████"
-        } else {
-          body
-        },
-      ),
-    )
+    rect(width: 100%, inset: info-inset, stroke: (bottom: stoke-width + black), text(
+      font: fonts.楷体,
+      size: 字号.四号,
+      bottom-edge: "descender",
+      if (anonymous and (key in anonymous-info-keys)) {
+        "█████"
+      } else {
+        body
+      },
+    ))
   }
 
   // 4.  正式渲染
@@ -92,18 +85,16 @@
 
     #v(18pt)
 
-    #set text(size: 字号.小四)
-
-    #[
-      #set par(first-line-indent: 2em)
-
-      #fake-par
+    #[#set text(font: fonts.宋体, size: 字号.小四)
+      #set par(first-line-indent: (amount: 2em, all: true))
 
       #body
     ]
 
     #v(15pt)
 
-    #strong[Key Words]: #(("",)+ keywords.intersperse(", ")).sum()
+    #[#set text(font: fonts.楷体, size: 字号.小四)
+      KEYWORDS: #(("",) + keywords.intersperse("; ")).sum()
+    ]
   ]
 }

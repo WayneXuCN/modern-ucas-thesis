@@ -1,9 +1,7 @@
-#import "@preview/anti-matter:0.0.2": anti-front-end
 #import "@preview/i-figured:0.2.4"
-#import "../utils/style.typ": 字号, 字体
+#import "../utils/style.typ": 字体, 字号
 #import "../utils/custom-numbering.typ": custom-numbering
-#import "../utils/custom-heading.typ": heading-display, active-heading, current-heading
-#import "../utils/indent.typ": fake-par
+#import "../utils/custom-heading.typ": active-heading, current-heading, heading-display
 #import "../utils/unpairs.typ": unpairs
 
 #let mainmatter(
@@ -47,12 +45,15 @@
   it,
 ) = {
   // 0.  标志前言结束
-  anti-front-end()
+  set page(numbering: "1")
 
   // 1.  默认参数
   info = (
-    title: ("基于 Typst 的", "中国科学院大学学位论文"),
-  ) + info
+    (
+      title: ("基于 Typst 的", "中国科学院大学学位论文"),
+    )
+      + info
+  )
   fonts = 字体 + fonts
   if (text-args == auto) {
     text-args = (font: fonts.宋体, size: 字号.小四)
@@ -62,10 +63,11 @@
     heading-font = (fonts.黑体,)
   }
   // 1.2 处理 heading- 开头的其他参数
-  let heading-text-args-lists = args.named().pairs().filter(pair => pair.at(0).starts-with("heading-")).map(pair => (
-    pair.at(0).slice("heading-".len()),
-    pair.at(1),
-  ))
+  let heading-text-args-lists = args
+    .named()
+    .pairs()
+    .filter(pair => pair.at(0).starts-with("heading-"))
+    .map(pair => (pair.at(0).slice("heading-".len()), pair.at(1)))
 
   // 2.  辅助函数
   let array-at(arr, pos) = {
@@ -79,9 +81,8 @@
     leading: leading,
     justify: justify,
     first-line-indent: first-line-indent,
+    spacing: spacing,
   )
-  //show par: set block(spacing: spacing)
-  set par(spacing: spacing)
   show raw: set text(font: fonts.等宽)
   // 3.2 脚注样式
   show footnote.entry: set text(font: fonts.宋体, size: 字号.五号)
@@ -91,7 +92,9 @@
   // 3.4 设置 equation 的编号和假段落首行缩进
   show math.equation.where(block: true): show-equation
   // 3.5 表格表头置顶 + 不用冒号用空格分割 + 样式
-  show figure.where(kind: table): set figure.caption(position: top)
+  show figure.where(
+    kind: table,
+  ): set figure.caption(position: top)
   set figure.caption(separator: separator)
   show figure.caption: caption-style
   show figure.caption: set text(font: fonts.宋体, size: 字号.五号)
@@ -110,22 +113,18 @@
       weight: array-at(heading-weight, it.level),
       ..unpairs(heading-text-args-lists.map(pair => (pair.at(0), array-at(pair.at(1), it.level)))),
     )
-    set block(
-      above: array-at(heading-above, it.level),
-      below: array-at(heading-below, it.level),
-    )
+    set block(above: array-at(heading-above, it.level), below: array-at(heading-below, it.level))
     it
-    fake-par
   }
   // 4.3 标题居中与自动换页
   show heading: it => {
-    if (array-at(heading-pagebreak, it.level)) {
+    if array-at(heading-pagebreak, it.level) {
       // 如果打上了 no-auto-pagebreak 标签，则不自动换页
-      if ("label" not in it.fields() or str(it.label) != "no-auto-pagebreak") {
+      if "label" not in it.fields() or str(it.label) != "no-auto-pagebreak" {
         pagebreak(weak: true)
       }
     }
-    if (array-at(heading-align, it.level) != auto) {
+    if array-at(heading-align, it.level) != auto {
       set align(array-at(heading-align, it.level))
       it
     } else {
@@ -137,46 +136,32 @@
   set page(..(
     if display-header {
       (
-        header: {
+        header: context {
           // 重置 footnote 计数器
           if reset-footnote {
             counter(footnote).update(0)
           }
-          locate(loc => {
-            // 定位函数，基于 loc（页面的位置信息）处理页眉内容
-            let cur-heading = current-heading(level: 1, loc)
-            // 如果以下条件满足，则渲染页眉：
-            // 1. 没有跳过渲染一级标题（skip-on-first-level 为 false）。
-            // 2. 当前页面没有一级标题（cur-heading == none）。
-            if not skip-on-first-level or cur-heading == none {
-              if header-render == auto {
-                // 如果页眉渲染方式是自动模式
-                // 一级标题和二级标题
-                let first-level-heading = if not twoside or calc.rem(loc.page(), 2) == 0 {
-                  // 如果不是双面打印，或者当前页是偶数页，获取一级标题
-                  heading-display(active-heading(level: 1, loc))
-                } else { "" } // 否则一级标题内容为空字符串
-                let second-level-heading = if not twoside or calc.rem(loc.page(), 2) == 2 {
-                  // 如果不是双面打印，或者当前页是奇数页，获取二级标题
-                  heading-display(active-heading(level: 2, prev: false, loc))
-                } else { "" } // 否则二级标题内容为空字符串
-                set text(font: fonts.楷体, size: 字号.五号)
-                stack(// 一级标题 + 水平间隔 + 二级标题
-                  first-level-heading + h(1fr) + second-level-heading,
-                  v(0.25em),
-                  // 如果一级标题或二级标题不为空，添加一条水平线
-                  if first-level-heading != "" or second-level-heading != "" {
-                    line(length: 100%, stroke: stroke-width + black)
-                  },
-                )
-              } else {
-                // 如果 header-render 不是 auto
-                // 调用传入的 header-render 参数（自定义渲染逻辑）
-                header-render(loc)
-              }
-              v(header-vspace)
+          let loc = here()
+          // 5.1 获取当前页面的一级标题
+          let cur-heading = current-heading(level: 1)
+          // 5.2 如果当前页面没有一级标题，则渲染页眉
+          if not skip-on-first-level or cur-heading == none {
+            if header-render == auto {
+              // 一级标题和二级标题
+              let first-level-heading = if not twoside or calc.rem(loc.page(), 2) == 0 {
+                heading-display(active-heading(level: 1, loc))
+              } else { "" }
+              let second-level-heading = if not twoside or calc.rem(loc.page(), 2) == 2 {
+                heading-display(active-heading(level: 2, prev: false, loc))
+              } else { "" }
+              set text(font: fonts.楷体, size: 字号.五号)
+              stack(first-level-heading + h(1fr) + second-level-heading, v(0.25em), if first-level-heading != ""
+                or second-level-heading != "" { line(length: 100%, stroke: stroke-width + black) })
+            } else {
+              header-render(loc)
             }
-          })
+            v(header-vspace)
+          }
         },
       )
     } else {
@@ -190,6 +175,14 @@
       )
     }
   ))
+  context {
+    if calc.even(here().page()) {
+      set page(numbering: "I", header: none)
+      // counter(page).update(1)
+      pagebreak() + " "
+    }
+  }
+  counter(page).update(1)
 
   it
 }

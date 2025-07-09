@@ -3,7 +3,9 @@
 ![Project Status](https://img.shields.io/badge/Status-In%20Progress-yellow)
 
 > 🚧 **Project Status: In Progress** 🚧
->
+
+![Alt](https://repobeats.axiom.co/api/embed/bcb1c161953f87781138dcbbcd30bf4ba8df2268.svg "Repobeats analytics image")
+
 #### 纸张要求与页面设置
 
 - ✅ 页面尺寸及边距调整。

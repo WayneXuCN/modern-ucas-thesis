@@ -1,4 +1,4 @@
-#import "../lib.typ": documentclass, indent
+#import "../lib.typ": documentclass
 
 // 你首先应该安装 fonts下的所有字体，
 // 如果是 Web App 上编辑，你应该手动上传这些字体文件，否则不能正常使用「楷体」和「仿宋」，导致显示错误。
@@ -9,7 +9,6 @@
   doc,
   preface,
   mainmatter,
-  mainmatter-end,
   appendix,
   // 页面函数
   fonts-display-page,
@@ -47,7 +46,6 @@
     category: "管理学博士",
     category-en: "Management Science",
     supervisor: ("李四", "教授"),
-
     // supervisor-ii: ("王五", "副教授"),
     // supervisor-ii-en: "Professor My Supervisor",
     submit-date: datetime.today(),
@@ -194,43 +192,40 @@ App）是一种简单有效的方式。这种方式无需配置本地环境，�
 
 引用@tbl:timing，引用@tbl:timing-tlt，以及@fig:nju-logo。引用图表时，表格和图片分别需要加上 `tbl:`和`fig:` 前缀才能正常显示编号。
 
-#align(
-  center,
-  (
-    stack(dir: ltr)[
-      #figure(
-        table(
-          align: center + horizon,
-          columns: 4,
-          [t], [1], [2], [3],
-          [y], [0.3s], [0.4s], [0.8s],
-        ),
-        caption: [常规表],
-      ) <timing>
-    ][
-      #h(50pt)
-    ][
-      #figure(
-        table(
-          columns: 4,
-          stroke: none,
-          table.hline(),
-          [t],
-          [1],
-          [2],
-          [3],
-          table.hline(stroke: .5pt),
-          [y],
-          [0.3s],
-          [0.4s],
-          [0.8s],
-          table.hline(),
-        ),
-        caption: [三线表],
-      ) <timing-tlt>
-    ]
-  ),
-)
+#align(center, (
+  stack(dir: ltr)[
+    #figure(
+      table(
+        align: center + horizon,
+        columns: 4,
+        [t], [1], [2], [3],
+        [y], [0.3s], [0.4s], [0.8s],
+      ),
+      caption: [常规表],
+    ) <timing>
+  ][
+    #h(50pt)
+  ][
+    #figure(
+      table(
+        columns: 4,
+        stroke: none,
+        table.hline(),
+        [t],
+        [1],
+        [2],
+        [3],
+        table.hline(stroke: .5pt),
+        [y],
+        [0.3s],
+        [0.4s],
+        [0.8s],
+        table.hline(),
+      ),
+      caption: [三线表],
+    ) <timing-tlt>
+  ]
+))
 
 #figure(image("images/ucas-emblem.svg", width: 20%), caption: [图片测试]) <nju-logo>
 
@@ -472,9 +467,25 @@ mm）打印、印刷或复印，按顺序装订成册。自中文摘要起双面
 === 书脊
 学位论文的书脊用黑体，英文和阿拉伯数字用Times New Roman体，字号一般为小四号，可根据论文厚度适当调整。上方写论文题目，中间写作者姓名，下方写“中国科学院大学”，距上下边界均为3cm左右。
 
+
+// 手动分页
+#if twoside {
+  pagebreak() + " "
+}
+
 // 中英双语参考文献
 // 默认使用 gb-7714-2015-numeric 样式
 #bilingual-bibliography(full: true)
+
+// 致谢
+#acknowledgement[
+  感谢 typst-ucas-thesis，感谢 ucasthesis LaTeX 模板。
+]
+
+// 手动分页
+#if twoside {
+  pagebreak() + " "
+}
 
 // 附录
 #show: appendix
@@ -519,7 +530,7 @@ mm）打印、印刷或复印，按顺序装订成册。自中文摘要起双面
   [翻译硕士], [Master of Translation and Interpreting],
   [工程硕士（调整前）\*], [Master of Engineering],
   [电子信息硕士\*], [Master of Electronic and Information\ Engineering],
-  [机械硕士\*],[Master of Mechanical Engineering],
+  [机械硕士\*], [Master of Mechanical Engineering],
   [材料与化工硕士\*], [Master of Materials and Chemical Engineering],
   [资源与环境硕士\*], [Master of Resources and Environmental\ Engineering],
   [能源动力硕士\*], [Master of Energy and Power Engineering],
@@ -530,15 +541,7 @@ mm）打印、印刷或复印，按顺序装订成册。自中文摘要起双面
   [工商管理硕士], [Master of Business Administration],
   [公共管理硕士], [Master of Public Administration],
   [工程管理硕士], [Master of Engineering Management],
-
 )
-
-
-// 致谢
-
-#acknowledgement[
-  感谢 typst-ucas-thesis，感谢 ucasthesis LaTeX 模板。
-]
 
 // 手动分页
 #if twoside {
@@ -572,13 +575,3 @@ mm）打印、印刷或复印，按顺序装订成册。自中文摘要起双面
   \
 
 ]
-
-// 手动分页
-#if twoside {
-  pagebreak() + " "
-}
-
-// 正文结束标志，不可缺少
-// 这里放在附录后面，使得页码能正确计数
-
-#mainmatter-end()

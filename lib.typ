@@ -1,9 +1,7 @@
 // 中国科学院大学学位论文模板 typst-ucas-thesis
 // Author: https://github.com/WayneHsuCN
 // Repo: https://github.com/WayneHsuCN/typst-ucas-thesis
-// 在线模板可能不会更新得很及时，如果需要最新版本，请关注 Repo
 
-#import "@preview/anti-matter:0.0.2": anti-inner-end as mainmatter-end
 #import "layouts/doc.typ": doc
 #import "layouts/preface.typ": preface
 #import "layouts/mainmatter.typ": mainmatter
@@ -26,9 +24,8 @@
 #import "utils/custom-cuti.typ": *
 #import "utils/bilingual-bibliography.typ": bilingual-bibliography
 #import "utils/custom-numbering.typ": custom-numbering
-#import "utils/custom-heading.typ": heading-display, active-heading, current-heading
-#import "utils/indent.typ": indent, fake-par
-#import "@preview/i-figured:0.2.4": show-figure, show-equation
+#import "utils/custom-heading.typ": active-heading, current-heading, heading-display
+#import "@preview/i-figured:0.2.4": show-equation, show-figure
 #import "utils/style.typ": 字体, 字号
 
 // 使用函数闭包特性，通过 `documentclass` 函数类进行全局信息配置，然后暴露出拥有了全局配置的、具体的 `layouts` 和 `templates` 内部函数。
@@ -45,40 +42,41 @@
   // 默认参数
   fonts = 字体 + fonts
   info = (
-    // 一般信息
-    title: ("基于 Typst 的", "中国科学院大学学位论文"),
-    title-en: "UCAS Thesis Template for Typst",
-    grade: "20XX",
-    student-id: "1234567890",
-    author: "张三",
-    author-en: "Zhang San",
-    department: "某研究所",
-    department-en: "XX Institute",
-    major: "xx 专业",
-    major-en: "xx major",
-    category: "学科门类或专业学位类别",
-    category-en: "XX category",
-    supervisor: ("李四", "教授"),
-    supervisor-en: "Professor Li Si",
-    supervisor-ii: (),
-    supervisor-ii-en: "",
-    submit-date: datetime.today(),
-    // 以下为研究生项
-    defend-date: datetime.today(),
-    confer-date: datetime.today(),
-    bottom-date: datetime.today(),
-    chairman: "某某某 教授",
-    reviewer: ("某某某 教授", "某某某 教授"),
-    clc: "O643.12",
-    udc: "544.4",
-    secret-level: "公开",
-    supervisor-contact: "中国科学院大学 北京市海淀区中关村东路80号",
-    email: "xyz@mails.ucas.ac.cn",
-    school-code: "14430",
-    degree: auto,
-    degree-en: auto,
+      // 一般信息
+      title: ("基于 Typst 的", "中国科学院大学学位论文"),
+      title-en: "UCAS Thesis Template for Typst",
+      grade: "20XX",
+      student-id: "1234567890",
+      author: "张三",
+      author-en: "Zhang San",
+      department: "某研究所",
+      department-en: "XX Institute",
+      major: "xx 专业",
+      major-en: "xx major",
+      category: "学科门类或专业学位类别",
+      category-en: "XX category",
+      supervisor: ("李四", "教授"),
+      supervisor-en: "Professor Li Si",
+      supervisor-ii: (),
+      supervisor-ii-en: "",
+      submit-date: datetime.today(),
+      // 以下为研究生项
+      defend-date: datetime.today(),
+      confer-date: datetime.today(),
+      bottom-date: datetime.today(),
+      chairman: "某某某 教授",
+      reviewer: ("某某某 教授", "某某某 教授"),
+      clc: "O643.12",
+      udc: "544.4",
+      secret-level: "公开",
+      supervisor-contact: "中国科学院大学 北京市海淀区中关村东路80号",
+      email: "xyz@mails.ucas.ac.cn",
+      school-code: "14430",
+      degree: auto,
+      degree-en: auto,
   ) + info
-  (
+
+  return (
     // 将传入参数再导出
     doctype: doctype,
     degree: degree,
@@ -116,12 +114,13 @@
         )
       }
     },
-    mainmatter-end: (..args) => {
-      mainmatter-end(..args)
-    },
     appendix: (..args) => {
-      appendix(..args)
+      appendix(
+        ..args,
+      )
     },
+
+    
     // 字体展示页
     fonts-display-page: (..args) => {
       fonts-display-page(
@@ -130,6 +129,7 @@
         fonts: fonts + args.named().at("fonts", default: (:)),
       )
     },
+
     // 封面页，通过 type 分发到不同函数
     cover: (..args) => {
       if doctype == "master" or doctype == "doctor" {

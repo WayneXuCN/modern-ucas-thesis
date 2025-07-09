@@ -10,9 +10,12 @@
 ) = {
   // 1.  默认参数
   info = (
-    title: ("基于 Typst 的", "中国科学院大学学位论文"),
-    author: "张三",
-  ) + info
+    (
+      title: ("基于 Typst 的", "中国科学院大学学位论文"),
+      author: "张三",
+    )
+      + info
+  )
 
   // 2.  对参数进行处理
   // 2.1 如果是字符串，则使用换行符将标题分隔为列表
@@ -25,8 +28,8 @@
   set page(
     paper: "a4",
     margin: margin,
-    header-ascent: (2.54cm-1.5cm),
-    footer-descent: (2.54cm-1.5cm),
+    header-ascent: (2.54cm - 1.5cm),
+    footer-descent: (2.54cm - 1.5cm),
   )
 
   // 4.  PDF 元信息

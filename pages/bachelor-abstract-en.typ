@@ -1,6 +1,5 @@
 #import "../utils/custom-cuti.typ": fakebold
-#import "../utils/style.typ": 字号, 字体
-#import "../utils/indent.typ": fake-par
+#import "../utils/style.typ": 字体, 字号
 #import "../utils/double-underline.typ": double-underline
 #import "../utils/invisible-heading.typ": invisible-heading
 
@@ -23,12 +22,15 @@
   // 1.  默认参数
   fonts = 字体 + fonts
   info = (
-    title-en: "NJU Thesis Template for Typst",
-    author-en: "Zhang San",
-    department-en: "XX Department",
-    major-en: "XX Major",
-    supervisor-en: "Professor Li Si",
-  ) + info
+    (
+      title-en: "NJU Thesis Template for Typst",
+      author-en: "Zhang San",
+      department-en: "XX Department",
+      major-en: "XX Major",
+      supervisor-en: "Professor Li Si",
+    )
+      + info
+  )
 
   // 2.  对参数进行处理
   // 2.1 如果是字符串，则使用换行符将标题分隔为列表
@@ -64,7 +66,7 @@
 
     #v(2pt)
 
-    THESIS: #info-value("title-en", (("",)+ info.title-en).sum())
+    THESIS: #info-value("title-en", (("",) + info.title-en).sum())
 
     DEPARTMENT: #info-value("department-en", info.department-en)
 
@@ -78,6 +80,6 @@
 
     #v(1em)
 
-    KEYWORDS: #(("",)+ keywords.intersperse("; ")).sum()
+    KEYWORDS: #(("",) + keywords.intersperse("; ")).sum()
   ]
 }

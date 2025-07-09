@@ -57,7 +57,9 @@
   v(title-vspace)
 
   // 目录样式
-  set outline(indent: level => indent.slice(0, calc.min(level + 1, indent.len())).sum())
+  set outline(indent: level => indent
+    .slice(0, calc.min(level + 1, indent.len()))
+    .sum())
   show outline.entry: entry => block(
     above: above.at(entry.level - 1, default: above.last()),
     below: below.at(entry.level - 1, default: below.last()),
@@ -75,7 +77,10 @@
             entry.body()
           },
         )
-        box(width: 1fr, inset: (x: .25em), fill.at(entry.level - 1, default: fill.last()))
+        box(width: 1fr, inset: (x: .25em), fill.at(
+          entry.level - 1,
+          default: fill.last(),
+        ))
         entry.page()
       },
       gap: 0pt,

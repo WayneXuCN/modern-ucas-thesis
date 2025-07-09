@@ -4,8 +4,6 @@
 
 > 🚧 **Project Status: In Progress** 🚧
 
-![Alt](https://repobeats.axiom.co/api/embed/bcb1c161953f87781138dcbbcd30bf4ba8df2268.svg "Repobeats analytics image")
-
 #### 纸张要求与页面设置
 
 - ✅ 页面尺寸及边距调整。
@@ -40,6 +38,15 @@
 - 🕒 作者简历及攻读学位期间发表的学术论文与其他相关学术成果
 - 🕒 文献格式兼容多种样式。
 
+## 快速开始
+
+### 使用模板
+
+1. **获取模板**：从 GitHub 下载或克隆此模板
+2. **编辑论文**：修改 `template/thesis.typ` 文件
+3. **编译生成**：使用 Typst 编译器生成 PDF
+
+
 ## 开发者指南
 
 ### template 目录
@@ -57,6 +64,45 @@
 - `lib.typ`:
   - **职责一**: 作为一个统一的对外接口，暴露出内部的 utils 函数。
   - **职责二**: 使用 **函数闭包** 特性，通过 `documentclass` 函数类进行全局信息配置，然后暴露出拥有了全局配置的、具体的 `layouts` 和 `pages` 内部函数。
+
+### 代码格式化
+
+本项目使用 `typstyle` 提供代码格式化功能，帮助保持代码风格的一致性。
+
+#### 安装 typstyle
+
+```bash
+# 使用 Homebrew 安装（推荐）
+brew install typstyle
+
+# 或使用 Cargo 安装
+cargo install typstyle
+```
+
+#### 使用 Makefile
+
+```bash
+# 格式化所有 .typ 文件
+make format
+
+# 检查代码格式
+make format-check
+
+# 格式化主要文件
+make format-main
+```
+
+#### 使用 Shell 脚本
+
+```bash
+# 格式化所有文件
+./format-typst.sh -a
+
+# 检查所有文件格式
+./format-typst.sh -c -a
+```
+
+📖 **详细使用说明**: [代码格式化工具文档](docs/FORMAT.md)
 
 ## 致谢
 

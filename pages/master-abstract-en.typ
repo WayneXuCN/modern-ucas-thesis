@@ -51,21 +51,30 @@
 
   // 3.  内置辅助函数
   let info-key(body) = {
-    rect(inset: info-inset, stroke: none, text(font: fonts.楷体, size: 字号.四号, body))
+    rect(inset: info-inset, stroke: none, text(
+      font: fonts.楷体,
+      size: 字号.四号,
+      body,
+    ))
   }
 
   let info-value(key, body) = {
     set align(info-value-align)
-    rect(width: 100%, inset: info-inset, stroke: (bottom: stoke-width + black), text(
-      font: fonts.楷体,
-      size: 字号.四号,
-      bottom-edge: "descender",
-      if (anonymous and (key in anonymous-info-keys)) {
-        "█████"
-      } else {
-        body
-      },
-    ))
+    rect(
+      width: 100%,
+      inset: info-inset,
+      stroke: (bottom: stoke-width + black),
+      text(
+        font: fonts.楷体,
+        size: 字号.四号,
+        bottom-edge: "descender",
+        if (anonymous and (key in anonymous-info-keys)) {
+          "█████"
+        } else {
+          body
+        },
+      ),
+    )
   }
 
   // 4.  正式渲染
@@ -81,7 +90,11 @@
 
     #v(24pt)
 
-    #align(center, text(size: 字号.四号, weight: abstract-title-weight, strong[Abstract]))
+    #align(center, text(
+      size: 字号.四号,
+      weight: abstract-title-weight,
+      strong[Abstract],
+    ))
 
     #v(18pt)
 

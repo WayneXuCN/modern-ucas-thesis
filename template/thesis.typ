@@ -75,7 +75,11 @@
 ]
 
 // 英文摘要
-#abstract-en(keywords: ("University of Chinese Academy of Sciences", "Thesis", "Typst Template"))[
+#abstract-en(keywords: (
+  "University of Chinese Academy of Sciences",
+  "Thesis",
+  "Typst Template",
+))[
   Chinese abstracts, English abstracts, table of contents, the main contents, references, appendix, acknowledgments,
   author's resume and academic papers published during the degree study and other relevant academic achievements must
   start with another right page (odd-numbered page).
@@ -504,7 +508,9 @@ mm）打印、印刷或复印，按顺序装订成册。自中文摘要起双面
   columns: (auto, auto, auto),
   align: (center, center, center),
   table.header([学位类别], [中文名称], [英文名称]),
-  table.cell(rowspan: 8, align: horizon, scd), [哲学博士], table.cell(rowspan: 8, align: horizon, dp),
+  table.cell(rowspan: 8, align: horizon, scd),
+  [哲学博士],
+  table.cell(rowspan: 8, align: horizon, dp),
   [经济学博士],
   [历史学博士],
   [理学博士],
@@ -512,7 +518,9 @@ mm）打印、印刷或复印，按顺序装订成册。自中文摘要起双面
   [农学博士],
   [医学博士],
   [管理学博士],
-  table.cell(rowspan: 10, align: horizon, scm), [哲学硕士], [Master of Philosophy],
+  table.cell(rowspan: 10, align: horizon, scm),
+  [哲学硕士],
+  [Master of Philosophy],
   [经济学硕士], [Master of Economics],
   [法学硕士], [Master of Law],
   [文学硕士], [Master of Arts],
@@ -522,7 +530,9 @@ mm）打印、印刷或复印，按顺序装订成册。自中文摘要起双面
   [农学硕士], [Master of Agriculture],
   [医学硕士], [Master of Medicine],
   [管理学硕士], [Master of Management Science],
-  [专业学位\ 博士], [材料与化工博士\*], [Doctor of Materials and Chemical\ Engineering],
+  [专业学位\ 博士],
+  [材料与化工博士\*],
+  [Doctor of Materials and Chemical\ Engineering],
   table.cell(rowspan: 17, align: horizon, pm),
   [金融硕士], [Master of Finance],
   [应用统计硕士], [Master of Applied Statistics],

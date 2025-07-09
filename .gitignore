@@ -11,3 +11,7 @@
 
 # Built Visual Studio Code Extensions
 *.vsix
+
+# macOS
+**/.DS_Store
+**/.AppleDouble

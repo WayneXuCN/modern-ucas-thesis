@@ -1,6 +1,6 @@
 #import "../utils/datetime-display.typ": datetime-display, datetime-en-display
 #import "../utils/justify-text.typ": justify-text
-#import "../utils/style.typ": 字号, 字体
+#import "../utils/style.typ": 字体, 字号
 
 // 硕士研究生封面
 #let master-cover(
@@ -17,7 +17,10 @@
   min-title-lines: 2, // 控制标题行数的最小值。
   min-supervisor-lines: 2, // 控制指导教师区域的最小行数。
   min-reviewer-lines: 5, // 控制评审人区域的最小行数。
-  info-inset: (x: 0pt, bottom: 0.5pt), // 控制信息区域的内边距。x 左右间距，bottom 底部间距
+  info-inset: (
+    x: 0pt,
+    bottom: 0.5pt,
+  ), // 控制信息区域的内边距。x 左右间距，bottom 底部间距
   info-key-width: 70pt, // 控制信息标签（如“论文题目”、“作者姓名”）的宽度。
   info-column-gutter: 18pt, // 控制信息列之间的间距。
   info-row-gutter: 12pt, // 控制信息行之间的间距。
@@ -49,18 +52,21 @@
   // 1.  默认参数
   fonts = 字体 + fonts
   info = (
-    title: "基于 Typst 的中国科学院大学学位论文",
-    title-en: "Typst Thesis Template of UCAS",
-    supervisors: ("李四 教授", "王五 研究员"),
-    supervisors-en: ("Professor Si Li", "Professor Wu Wang"),
-    grade: "20XX",
-    student-id: "1234567890",
-    author: "张三",
-    department: "XX 研究所",
-    major: "某专业",
-    supervisor: ("李四", "教授"),
-    submit-date: datetime.today(),
-  ) + info
+    (
+      title: "基于 Typst 的中国科学院大学学位论文",
+      title-en: "Typst Thesis Template of UCAS",
+      supervisors: ("李四 教授", "王五 研究员"),
+      supervisors-en: ("Professor Si Li", "Professor Wu Wang"),
+      grade: "20XX",
+      student-id: "1234567890",
+      author: "张三",
+      department: "XX 研究所",
+      major: "某专业",
+      supervisor: ("李四", "教授"),
+      submit-date: datetime.today(),
+    )
+      + info
+  )
 
   // 2.  对参数进行处理
   // 2.1 如果是字符串，则使用换行符将标题分隔为列表
@@ -77,11 +83,22 @@
     info.supervisors-en = info.supervisors-en.split("\n")
   }
   // 2.2 根据 min-title-lines 和 min-reviewer-lines 填充标题和评阅人
-  info.title = info.title + range(min-title-lines - info.title.len()).map(it => "　")
-  info.reviewer = info.reviewer + range(min-reviewer-lines - info.reviewer.len()).map(it => "　")
-  info.supervisors = info.supervisors + range(min-supervisor-lines - info.supervisors.len()).map(it => "　")
+  info.title = (
+    info.title + range(min-title-lines - info.title.len()).map(it => "　")
+  )
+  info.reviewer = (
+    info.reviewer
+      + range(min-reviewer-lines - info.reviewer.len()).map(it => "　")
+  )
+  info.supervisors = (
+    info.supervisors
+      + range(min-supervisor-lines - info.supervisors.len()).map(it => "　")
+  )
   // 2.3 处理日期
-  assert(type(info.submit-date) == datetime, message: "submit-date must be datetime.")
+  assert(
+    type(info.submit-date) == datetime,
+    message: "submit-date must be datetime.",
+  )
   if type(info.defend-date) == datetime {
     info.defend-date = datetime-display(info.defend-date)
   }
@@ -127,7 +144,13 @@
     )
   }
 
-  let info-value(key, body, info-inset: info-inset, is-meta: false, no-stroke: false) = {
+  let info-value(
+    key,
+    body,
+    info-inset: info-inset,
+    is-meta: false,
+    no-stroke: false,
+  ) = {
     set align(center)
     rect(
       width: 100%,
@@ -176,7 +199,10 @@
   }
 
   let meta-info-key = info-key.with(info-inset: meta-info-inset, is-meta: true)
-  let meta-info-value = info-value.with(info-inset: meta-info-inset, is-meta: true)
+  let meta-info-value = info-value.with(
+    info-inset: meta-info-inset,
+    is-meta: true,
+  )
   let defence-info-key = info-key.with(info-inset: defence-info-inset)
   let defence-info-value = info-value.with(info-inset: defence-info-inset)
 
@@ -219,7 +245,11 @@
     font: fonts.黑体,
     spacing: 100%,
     weight: "bold",
-    underline(offset: .4em, stroke: .05em, evade: false)[基于 Typst 的中国科学院大学学位论文模板],
+    underline(
+      offset: .4em,
+      stroke: .05em,
+      evade: false,
+    )[基于 Typst 的中国科学院大学学位论文模板],
   )
 
   v(56pt)
@@ -233,7 +263,10 @@
       info-key("作者姓名："),
       info-value("author", info.author),
       info-key("指导教师："),
-      ..info.supervisors.map(s => info-value("supervisors", s)).intersperse(info-key("　")),
+      ..info
+        .supervisors
+        .map(s => info-value("supervisors", s))
+        .intersperse(info-key("　")),
       info-key("学位类别："),
       info-value("category", info.category),
       ..(
@@ -241,7 +274,10 @@
           (
             {
               set text(font: fonts.楷体, size: 字号.四号, weight: "bold")
-              move(dy: 0.3em, scale(x: 55%, box(width: 10em, "专业学位类别（领域）")))
+              move(dy: 0.3em, scale(x: 55%, box(
+                width: 10em,
+                "专业学位类别（领域）",
+              )))
             },
             info-value("major", info.degree + "（" + info.major + "）"),
           )
@@ -258,18 +294,23 @@
         if info.supervisor-ii != () {
           (
             info-key("　"),
-            info-value("supervisor-ii", info.supervisor-ii.intersperse(" ").sum()),
+            info-value(
+              "supervisor-ii",
+              info.supervisor-ii.intersperse(" ").sum(),
+            ),
           )
         } else {
           ()
         }
-      )
+      ),
     ),
   )
 
   v(42pt)
 
-  text(font: fonts.宋体, size: 字号.四号, weight: "bold", datetime-display(info.submit-date))
+  text(font: fonts.宋体, size: 字号.四号, weight: "bold", datetime-display(
+    info.submit-date,
+  ))
 
   // 第二页
   if twoside {
@@ -291,13 +332,18 @@
     font: "Times New Roman",
     size: 字号.小三,
     weight: "bold",
-    underline(offset: .4em, stroke: .05em, evade: false)[#info.title-en.intersperse("\n").sum()],
+    underline(offset: .4em, stroke: .05em, evade: false)[#(
+        info.title-en.intersperse("\n").sum()
+      )],
   )
 
   if info.supervisor-ii-en != "" {
     v(-4pt)
 
-    text(font: fonts.黑体, size: 字号.四号, anonymous-text("supervisor-ii-en", info.supervisor-ii-en))
+    text(font: fonts.黑体, size: 字号.四号, anonymous-text(
+      "supervisor-ii-en",
+      info.supervisor-ii-en,
+    ))
 
     v(-9pt)
   }
@@ -335,13 +381,17 @@
   } else {
     // 多个supervisor
     // 先把所有的supervisors转为匿名处理后的字符串列表
-    let supers = info.supervisors-en.map(s => anonymous-text("supervisors-en", s))
+    let supers = info.supervisors-en.map(s => anonymous-text(
+      "supervisors-en",
+      s,
+    ))
 
     // 利用 intersperse 在各个supervisor之间加入换行和空格（缩进）
     // TODO: 丑陋的实现，但效果还行，有时间再优化
     text(
       weight: "bold",
-      "Supervisors: " + supers.intersperse("\n                               ").sum(),
+      "Supervisors: "
+        + supers.intersperse("\n                               ").sum(),
     )
   }
 

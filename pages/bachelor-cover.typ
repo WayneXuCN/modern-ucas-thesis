@@ -1,5 +1,5 @@
 #import "../utils/datetime-display.typ": datetime-display
-#import "../utils/style.typ": 字号, 字体
+#import "../utils/style.typ": 字体, 字号
 
 // 本科生封面
 #let bachelor-cover(
@@ -17,7 +17,13 @@
   info-value-font: "楷体",
   column-gutter: -3pt,
   row-gutter: 11.5pt,
-  anonymous-info-keys: ("grade", "student-id", "author", "supervisor", "supervisor-ii"),
+  anonymous-info-keys: (
+    "grade",
+    "student-id",
+    "author",
+    "supervisor",
+    "supervisor-ii",
+  ),
   bold-info-keys: ("title",),
   bold-level: "bold",
   datetime-display: datetime-display,
@@ -25,15 +31,18 @@
   // 1.  默认参数
   fonts = 字体 + fonts
   info = (
-    title: ("基于 Typst 的", "中国科学院大学学位论文"),
-    grade: "20XX",
-    student-id: "1234567890",
-    author: "张三",
-    department: "某学院",
-    major: "某专业",
-    supervisor: ("李四", "教授"),
-    submit-date: datetime.today(),
-  ) + info
+    (
+      title: ("基于 Typst 的", "中国科学院大学学位论文"),
+      grade: "20XX",
+      student-id: "1234567890",
+      author: "张三",
+      department: "某学院",
+      major: "某专业",
+      supervisor: ("李四", "教授"),
+      submit-date: datetime.today(),
+    )
+      + info
+  )
 
   // 2.  对参数进行处理
   // 2.1 如果是字符串，则使用换行符将标题分隔为列表
@@ -41,7 +50,9 @@
     info.title = info.title.split("\n")
   }
   // 2.2 根据 min-title-lines 填充标题
-  info.title = info.title + range(min-title-lines - info.title.len()).map((it) => "　")
+  info.title = (
+    info.title + range(min-title-lines - info.title.len()).map(it => "　")
+  )
   // 2.3 处理提交日期
   if type(info.submit-date) == datetime {
     info.submit-date = datetime-display(info.submit-date)
@@ -56,7 +67,7 @@
       text(
         font: fonts.at(info-key-font, default: "楷体"),
         size: 字号.三号,
-        body
+        body,
       ),
     )
   }
@@ -78,15 +89,16 @@
   }
 
   let info-long-value(key, body) = {
-    grid.cell(colspan: 3,
+    grid.cell(
+      colspan: 3,
       info-value(
         key,
         if anonymous and (key in anonymous-info-keys) {
           "██████████"
         } else {
           body
-        }
-      )
+        },
+      ),
     )
   }
 
@@ -97,13 +109,13 @@
         "█████"
       } else {
         body
-      }
+      },
     )
   }
-  
+
 
   // 4.  正式渲染
-  
+
   pagebreak(weak: true, to: if twoside { "odd" })
 
   // 居中对齐
@@ -123,8 +135,13 @@
   }
 
   // 将中文之间的空格间隙从 0.25 em 调整到 0.5 em
-  text(size: 字号.一号, font: fonts.宋体, spacing: 200%, weight: "bold")[本 科 毕 业 论 文]
-  
+  text(
+    size: 字号.一号,
+    font: fonts.宋体,
+    spacing: 200%,
+    weight: "bold",
+  )[本 科 毕 业 论 文]
+
   if anonymous {
     v(155pt)
   } else {
@@ -140,7 +157,10 @@
     info-key("专　　业"),
     info-long-value("major", info.major),
     info-key("题　　目"),
-    ..info.title.map((s) => info-long-value("title", s)).intersperse(info-key("　")),
+    ..info
+      .title
+      .map(s => info-long-value("title", s))
+      .intersperse(info-key("　")),
     info-key("年　　级"),
     info-short-value("grade", info.grade),
     info-key("学　　号"),
@@ -151,12 +171,16 @@
     info-short-value("supervisor", info.supervisor.at(0)),
     info-key("职　　称"),
     info-short-value("supervisor", info.supervisor.at(1)),
-    ..(if info.supervisor-ii != () {(
-      info-key("第二导师"),
-      info-short-value("supervisor-ii", info.supervisor-ii.at(0)),
-      info-key("职　　称"),
-      info-short-value("supervisor-ii", info.supervisor-ii.at(1)),
-    )} else {()}),
+    ..(
+      if info.supervisor-ii != () {
+        (
+          info-key("第二导师"),
+          info-short-value("supervisor-ii", info.supervisor-ii.at(0)),
+          info-key("职　　称"),
+          info-short-value("supervisor-ii", info.supervisor-ii.at(1)),
+        )
+      } else { () }
+    ),
     info-key("提交日期"),
     info-long-value("submit-date", info.submit-date),
   ))

@@ -11,7 +11,10 @@
   allow-comma-in-name: false,
   // 如果使用的 CSL 中，英文姓名中会出现逗号，请设置为 true
 ) = {
-  assert(bibliography != none, message: "请传入带有 source 的 bibliography 函数。")
+  assert(
+    bibliography != none,
+    message: "请传入带有 source 的 bibliography 函数。",
+  )
 
   // Please fill in the remaining mapping table here
   mapping = (
@@ -44,7 +47,10 @@
     // 后续的操作是对 string 进行的。
     let ittext = to-string(it)
     // 判断是否为中文文献：去除特定词组后，仍有至少两个连续汉字。
-    let pureittext = ittext.replace(regex("[等卷册和版本章期页篇译间者(不详)]"), "")
+    let pureittext = ittext.replace(
+      regex("[等卷册和版本章期页篇译间者(不详)]"),
+      "",
+    )
     if pureittext.find(regex("\p{sc=Hani}{2,}")) != none {
       // 新增功能：将带有“标准”两个字的一行中的 [Z] 替换为 [S]
       ittext = ittext.replace(regex("标准.*\[Z\]"), itt => {
@@ -113,7 +119,27 @@
         "et al."
         // 如果原文就是 `等.`，则仅需简单替换，不需要额外处理
         // 如果原文 `等` 后没有跟随英文标点，则需要补充一个空格
-        if not itt.text.last() in (".", ",", ";", ":", "[", "]", "/", "\\", "<", ">", "?", "(", ")", " ", "\"", "'") {
+        if not (
+          itt.text.last()
+            in (
+              ".",
+              ",",
+              ";",
+              ":",
+              "[",
+              "]",
+              "/",
+              "\\",
+              "<",
+              ">",
+              "?",
+              "(",
+              ")",
+              " ",
+              "\"",
+              "'",
+            )
+        ) {
           " "
         }
         // 原文有英文句号时不需要重复句号，否则需要将匹配到的最后一个字符吐回来

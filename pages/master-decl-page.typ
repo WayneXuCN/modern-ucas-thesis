@@ -32,7 +32,11 @@
 
   block[
     #set text(font: fonts.宋体, size: 字号.小四)
-    #set par(justify: true, first-line-indent: (amount: 2em, all: true), leading: 1.2em)
+    #set par(
+      justify: true,
+      first-line-indent: (amount: 2em, all: true),
+      leading: 1.2em,
+    )
 
     本人郑重声明：所呈交的学位论文是本人在导师的指导下独立进行研究工作所取得的成果。
     承诺除文中已经注明引用的内容外，本论文不包含任何其他个人或集体享有著作权的研究成果，
@@ -63,7 +67,11 @@
 
   block[
     #set text(font: fonts.宋体, size: 字号.小四)
-    #set par(justify: true, first-line-indent: (amount: 2em, all: true), leading: 1.2em)
+    #set par(
+      justify: true,
+      first-line-indent: (amount: 2em, all: true),
+      leading: 1.2em,
+    )
 
     本人完全了解并同意遵守中国科学院大学有关收集、保存和使用学位论文
     的规定，即中国科学院大学有权按照学术研究公开原则和保护知识产权的原则，

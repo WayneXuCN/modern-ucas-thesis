@@ -1,7 +1,9 @@
 #import "@preview/i-figured:0.2.4"
 #import "../utils/style.typ": 字体, 字号
 #import "../utils/custom-numbering.typ": custom-numbering
-#import "../utils/custom-heading.typ": active-heading, current-heading, heading-display
+#import "../utils/custom-heading.typ": (
+  active-heading, current-heading, heading-display,
+)
 #import "../utils/unpairs.typ": unpairs
 
 #let mainmatter(
@@ -111,9 +113,15 @@
       font: array-at(heading-font, it.level),
       size: array-at(heading-size, it.level),
       weight: array-at(heading-weight, it.level),
-      ..unpairs(heading-text-args-lists.map(pair => (pair.at(0), array-at(pair.at(1), it.level)))),
+      ..unpairs(heading-text-args-lists.map(pair => (
+        pair.at(0),
+        array-at(pair.at(1), it.level),
+      ))),
     )
-    set block(above: array-at(heading-above, it.level), below: array-at(heading-below, it.level))
+    set block(above: array-at(heading-above, it.level), below: array-at(
+      heading-below,
+      it.level,
+    ))
     it
   }
   // 4.3 标题居中与自动换页
@@ -148,15 +156,24 @@
           if not skip-on-first-level or cur-heading == none {
             if header-render == auto {
               // 一级标题和二级标题
-              let first-level-heading = if not twoside or calc.rem(loc.page(), 2) == 0 {
+              let first-level-heading = if (
+                not twoside or calc.rem(loc.page(), 2) == 0
+              ) {
                 heading-display(active-heading(level: 1, loc))
               } else { "" }
-              let second-level-heading = if not twoside or calc.rem(loc.page(), 2) == 2 {
+              let second-level-heading = if (
+                not twoside or calc.rem(loc.page(), 2) == 2
+              ) {
                 heading-display(active-heading(level: 2, prev: false, loc))
               } else { "" }
               set text(font: fonts.楷体, size: 字号.五号)
-              stack(first-level-heading + h(1fr) + second-level-heading, v(0.25em), if first-level-heading != ""
-                or second-level-heading != "" { line(length: 100%, stroke: stroke-width + black) })
+              stack(
+                first-level-heading + h(1fr) + second-level-heading,
+                v(0.25em),
+                if first-level-heading != "" or second-level-heading != "" {
+                  line(length: 100%, stroke: stroke-width + black)
+                },
+              )
             } else {
               header-render(loc)
             }

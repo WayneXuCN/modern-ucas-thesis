@@ -1,4 +1,4 @@
-#import "../utils/style.typ": 字号, 字体
+#import "../utils/style.typ": 字体, 字号
 
 // 本科生声明页
 #let bachelor-decl-page(
@@ -15,8 +15,11 @@
   // 1.  默认参数
   fonts = 字体 + fonts
   info = (
-    title: ("基于 Typst 的", "中国科学院大学学位论文"),
-  ) + info
+    (
+      title: ("基于 Typst 的", "中国科学院大学学位论文"),
+    )
+      + info
+  )
 
   // 2.  对参数进行处理
   // 2.1 如果是字符串，则使用换行符将标题分隔为列表
@@ -60,12 +63,12 @@
     [],
     align(left)[
       #set text(font: fonts.黑体, size: 字号.小三)
-      
+
       作者签名：
 
       学号：
 
       日期：
-    ]
+    ],
   )
 }

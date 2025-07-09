@@ -27,17 +27,27 @@
   let info-inset = 0pt
 
   let info-key(body) = {
-    rect(width: 100%, inset: info-inset, stroke: none, text(font: 字体.黑体, size: 字号.三号, weight: "bold", body))
+    rect(width: 100%, inset: info-inset, stroke: none, text(
+      font: 字体.黑体,
+      size: 字号.三号,
+      weight: "bold",
+      body,
+    ))
   }
 
   let info-value(body) = {
     set align(center)
-    rect(width: 100%, inset: info-inset, stroke: (bottom: table-stroke + black), text(
-      font: 字体.黑体,
-      size: 字号.三号,
-      bottom-edge: "descender",
-      body,
-    ))
+    rect(
+      width: 100%,
+      inset: info-inset,
+      stroke: (bottom: table-stroke + black),
+      text(
+        font: 字体.黑体,
+        size: 字号.三号,
+        bottom-edge: "descender",
+        body,
+      ),
+    )
   }
 
   grid(

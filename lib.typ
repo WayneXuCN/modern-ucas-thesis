@@ -24,7 +24,9 @@
 #import "utils/custom-cuti.typ": *
 #import "utils/bilingual-bibliography.typ": bilingual-bibliography
 #import "utils/custom-numbering.typ": custom-numbering
-#import "utils/custom-heading.typ": active-heading, current-heading, heading-display
+#import "utils/custom-heading.typ": (
+  active-heading, current-heading, heading-display,
+)
 #import "@preview/i-figured:0.2.4": show-equation, show-figure
 #import "utils/style.typ": 字体, 字号
 
@@ -42,6 +44,7 @@
   // 默认参数
   fonts = 字体 + fonts
   info = (
+    (
       // 一般信息
       title: ("基于 Typst 的", "中国科学院大学学位论文"),
       title-en: "UCAS Thesis Template for Typst",
@@ -74,7 +77,9 @@
       school-code: "14430",
       degree: auto,
       degree-en: auto,
-  ) + info
+    )
+      + info
+  )
 
   return (
     // 将传入参数再导出
@@ -119,8 +124,6 @@
         ..args,
       )
     },
-
-    
     // 字体展示页
     fonts-display-page: (..args) => {
       fonts-display-page(
@@ -129,7 +132,6 @@
         fonts: fonts + args.named().at("fonts", default: (:)),
       )
     },
-
     // 封面页，通过 type 分发到不同函数
     cover: (..args) => {
       if doctype == "master" or doctype == "doctor" {

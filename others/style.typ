@@ -42,9 +42,21 @@
     "STHeiti",
   ),
   // 楷体
-  楷体: ((name: "Times New Roman", covers: "latin-in-cjk"), "KaiTi", "Kaiti SC", "STKaiti", "FZKai-Z03S"),
+  楷体: (
+    (name: "Times New Roman", covers: "latin-in-cjk"),
+    "KaiTi",
+    "Kaiti SC",
+    "STKaiti",
+    "FZKai-Z03S",
+  ),
   // 仿宋
-  仿宋: ((name: "Times New Roman", covers: "latin-in-cjk"), "FangSong", "FangSong SC", "STFangSong", "FZFangSong-Z02S"),
+  仿宋: (
+    (name: "Times New Roman", covers: "latin-in-cjk"),
+    "FangSong",
+    "FangSong SC",
+    "STFangSong",
+    "FZFangSong-Z02S",
+  ),
   // 等宽字体，用于代码块环境，一般可以等同于英文中的 Monospaced Font
   // 这一行分别是「Courier New（Windows 等宽英文字体）」、「思源等宽黑体（简体）」、「思源等宽黑体」、「黑体（Windows）」、「黑体（MacOS）」
   等宽: (

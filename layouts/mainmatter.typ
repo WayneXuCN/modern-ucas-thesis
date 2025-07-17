@@ -16,7 +16,7 @@
   leading: 1.5 * 15.6pt - 0.7em,
   spacing: 1.5 * 15.6pt - 0.7em,
   justify: true,
-  first-line-indent: 2em,
+  first-line-indent: (amount: 2em, all: true),
   numbering: custom-numbering.with(first-level: "第一章 ", depth: 4, "1.1 "),
   // 正文字体与字号参数
   text-args: auto,

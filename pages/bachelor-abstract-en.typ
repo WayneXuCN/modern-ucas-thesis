@@ -1,5 +1,4 @@
-#import "../utils/custom-cuti.typ": fakebold
-#import "../utils/style.typ": 字体, 字号
+#import "../utils/style.typ": get-fonts, 字号
 #import "../utils/double-underline.typ": double-underline
 #import "../utils/invisible-heading.typ": invisible-heading
 
@@ -8,6 +7,7 @@
   // documentclass 传入的参数
   anonymous: false,
   twoside: false,
+  fontset: "mac",
   fonts: (:),
   info: (:),
   // 其他参数
@@ -20,7 +20,7 @@
   body,
 ) = {
   // 1.  默认参数
-  fonts = 字体 + fonts
+  fonts = get-fonts(fontset) + fonts
   info = (
     (
       title-en: "UCAS Thesis Template for Typst",
@@ -61,7 +61,7 @@
 
       #v(1em)
 
-      #double-underline[#fakebold[中国科学院大学本科生毕业论文（设计、作品）英文摘要]]
+      #double-underline[*中国科学院大学本科生毕业论文（设计、作品）英文摘要*]
     ]
 
     #v(2pt)

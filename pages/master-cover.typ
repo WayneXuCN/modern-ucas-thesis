@@ -1,6 +1,6 @@
 #import "../utils/datetime-display.typ": datetime-display, datetime-en-display
 #import "../utils/justify-text.typ": justify-text
-#import "../utils/style.typ": 字体, 字号
+#import "../utils/style.typ": get-fonts, 字号
 
 // 硕士研究生封面
 #let master-cover(
@@ -10,6 +10,7 @@
   nl-cover: false,
   anonymous: false,
   twoside: false,
+  fontset: "mac",
   fonts: (:),
   info: (:),
   // 其他参数
@@ -50,7 +51,7 @@
   datetime-en-display: datetime-en-display, // 用于格式化英文日期显示。
 ) = {
   // 1.  默认参数
-  fonts = 字体 + fonts
+  fonts = get-fonts(fontset) + fonts
   info = (
     (
       title: "基于 Typst 的中国科学院大学学位论文",

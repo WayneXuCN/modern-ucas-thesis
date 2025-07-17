@@ -114,13 +114,9 @@
     stroke: none,
     table.header()[*Symbol*][*Description*][*Unit*],
     [$R$], [the gas constant], [$m^2 dot s^(-2) dot K^(-1)$],
-    [$C_v$],
-    [specific heat capacity at constant volume],
-    [$m^2 dot s^(-2) dot K^(-1)$],
+    [$C_v$], [specific heat capacity at constant volume], [$m^2 dot s^(-2) dot K^(-1)$],
 
-    [$C_p$],
-    [specific heat capacity at constant pressure],
-    [$m^2 dot s^(-2) dot K^(-1)$],
+    [$C_p$], [specific heat capacity at constant pressure], [$m^2 dot s^(-2) dot K^(-1)$],
 
     [$E$], [specific total energy], [$m^2 dot s^(-2)$],
     [$e$], [specific internal energy], [$m^2 dot s^(-2)$],
@@ -271,10 +267,7 @@
   ]
 ))
 
-#figure(
-  image("images/ucas-emblem.svg", width: 20%),
-  caption: [图片测试],
-) <ucas-logo>
+#figure(image("images/ucas-emblem.svg", width: 20%), caption: [图片测试]) <ucas-logo>
 
 === 数学公式
 
@@ -524,17 +517,12 @@ mm）打印、印刷或复印，按顺序装订成册。自中文摘要起双面
 // 默认使用 gb-7714-2015-numeric 样式
 #bilingual-bibliography(full: true)
 
-// 致谢
-#acknowledgement[
-  感谢 typst-ucas-thesis。
-]
-
 // 附录
 #show: appendix
 
 = 附录
 
-#align(center)[== 学位类别中英文对照表]
+#align(center)[#strong[学位类别中英文对照表]]
 
 #let scd = [学术型\ 博士]
 #let scm = [学术型\ 硕士]
@@ -591,10 +579,16 @@ mm）打印、印刷或复印，按顺序装订成册。自中文摘要起双面
   [工程管理硕士], [Master of Engineering Management],
 )
 
+// 致谢
+#acknowledgement[
+  感谢 typst-ucas-thesis。
+]
+
 
 #backmatter[
-
-  #strong[作者简历:]\
+  // 作者简历部分
+  #strong[作者简历：]
+  
 
   ××××年××月——××××年××月，在××大学××院（系）获得学士学位。
 
@@ -602,20 +596,30 @@ mm）打印、印刷或复印，按顺序装订成册。自中文摘要起双面
 
   ××××年××月——××××年××月，在中国科学院××研究所（或中国科学院大学××院系）攻读博士/硕士学位。
 
-  #strong[工作经历：]\
+  工作经历：
 
-  \
 
-  #strong[已发表（或正式接受）的学术论文：]\
+  // 学术论文部分
+  #v(1em)
+  #strong[已发表（或正式接受）的学术论文：（书写格式同参考文献）]
 
-  已发表工作 1 \
+  (1) 已发表工作 1 
 
-  #strong[申请或已获得的专利：]\
+  (2) 已发表工作 2
 
-  （无专利时此项不必列出）
+  // 专利部分
+  #v(1em)
+  #strong[申请或已获得的专利：（无专利时此项不必列出）]
+  
+  (1) 专利名称
+  
+  (2) 专利名称
 
+  // 研究项目及获奖情况
+  #v(1em)
   #strong[参加的研究项目及获奖情况：]
 
-  \
-
+  (1) 项目名称
+  
+  (2) 获奖名称
 ]

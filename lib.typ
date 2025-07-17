@@ -24,9 +24,7 @@
 #import "utils/custom-cuti.typ": *
 #import "utils/bilingual-bibliography.typ": bilingual-bibliography
 #import "utils/custom-numbering.typ": custom-numbering
-#import "utils/custom-heading.typ": (
-  active-heading, current-heading, heading-display,
-)
+#import "utils/custom-heading.typ": active-heading, current-heading, heading-display
 #import "@preview/i-figured:0.2.4": show-equation, show-figure
 #import "utils/style.typ": 字体, 字号
 
@@ -37,7 +35,7 @@
   nl-cover: false, // TODO: 是否使用国家图书馆封面，默认关闭
   twoside: false, // 双面模式，会加入空白页，便于打印
   anonymous: false, // 盲审模式
-  bibliography: none, // 原来的参考文献函数
+  bibliography: none, // 参考文献函数
   fonts: (:), // 字体，应传入「宋体」、「黑体」、「楷体」、「仿宋」、「等宽」
   info: (:),
 ) = {
@@ -45,7 +43,6 @@
   fonts = 字体 + fonts
   info = (
     (
-      // 一般信息
       title: ("基于 Typst 的", "中国科学院大学学位论文"),
       title-en: "UCAS Thesis Template for Typst",
       grade: "20XX",
@@ -80,7 +77,7 @@
     )
       + info
   )
-
+  
   return (
     // 将传入参数再导出
     doctype: doctype,

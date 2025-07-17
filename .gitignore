@@ -15,3 +15,6 @@
 # macOS
 **/.DS_Store
 **/.AppleDouble
+
+# Ignore thesis.pdf in template folder
+template/thesis.pdf

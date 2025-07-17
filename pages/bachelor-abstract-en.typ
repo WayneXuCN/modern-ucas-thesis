@@ -23,7 +23,7 @@
   fonts = 字体 + fonts
   info = (
     (
-      title-en: "NJU Thesis Template for Typst",
+      title-en: "UCAS Thesis Template for Typst",
       author-en: "Zhang San",
       department-en: "XX Department",
       major-en: "XX Major",

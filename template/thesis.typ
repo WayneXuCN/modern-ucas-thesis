@@ -164,19 +164,15 @@
 
 == 系统要求<sec:system>
 
-#link("https://typst.app/")[Typst]是一个现代化的排版工具，可以在主流的编辑器和编译环境中使用，如VSCode、Neovim和Emacs。Typst在设计上具备即时编译的特性，用户可以实时查看文档的渲染效果，非常适合学术和专业文档的编写。不同于LaTeX，Typst的语法更简单，学习曲线更平缓，因此推荐初学者和非专业排版用户使用Typst。
+#link("https://typst.app/")[Typst]是一款现代化的排版系统，支持在主流编辑器和编译环境（如 VS Code、Neovim、Emacs 等）中高效工作。Typst 采用即时编译技术，用户能够实时预览文档渲染结果，极大提升了学术及专业文档的编写体验。与传统的 LaTeX 系统相比，Typst 拥有更为简洁明了的语法设计，降低了学习曲线，非常适合初学者及非专业排版用户使用。
 
-推荐的编辑器和编译器环境见@tab:Typst_intro。请从各软件的官方网站下载安装，避免使用不明来源的程序。编辑器和Typst
-CLI分别安装成功后，即完成了Typst的系统配置，无需其他手动设置。对于大部分初学者而言，使用在线编辑器（如Typst Web
-App）是一种简单有效的方式。这种方式无需配置本地环境，只需将文件上传至网站即可进行编辑，同时支持多人、多地协作编辑文档。
-
-本模板兼容多种操作系统，包括Windows、Linux、MacOS和Typst Web App。Typst不依赖传统的LaTeX编译引擎，而是基于wasm技术实现的即时渲染，具备跨平台和跨编辑器的高兼容性，适合大多数用户的需求。
+当前，Typst 官方已提供跨平台支持，兼容 Windows、Linux、macOS 以及网页版（Typst Web App）。用户可通过各软件的官方网站获取最新版本，建议避免使用非官方渠道下载。编辑器与 Typst CLI 安装完成后，即可实现本地编译，无需额外配置。对于初学者，推荐直接使用 Typst Web App 进行在线编辑与预览，无需本地环境配置，且支持多人协作。值得注意的是，Typst 不依赖于传统 LaTeX 编译引擎，而基于 WebAssembly 技术实现高效渲染，具备良好的跨平台兼容性，能够满足绝大多数用户的学术写作需求。
 
 #figure(
   table(
     columns: 6,
     align: center,
-    [名称], [编辑器], [编译器环境], [预览方案], [是否支持即时编译], [语言服务],
+    table.header()[名称][编辑器][编译器环境][预览方案][是否支持即时编译][语言服务],
     [WebAPP], [Code Mirror], [wasm], [渲染图片], [是], [优秀],
     [VSCode], [VSCode], [native], [webview], [是], [良好],
     [neovim], [neovim], [native], [webview], [是], [良好],
@@ -189,21 +185,6 @@ App）是一种简单有效的方式。这种方式无需配置本地环境，�
 = Typst使用说明<chap:guide>
 
 为了方便使用并更好地展示Typst的现代排版特性，本模板框架和文件结构经过精细设计，尽可能模块化各个功能和板块，以方便用户进行高效编辑。
-
-== 初步设置
-
-=== 在线编辑
-1. 使用Typst Web App：打开并注册 Typst Web App。
-2. 将项目文件上传至Typst Web App。
-3. 编辑和实时预览，无需手动配置环境。
-4. 编译完成后即可生成PDF文档。
-
-=== VS Code 本地编辑（推荐）
-
-1. 在VS Code中安装 #link("https://marketplace.visualstudio.com/items?itemName=myriad-dreamin.tinymist")[Tinymist Typst] 插件。可以实现语法高亮、错误检查和预览等功能。
-2. 按下 `Ctrl + Shift + P` 打开命令界面，输入 `Typst: Show available Typst templates (gallery) for picking up a template` 打开 Tinymist
-  提供的 Template Gallery，然后从里面找到 `typst-ucas-thesis`，点击 #emoji.heart 按钮进行收藏，以及点击 `+` 号，就可以创建对应的论文模板了。
-3. 最后用 VS Code 打开生成的目录，打开 `thesis.typ` 文件，并按下 `Ctrl + K V` 进行实时编辑和预览。
 
 == 文档目录简介
 === template目录

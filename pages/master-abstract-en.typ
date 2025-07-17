@@ -34,7 +34,7 @@
   fonts = 字体 + fonts
   info = (
     (
-      title-en: "NJU Thesis Template for Typst",
+      title-en: "UCAS Thesis Template for Typst",
       author-en: "Zhang San",
       department-en: "XX Department",
       major-en: "XX Major",
@@ -60,21 +60,16 @@
 
   let info-value(key, body) = {
     set align(info-value-align)
-    rect(
-      width: 100%,
-      inset: info-inset,
-      stroke: (bottom: stoke-width + black),
-      text(
-        font: fonts.楷体,
-        size: 字号.四号,
-        bottom-edge: "descender",
-        if (anonymous and (key in anonymous-info-keys)) {
-          "█████"
-        } else {
-          body
-        },
-      ),
-    )
+    rect(width: 100%, inset: info-inset, stroke: (bottom: stoke-width + black), text(
+      font: fonts.楷体,
+      size: 字号.四号,
+      bottom-edge: "descender",
+      if (anonymous and (key in anonymous-info-keys)) {
+        "█████"
+      } else {
+        body
+      },
+    ))
   }
 
   // 4.  正式渲染
@@ -90,15 +85,12 @@
 
     #v(24pt)
 
-    #align(center, text(
-      size: 字号.四号,
-      weight: abstract-title-weight,
-      strong[Abstract],
-    ))
+    #align(center, text(size: 字号.四号, weight: abstract-title-weight, strong[Abstract]))
 
     #v(18pt)
 
     #[#set text(font: fonts.宋体, size: 字号.小四)
+      #show smartquote: set text(font: "Times New Roman")
       #set par(first-line-indent: (amount: 2em, all: true))
 
       #body
@@ -106,8 +98,9 @@
 
     #v(15pt)
 
-    #[#set text(font: fonts.楷体, size: 字号.小四)
-      KEYWORDS: #(("",) + keywords.intersperse("; ")).sum()
+    #[#set text(font: fonts.宋体, size: 字号.小四)
+      #show smartquote: set text(font: "Times New Roman")
+      #strong[Key Words]: #(("",) + keywords.intersperse("; ")).sum()
     ]
   ]
 }

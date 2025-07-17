@@ -1,5 +1,4 @@
-#import "../utils/custom-cuti.typ": fakebold
-#import "../utils/style.typ": 字体, 字号
+#import "../utils/style.typ": get-fonts, 字号
 #import "../utils/double-underline.typ": double-underline
 #import "../utils/invisible-heading.typ": invisible-heading
 
@@ -9,6 +8,7 @@
   // documentclass 传入的参数
   anonymous: false,
   twoside: false,
+  fontset: "mac",
   fonts: (:),
   info: (:),
   // 其他参数
@@ -21,7 +21,7 @@
   body,
 ) = {
   // 1.  默认参数
-  fonts = 字体 + fonts
+  fonts = get-fonts(fontset) + fonts
   info = (
     (
       title: ("基于 Typst 的", "中国科学院大学学位论文"),
@@ -62,18 +62,18 @@
 
       #v(1em)
 
-      #double-underline[#fakebold[中国科学院大学本科生毕业论文（设计、作品）中文摘要]]
+      #double-underline[*中国科学院大学本科生毕业论文（设计、作品）中文摘要*]
     ]
 
-    #fakebold[题目：]#info-value("title", (("",) + info.title).sum())
+    *题目：*#info-value("title", (("",) + info.title).sum())
 
-    #fakebold[院系：]#info-value("department", info.department)
+    *院系：*#info-value("department", info.department)
 
-    #fakebold[专业：]#info-value("major", info.major)
+    *专业：*#info-value("major", info.major)
 
-    #fakebold[本科生姓名：]#info-value("author", info.author)
+    *本科生姓名：*#info-value("author", info.author)
 
-    #fakebold[指导教师（姓名、职称）：]#info-value(
+    *指导教师（姓名、职称）：*#info-value(
       "supervisor",
       info.supervisor.at(0) + info.supervisor.at(1),
     ) #(
@@ -83,7 +83,7 @@
         )]
     )
 
-    #fakebold[摘要：]
+    *摘要：*
 
     #[
       #set par(first-line-indent: 2em)
@@ -95,6 +95,6 @@
 
     #v(1em)
 
-    #fakebold[关键词：]#(("",) + keywords.intersperse("；")).sum()
+    *关键词：*#(("",) + keywords.intersperse("；")).sum()
   ]
 }

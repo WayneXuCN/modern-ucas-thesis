@@ -1,5 +1,5 @@
 #import "@preview/pinit:0.2.2": pin, pinit-place
-#import "../utils/style.typ": 字体, 字号
+#import "../utils/style.typ": get-fonts, 字号
 #import "../utils/double-underline.typ": double-underline
 #import "../utils/custom-tablex.typ": colspanx, gridx
 #import "../utils/invisible-heading.typ": invisible-heading
@@ -11,6 +11,7 @@
   degree: "academic",
   anonymous: false,
   twoside: false,
+  fontset: "mac",
   fonts: (:),
   info: (:),
   // 其他参数
@@ -31,7 +32,7 @@
   body,
 ) = {
   // 1.  默认参数
-  fonts = 字体 + fonts
+  fonts = get-fonts(fontset) + fonts
   info = (
     (
       title-en: "UCAS Thesis Template for Typst",
@@ -60,16 +61,21 @@
 
   let info-value(key, body) = {
     set align(info-value-align)
-    rect(width: 100%, inset: info-inset, stroke: (bottom: stoke-width + black), text(
-      font: fonts.楷体,
-      size: 字号.四号,
-      bottom-edge: "descender",
-      if (anonymous and (key in anonymous-info-keys)) {
-        "█████"
-      } else {
-        body
-      },
-    ))
+    rect(
+      width: 100%,
+      inset: info-inset,
+      stroke: (bottom: stoke-width + black),
+      text(
+        font: fonts.楷体,
+        size: 字号.四号,
+        bottom-edge: "descender",
+        if (anonymous and (key in anonymous-info-keys)) {
+          "█████"
+        } else {
+          body
+        },
+      ),
+    )
   }
 
   // 4.  正式渲染
@@ -85,7 +91,11 @@
 
     #v(24pt)
 
-    #align(center, text(size: 字号.四号, weight: abstract-title-weight, strong[Abstract]))
+    #align(center, text(
+      size: 字号.四号,
+      weight: abstract-title-weight,
+      strong[Abstract],
+    ))
 
     #v(18pt)
 

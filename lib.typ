@@ -19,7 +19,7 @@
 #import "pages/list-of-figures.typ": list-of-figures
 #import "pages/list-of-tables.typ": list-of-tables
 #import "pages/notation.typ": notation
-#import "pages/acknowledgement.typ": acknowledgement 
+#import "pages/acknowledgement.typ": acknowledgement
 #import "pages/backmatter.typ": backmatter
 #import "utils/bilingual-bibliography.typ": bilingual-bibliography
 #import "utils/custom-numbering.typ": custom-numbering

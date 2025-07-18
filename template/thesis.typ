@@ -114,9 +114,13 @@
     stroke: none,
     table.header()[*Symbol*][*Description*][*Unit*],
     [$R$], [the gas constant], [$m^2 dot s^(-2) dot K^(-1)$],
-    [$C_v$], [specific heat capacity at constant volume], [$m^2 dot s^(-2) dot K^(-1)$],
+    [$C_v$],
+    [specific heat capacity at constant volume],
+    [$m^2 dot s^(-2) dot K^(-1)$],
 
-    [$C_p$], [specific heat capacity at constant pressure], [$m^2 dot s^(-2) dot K^(-1)$],
+    [$C_p$],
+    [specific heat capacity at constant pressure],
+    [$m^2 dot s^(-2) dot K^(-1)$],
 
     [$E$], [specific total energy], [$m^2 dot s^(-2)$],
     [$e$], [specific internal energy], [$m^2 dot s^(-2)$],
@@ -267,7 +271,10 @@
   ]
 ))
 
-#figure(image("images/ucas-emblem.svg", width: 20%), caption: [图片测试]) <ucas-logo>
+#figure(
+  image("images/ucas-emblem.svg", width: 20%),
+  caption: [图片测试],
+) <ucas-logo>
 
 === 数学公式
 
@@ -588,7 +595,7 @@ mm）打印、印刷或复印，按顺序装订成册。自中文摘要起双面
 #backmatter[
   // 作者简历部分
   #strong[作者简历：]
-  
+
 
   ××××年××月——××××年××月，在××大学××院（系）获得学士学位。
 
@@ -603,16 +610,16 @@ mm）打印、印刷或复印，按顺序装订成册。自中文摘要起双面
   #v(1em)
   #strong[已发表（或正式接受）的学术论文：（书写格式同参考文献）]
 
-  (1) 已发表工作 1 
+  (1) 已发表工作 1
 
   (2) 已发表工作 2
 
   // 专利部分
   #v(1em)
   #strong[申请或已获得的专利：（无专利时此项不必列出）]
-  
+
   (1) 专利名称
-  
+
   (2) 专利名称
 
   // 研究项目及获奖情况
@@ -620,6 +627,6 @@ mm）打印、印刷或复印，按顺序装订成册。自中文摘要起双面
   #strong[参加的研究项目及获奖情况：]
 
   (1) 项目名称
-  
+
   (2) 获奖名称
 ]

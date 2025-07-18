@@ -10,7 +10,7 @@
 ) = {
   if (not anonymous) {
     pagebreak(weak: true, to: if twoside { "odd" })
-    [ 
+    [
       #heading(
         level: 1,
         numbering: none,
@@ -18,7 +18,7 @@
         title,
       ) <no-auto-pagebreak>
       #set par(first-line-indent: 0em)
-      
+
       #body
     ]
   }

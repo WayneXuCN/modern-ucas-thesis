@@ -98,9 +98,6 @@
 // 表目录
 #list-of-tables()
 
-// 正文
-#show: mainmatter
-
 // 符号列表
 #notation(
   title: "符号列表",
@@ -109,9 +106,11 @@
   字符
 
   #table(
-    columns: (auto, auto, auto),
+    columns: (1fr, auto, auto),
     align: (left, left, left),
     stroke: none,
+    // 表格内容与左边距的距离为 0，使其与正文完全左对齐
+    inset: (left: 0pt),
     table.header()[*Symbol*][*Description*][*Unit*],
     [$R$], [the gas constant], [$m^2 dot s^(-2) dot K^(-1)$],
     [$C_v$],
@@ -136,9 +135,10 @@
   算子
 
   #table(
-    columns: (auto, auto),
+    columns: (1fr, auto),
     align: (left, left),
     stroke: none,
+    inset: (left: 0pt),
     table.header()[*Symbol*][*Description*],
     [$Delta$], [difference],
     [$nabla$], [gradient operator],
@@ -148,9 +148,10 @@
   缩写
 
   #table(
-    columns: (auto, auto),
+    columns: (1fr, auto),
     align: (left, left),
     stroke: none,
+    inset: (left: 0pt),
     table.header()[*Symbol*][*Description*],
     [CFD], [Computational Fluid Dynamics],
     [CFL], [Courant-Friedrichs-Lewy],
@@ -160,6 +161,9 @@
     [ZND], [Zeldovich-von Neumann-Döring],
   )
 ]
+
+// 正文
+#show: mainmatter
 
 = 绪论<chap:introduction>
 

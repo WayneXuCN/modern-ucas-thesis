@@ -1,4 +1,4 @@
-# 中国科学院大学学位论文 typst-ucas-thesis
+# 中国科学院大学学位论文 modern-ucas-thesis
 
 <p align="center" style="color: #888; font-size: 0.95em; margin-top: -0.5em; margin-bottom: 0.5em;">
   <a href="docs/README_EN.md">English</a> | <b>中文</b>
@@ -7,9 +7,9 @@
 <div align="center">
 
 ![Project Status](https://img.shields.io/badge/status-beta-blue?style=flat-square)
-![Last Commit](https://img.shields.io/github/last-commit/WayneXuCN/typst-ucas-thesis?style=flat-square)
-![Issues](https://img.shields.io/github/issues/WayneXuCN/typst-ucas-thesis?style=flat-square)
-![License](https://img.shields.io/github/license/WayneXuCN/typst-ucas-thesis?style=flat-square)
+![Last Commit](https://img.shields.io/github/last-commit/WayneXuCN/modern-ucas-thesis?style=flat-square)
+![Issues](https://img.shields.io/github/issues/WayneXuCN/modern-ucas-thesis?style=flat-square)
+![License](https://img.shields.io/github/license/WayneXuCN/modern-ucas-thesis?style=flat-square)
 
 </div>
 
@@ -17,7 +17,7 @@
 <summary>🚧 <strong>当前状态：Beta 版，持续开发中，欢迎反馈与贡献！</strong> 🚧</summary>
 
 > - 该模板可初步用于撰写论文，但有大量细节仍在持续完善。
-> - 欢迎通过 <a href="https://github.com/WayneXuCN/typst-ucas-thesis/issues">Issue</a> 或 <a href="https://github.com/WayneXuCN/typst-ucas-thesis/pulls">PR</a> 提出建议、反馈问题或贡献代码。
+> - 欢迎通过 <a href="https://github.com/WayneXuCN/modern-ucas-thesis/issues">Issue</a> 或 <a href="https://github.com/WayneXuCN/modern-ucas-thesis/pulls">PR</a> 提出建议、反馈问题或贡献代码。
 >
 </details>
 
@@ -42,11 +42,11 @@
 
 ```bash
 # 方式一：直接克隆仓库
-git clone https://github.com/WayneXuCN/typst-ucas-thesis.git
-cd typst-ucas-thesis
+git clone https://github.com/WayneXuCN/modern-ucas-thesis.git
+cd modern-ucas-thesis
 
 # 方式二：下载最新版本
-wget https://github.com/WayneXuCN/typst-ucas-thesis/archive/refs/heads/main.zip
+wget https://github.com/WayneXuCN/modern-ucas-thesis/archive/refs/heads/main.zip
 unzip main.zip
 ```
 
@@ -79,7 +79,7 @@ typst watch template/thesis.typ
 ## 📁 项目结构
 
 ```text
-typst-ucas-thesis/
+modern-ucas-thesis/
 ├── template/           # 模板文件目录
 │   ├── thesis.typ     # 主论文文件
 │   ├── ref.bib        # 参考文献
@@ -305,6 +305,6 @@ make format-check     # 检查格式
 
 如果您在使用过程中遇到问题或有改进建议，欢迎：
 
-- 🐛 [报告问题](https://github.com/WayneXuCN/typst-ucas-thesis/issues)
-- 💡 [提出建议](https://github.com/WayneXuCN/typst-ucas-thesis/discussions)
-- 🔧 [提交代码](https://github.com/WayneXuCN/typst-ucas-thesis/pulls)
+- 🐛 [报告问题](https://github.com/WayneXuCN/modern-ucas-thesis/issues)
+- 💡 [提出建议](https://github.com/WayneXuCN/modern-ucas-thesis/discussions)
+- 🔧 [提交代码](https://github.com/WayneXuCN/modern-ucas-thesis/pulls)

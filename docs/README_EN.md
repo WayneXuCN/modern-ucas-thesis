@@ -1,4 +1,4 @@
-# typst-ucas-thesis: UCAS Thesis Template (Typst)
+# modern-ucas-thesis: UCAS Thesis Template (Typst)
 
 <p align="center" style="color: #888; font-size: 0.95em; margin-top: -0.5em; margin-bottom: 0.5em;">
   <b>English</b> | <a href="../README.md">中文</a>
@@ -7,9 +7,9 @@
 <div align="center">
 
 ![Project Status](https://img.shields.io/badge/status-beta-blue?style=flat-square)
-![Last Commit](https://img.shields.io/github/last-commit/WayneXuCN/typst-ucas-thesis?style=flat-square)
-![Issues](https://img.shields.io/github/issues/WayneXuCN/typst-ucas-thesis?style=flat-square)
-![License](https://img.shields.io/github/license/WayneXuCN/typst-ucas-thesis?style=flat-square)
+![Last Commit](https://img.shields.io/github/last-commit/WayneXuCN/modern-ucas-thesis?style=flat-square)
+![Issues](https://img.shields.io/github/issues/WayneXuCN/modern-ucas-thesis?style=flat-square)
+![License](https://img.shields.io/github/license/WayneXuCN/modern-ucas-thesis?style=flat-square)
 
 </div>
 
@@ -17,7 +17,7 @@
 <summary>🚧 <strong>Status: Beta, under active development. Feedback and contributions are welcome!</strong> 🚧</summary>
 
 > - This template can be used for thesis writing, but many details are still being improved.
-> - Please submit suggestions, report issues, or contribute via <a href="https://github.com/WayneXuCN/typst-ucas-thesis/issues">Issues</a> or <a href="https://github.com/WayneXuCN/typst-ucas-thesis/pulls">PRs</a>.
+> - Please submit suggestions, report issues, or contribute via <a href="https://github.com/WayneXuCN/modern-ucas-thesis/issues">Issues</a> or <a href="https://github.com/WayneXuCN/modern-ucas-thesis/pulls">PRs</a>.
 </details>
 
 <blockquote style="border-left: 4px solid #f39c12; background: #fffbe6; padding: 0.8em 1em;">
@@ -41,11 +41,11 @@ It is <b>not</b> an official template. Please verify the latest requirements fro
 
 ```bash
 # Method 1: Clone the repo
-git clone https://github.com/WayneXuCN/typst-ucas-thesis.git
-cd typst-ucas-thesis
+git clone https://github.com/WayneXuCN/modern-ucas-thesis.git
+cd modern-ucas-thesis
 
 # Method 2: Download latest version
-wget https://github.com/WayneXuCN/typst-ucas-thesis/archive/refs/heads/main.zip
+wget https://github.com/WayneXuCN/modern-ucas-thesis/archive/refs/heads/main.zip
 unzip main.zip
 ```
 
@@ -78,7 +78,7 @@ typst watch template/thesis.typ
 ## 📁 Project Structure
 
 ```text
-typst-ucas-thesis/
+modern-ucas-thesis/
 ├── template/           # Template files
 │   ├── thesis.typ     # Main thesis file
 │   ├── ref.bib        # Bibliography
@@ -304,9 +304,9 @@ MIT License. See [../LICENSE](../LICENSE).
 
 If you have questions or suggestions:
 
-- 🐛 [Report issues](https://github.com/WayneXuCN/typst-ucas-thesis/issues)
-- 💡 [Start a discussion](https://github.com/WayneXuCN/typst-ucas-thesis/discussions)
-- 🔧 [Contribute code](https://github.com/WayneXuCN/typst-ucas-thesis/pulls)
+- 🐛 [Report issues](https://github.com/WayneXuCN/modern-ucas-thesis/issues)
+- 💡 [Start a discussion](https://github.com/WayneXuCN/modern-ucas-thesis/discussions)
+- 🔧 [Contribute code](https://github.com/WayneXuCN/modern-ucas-thesis/pulls)
 
 ---
 

@@ -21,3 +21,6 @@ template/thesis.pdf
 
 # env
 .env
+
+# test files
+test/

@@ -1,6 +1,6 @@
-// 中国科学院大学学位论文模板 typst-ucas-thesis
+// 中国科学院大学学位论文模板 modern-ucas-thesis
 // Author: https://github.com/WayneHsuCN
-// Repo: https://github.com/WayneHsuCN/typst-ucas-thesis
+// Repo: https://github.com/WayneHsuCN/modern-ucas-thesis
 
 #import "layouts/doc.typ": doc
 #import "layouts/preface.typ": preface

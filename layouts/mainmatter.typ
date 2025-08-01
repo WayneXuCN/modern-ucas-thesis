@@ -51,6 +51,8 @@
   set page(numbering: "1")
 
   // 1.  默认参数
+
+  // 1.  默认参数
   info = (
     (
       title: ("基于 Typst 的", "中国科学院大学学位论文"),
@@ -150,36 +152,106 @@
           if reset-footnote {
             counter(footnote).update(0)
           }
-          let loc = here()
-          // 5.1 获取当前页面的一级标题
-          let cur-heading = current-heading(level: 1)
-          // 5.2 如果当前页面没有一级标题，则渲染页眉
-          if not skip-on-first-level or cur-heading == none {
-            if header-render == auto {
-              // 一级标题和二级标题
-              let first-level-heading = if (
-                not twoside or calc.rem(loc.page(), 2) == 0
-              ) {
-                heading-display(active-heading(level: 1, loc))
-              } else { "" }
-              let second-level-heading = if (
-                not twoside or calc.rem(loc.page(), 2) == 2
-              ) {
-                heading-display(active-heading(level: 2, prev: false, loc))
-              } else { "" }
-              set text(font: fonts.楷体, size: 字号.五号)
-              stack(
-                first-level-heading + h(1fr) + second-level-heading,
-                v(0.25em),
-                if first-level-heading != "" or second-level-heading != "" {
-                  line(length: 100%, stroke: stroke-width + black)
-                },
-              )
+
+          // 获取当前页码
+          let current-page = counter(page).get().first()
+
+          // 判断是否为奇数页
+          let is-odd-page = calc.odd(current-page)
+
+          let header-content = ""
+
+          if is-odd-page {
+            // 奇数页：显示各章标题
+            // 查询正文部分的一级标题（正文从mainmatter函数开始的页面开始）
+            // 这里我们假设mainmatter从当前页开始，因为在mainmatter函数内部
+            let chapter-headings = query(heading.where(level: 1))
+              .filter(chapter => chapter.location().page() >= current-page)
+            
+            // 找到当前页面或之前页面的最新章节标题
+            let prev-chapters = chapter-headings
+              .filter(chapter => chapter.location().page() <= current-page)
+            
+            // 简化处理，直接取页面最大的章节
+            let current-or-prev-chapter = if prev-chapters.len() > 0 {
+              // 获取页面最大的章节
+              let max-page = 0
+              let max-chapter = none
+              
+              for chapter in prev-chapters {
+                let chapter-page = chapter.location().page()
+                if chapter-page >= max-page {
+                  max-page = chapter-page
+                  max-chapter = chapter
+                }
+              }
+              max-chapter
             } else {
-              header-render(loc)
+              // 如果没找到之前的章节，查找之后的第一个章节
+              let next-chapters = chapter-headings
+                .filter(chapter => chapter.location().page() > current-page)
+              
+              // 获取页面最小的章节
+              if next-chapters.len() > 0 {
+                let min-page = 9999
+                let min-chapter = none
+                
+                for chapter in next-chapters {
+                  let chapter-page = chapter.location().page()
+                  if chapter-page <= min-page {
+                    min-page = chapter-page
+                    min-chapter = chapter
+                  }
+                }
+                min-chapter
+              } else {
+                none
+              }
             }
-            v(header-vspace)
+            
+            if current-or-prev-chapter != none {
+              // 使用找到的章节标题
+              if current-or-prev-chapter.has("numbering") and current-or-prev-chapter.numbering != none {
+                let counter-values = counter(heading).at(current-or-prev-chapter.location())
+                header-content = custom-numbering(
+                  first-level: "第一章 ",
+                  depth: 4,
+                  "1.1 ",
+                  ..counter-values
+                ) + " "
+              }
+              header-content += current-or-prev-chapter.body
+            } else {
+              header-content = "没有找到章标题"
+            }
+          } else {
+            // 偶数页：显示论文标题
+            // 确保正确获取论文标题
+            let thesis-title = info.title
+            if thesis-title != none {
+              header-content = if type(thesis-title) == array {
+                thesis-title.join("")
+              } else {
+                str(thesis-title)
+              }
+            }
+            // 如果没有标题，使用默认
+            if header-content == "" {
+              header-content = "没有找到标题"
+            }
           }
+
+          // 渲染页眉
+          set text(font: fonts.楷体, size: 字号.五号)
+
+          // 显示页眉内容
+          stack(
+            align(center, header-content),
+            v(0.25em),
+            line(length: 100%, stroke: stroke-width + black),
+          )
+          
+          v(header-vspace)
         },
       )
     } else {

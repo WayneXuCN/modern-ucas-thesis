@@ -88,12 +88,10 @@
     info.title + range(min-title-lines - info.title.len()).map(it => "　")
   )
   info.reviewer = (
-    info.reviewer
-      + range(min-reviewer-lines - info.reviewer.len()).map(it => "　")
+    info.reviewer + range(min-reviewer-lines - info.reviewer.len()).map(it => "　")
   )
   info.supervisors = (
-    info.supervisors
-      + range(min-supervisor-lines - info.supervisors.len()).map(it => "　")
+    info.supervisors + range(min-supervisor-lines - info.supervisors.len()).map(it => "　")
   )
   // 2.3 处理日期
   assert(
@@ -250,7 +248,7 @@
       offset: .4em,
       stroke: .05em,
       evade: false,
-    )[基于 Typst 的中国科学院大学学位论文模板],
+    )[#(info.title.sum())],
   )
 
   v(56pt)
@@ -264,10 +262,7 @@
       info-key("作者姓名："),
       info-value("author", info.author),
       info-key("指导教师："),
-      ..info
-        .supervisors
-        .map(s => info-value("supervisors", s))
-        .intersperse(info-key("　")),
+      ..info.supervisors.map(s => info-value("supervisors", s)).intersperse(info-key("　")),
       info-key("学位类别："),
       info-value("category", info.category),
       ..(
@@ -391,8 +386,7 @@
     // TODO: 丑陋的实现，但效果还行，有时间再优化
     text(
       weight: "bold",
-      "Supervisors: "
-        + supers.intersperse("\n                               ").sum(),
+      "Supervisors: " + supers.intersperse("\n                               ").sum(),
     )
   }
 

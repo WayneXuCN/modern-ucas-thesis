@@ -163,56 +163,37 @@
 
           if is-odd-page {
             // 奇数页：显示各章标题
-            // 查询正文部分的一级标题（正文从mainmatter函数开始的页面开始）
-            // 这里我们假设mainmatter从当前页开始，因为在mainmatter函数内部
-            let chapter-headings = query(heading.where(level: 1))
-              .filter(chapter => chapter.location().page() >= current-page)
+            // 查询所有一级标题
+            let all-chapters = query(heading.where(level: 1))
             
-            // 找到当前页面或之前页面的最新章节标题
-            let prev-chapters = chapter-headings
-              .filter(chapter => chapter.location().page() <= current-page)
+            // 只考虑当前位置之后的章节（正文部分）
+            let main-chapters = all-chapters
+              .filter(h => h.location().page() >= here().page())
             
-            // 简化处理，直接取页面最大的章节
-            let current-or-prev-chapter = if prev-chapters.len() > 0 {
-              // 获取页面最大的章节
-              let max-page = 0
-              let max-chapter = none
-              
-              for chapter in prev-chapters {
-                let chapter-page = chapter.location().page()
-                if chapter-page >= max-page {
-                  max-page = chapter-page
-                  max-chapter = chapter
-                }
-              }
-              max-chapter
+            // 获取当前页或之前页的章节
+            let prev-chapters = main-chapters
+              .filter(h => h.location().page() <= current-page)
+            
+            // 获取当前页之后的章节
+            let next-chapters = main-chapters
+              .filter(h => h.location().page() > current-page)
+            
+            // 确定要显示的章节
+            let display-chapter = if prev-chapters.len() > 0 {
+              // 有之前的章节，取最后一个（最新的）
+              prev-chapters.last()
+            } else if next-chapters.len() > 0 {
+              // 没有之前的章节，取第一个之后的章节
+              next-chapters.first()
             } else {
-              // 如果没找到之前的章节，查找之后的第一个章节
-              let next-chapters = chapter-headings
-                .filter(chapter => chapter.location().page() > current-page)
-              
-              // 获取页面最小的章节
-              if next-chapters.len() > 0 {
-                let min-page = 9999
-                let min-chapter = none
-                
-                for chapter in next-chapters {
-                  let chapter-page = chapter.location().page()
-                  if chapter-page <= min-page {
-                    min-page = chapter-page
-                    min-chapter = chapter
-                  }
-                }
-                min-chapter
-              } else {
-                none
-              }
+              // 都没有找到合适的章节
+              none
             }
             
-            if current-or-prev-chapter != none {
-              // 使用找到的章节标题
-              if current-or-prev-chapter.has("numbering") and current-or-prev-chapter.numbering != none {
-                let counter-values = counter(heading).at(current-or-prev-chapter.location())
+            if display-chapter != none {
+              // 构造章节标题显示内容
+              if display-chapter.has("numbering") and display-chapter.numbering != none {
+                let counter-values = counter(heading).at(display-chapter.location())
                 header-content = custom-numbering(
                   first-level: "第一章 ",
                   depth: 4,
@@ -220,13 +201,12 @@
                   ..counter-values
                 ) + " "
               }
-              header-content += current-or-prev-chapter.body
+              header-content += display-chapter.body
             } else {
               header-content = "没有找到章标题"
             }
           } else {
             // 偶数页：显示论文标题
-            // 确保正确获取论文标题
             let thesis-title = info.title
             if thesis-title != none {
               header-content = if type(thesis-title) == array {
@@ -235,7 +215,6 @@
                 str(thesis-title)
               }
             }
-            // 如果没有标题，使用默认
             if header-content == "" {
               header-content = "没有找到标题"
             }

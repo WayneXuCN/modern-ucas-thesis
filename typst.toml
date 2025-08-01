@@ -1,11 +1,14 @@
 [package]
-name = "typst-ucas-thesis"
-version = "0.0.2"
+name = "modern-ucas-thesis"
+version = "0.1.0"
 entrypoint = "lib.typ"
 authors = ["Wenjie Xu <@WayneXuCN>"]
+# Note: MIT license applies to the template code only.
+# UCAS logos in assets/vi/ are copyrighted by UCAS and not covered by this license.
+# See LOGO_COPYRIGHT.md for details.
 license = "MIT"
-description = "Thesis/Dissertation Typst template of Chinese Academy of Sciences"
-repository = "https://github.com/WayneXuCN/typst-ucas-thesis"
+description = "Master's or doctoral thesis at the University of Chinese Academy of Sciences."
+repository = "https://github.com/WayneXuCN/modern-ucas-thesis"
 keywords = [
     "University of Chinese Academy of Sciences",
     "UCAS",
@@ -15,7 +18,7 @@ keywords = [
     "template",
 ]
 categories = ["thesis"]
-exclude = ["imgs", "docs"]
+exclude = ["imgs"]
 
 [template]
 path = "template"

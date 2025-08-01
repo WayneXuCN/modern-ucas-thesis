@@ -1,5 +1,5 @@
-#import "../lib.typ": documentclass
-
+#import "@preview/modern-ucas-thesis:0.1.0": documentclass
+// #import "../lib.typ": documentclass
 // 你首先应该安装 fonts下的所有字体，或在编译的时候指定字体路径：
 // typst watch template/thesis.typ --font-path ./fonts
 // 如果是 Web App 上编辑，你应该手动上传所有字体文件，否则部分字体不能正常使用，导致显示错误。
@@ -62,7 +62,7 @@
 #show: doc
 
 // 字体展示测试页
-#fonts-display-page()
+// #fonts-display-page()
 
 // 封面页
 #cover()
@@ -113,13 +113,9 @@
     inset: (left: 0pt),
     table.header()[*Symbol*][*Description*][*Unit*],
     [$R$], [the gas constant], [$m^2 dot s^(-2) dot K^(-1)$],
-    [$C_v$],
-    [specific heat capacity at constant volume],
-    [$m^2 dot s^(-2) dot K^(-1)$],
+    [$C_v$], [specific heat capacity at constant volume], [$m^2 dot s^(-2) dot K^(-1)$],
 
-    [$C_p$],
-    [specific heat capacity at constant pressure],
-    [$m^2 dot s^(-2) dot K^(-1)$],
+    [$C_p$], [specific heat capacity at constant pressure], [$m^2 dot s^(-2) dot K^(-1)$],
 
     [$E$], [specific total energy], [$m^2 dot s^(-2)$],
     [$e$], [specific internal energy], [$m^2 dot s^(-2)$],
@@ -592,7 +588,7 @@ mm）打印、印刷或复印，按顺序装订成册。自中文摘要起双面
 
 // 致谢
 #acknowledgement[
-  感谢 typst-ucas-thesis。
+  感谢 modern-ucas-thesis。
 ]
 
 

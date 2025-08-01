@@ -1,17 +1,20 @@
 #import "@preview/cuti:0.3.0": show-cn-fakebold
+#import "../utils/style.typ": get-fonts, 字号
 
 // 文稿设置，可以进行一些像页面边距这类的全局设置
 #let doc(
   // documentclass 传入参数
   info: (:),
+  fontset: "mac",
+  fonts: (:),
   // 其他参数
   fallback: false, // 字体缺失时使用 fallback，不显示豆腐块
   lang: "zh",
   margin: (top: 2.54cm, bottom: 2.54cm, left: 3.17cm, right: 3.17cm),
-  fontset: "mac", // 使用的字体组，从documentclass传入
   it,
 ) = {
   // 1.  默认参数
+  fonts = get-fonts(fontset) + fonts
   info = (
     (
       title: ("基于 Typst 的", "中国科学院大学学位论文"),

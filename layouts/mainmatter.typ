@@ -185,6 +185,7 @@
                     + " "
                 )
               }
+              // TODO: 附录页的页眉异常
               header-content += current-heading.body
             } else {
               header-content = "没有找到章标题"

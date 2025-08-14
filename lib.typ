@@ -16,16 +16,13 @@
 #import "pages/bachelor-abstract-en.typ": bachelor-abstract-en
 #import "pages/master-abstract-en.typ": master-abstract-en
 #import "pages/outline-page.typ": outline-page
-#import "pages/list-of-figures.typ": list-of-figures
-#import "pages/list-of-tables.typ": list-of-tables
+#import "pages/list-of-figures-and-tables.typ": list-of-figures-and-tables
 #import "pages/notation.typ": notation
 #import "pages/acknowledgement.typ": acknowledgement
 #import "pages/backmatter.typ": backmatter
 #import "utils/bilingual-bibliography.typ": bilingual-bibliography
 #import "utils/custom-numbering.typ": custom-numbering
-#import "utils/custom-heading.typ": (
-  active-heading, current-heading, heading-display,
-)
+#import "utils/custom-heading.typ": active-heading, current-heading, heading-display
 #import "@preview/i-figured:0.2.4": show-equation, show-figure
 #import "utils/style.typ": get-fonts, 字体组, 字号
 
@@ -253,18 +250,9 @@
         fonts: fonts + args.named().at("fonts", default: (:)),
       )
     },
-    // 插图目录页
-    list-of-figures: (..args) => {
-      list-of-figures(
-        twoside: twoside,
-        fontset: fontset,
-        ..args,
-        fonts: fonts + args.named().at("fonts", default: (:)),
-      )
-    },
-    // 表格目录页
-    list-of-tables: (..args) => {
-      list-of-tables(
+    // 图表目录页
+    list-of-figures-and-tables: (..args) => {
+      list-of-figures-and-tables(
         twoside: twoside,
         fontset: fontset,
         ..args,

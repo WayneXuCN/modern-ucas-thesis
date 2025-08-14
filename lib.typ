@@ -15,7 +15,7 @@
 #import "pages/master-abstract.typ": master-abstract
 #import "pages/bachelor-abstract-en.typ": bachelor-abstract-en
 #import "pages/master-abstract-en.typ": master-abstract-en
-#import "pages/bachelor-outline-page.typ": bachelor-outline-page
+#import "pages/outline-page.typ": outline-page
 #import "pages/list-of-figures.typ": list-of-figures
 #import "pages/list-of-tables.typ": list-of-tables
 #import "pages/notation.typ": notation
@@ -246,7 +246,7 @@
     },
     // 目录页
     outline-page: (..args) => {
-      bachelor-outline-page(
+      outline-page(
         twoside: twoside,
         fontset: fontset,
         ..args,

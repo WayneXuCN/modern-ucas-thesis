@@ -17,7 +17,7 @@
   info: (:),
   // 其他参数
   keywords: (),
-  outline-title: "中文摘要",
+  outline-title: [摘#h(1em)要],
   outlined: true,
   abstract-title-weight: "regular",
   stoke-width: 0.5pt,

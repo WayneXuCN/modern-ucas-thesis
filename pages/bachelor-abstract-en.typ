@@ -12,7 +12,7 @@
   info: (:),
   // 其他参数
   keywords: (),
-  outline-title: "ABSTRACT",
+  outline-title: "Abstract",
   outlined: false,
   anonymous-info-keys: ("author-en", "supervisor-en", "supervisor-ii-en"),
   leading: 1.28em,

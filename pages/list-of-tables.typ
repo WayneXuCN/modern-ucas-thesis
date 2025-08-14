@@ -11,7 +11,7 @@
   // 其他参数
   title: "表格目录",
   outlined: false,
-  title-vspace: 32pt,
+  title-vspace: 18pt,
   title-text-args: auto,
   // 字体与字号
   font: auto,

@@ -1,4 +1,5 @@
 #import "../utils/style.typ": get-fonts, 字号
+#import "../utils/invisible-heading.typ": invisible-heading
 
 // 符号列表页
 #let notation(
@@ -9,8 +10,11 @@
   // 其他参数
   title: "符号列表",
   outlined: false,
-  title-vspace: 32pt,
+  title-vspace: 18pt,
   title-text-args: auto,
+  // 字体与字号
+  font: auto,
+  size: 字号.小四,
   body,
   ..args,
 ) = {
@@ -20,21 +24,31 @@
     title-text-args = (font: fonts.黑体, size: 字号.四号, weight: "bold")
   }
 
+  // 字体与字号
+  if font == auto {
+    font = fonts.黑体
+  }
+
   // 2. 正式渲染
   pagebreak(weak: true, to: if twoside { "odd" })
 
   // 默认显示的字体
-  set text(font: fonts.黑体, size: 字号.小四)
+  set text(font: font, size: size)
+
+  {
+    set align(center)
+    text(..title-text-args, title)
+
+    // 标记一个不可见的标题用于目录生成
+    invisible-heading(level: 1, outlined: outlined, title)
+  }
+
+  v(title-vspace)
+
   // 设置首行缩进为 0
   set par(first-line-indent: (amount: 0pt, all: true))
 
   [
-    // 标题，居中显示，段前间距 24pt，段后间距 18pt
-    #align(center)[
-      #block(below: 18pt, above: 24pt)[
-        #text(..title-text-args, title)
-      ]
-    ]
     #body
   ]
 

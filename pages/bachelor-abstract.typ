@@ -13,7 +13,7 @@
   info: (:),
   // 其他参数
   keywords: (),
-  outline-title: "中文摘要",
+  outline-title: [摘#h(1em)要],
   outlined: false,
   anonymous-info-keys: ("author", "supervisor", "supervisor-ii"),
   leading: 1.28em,

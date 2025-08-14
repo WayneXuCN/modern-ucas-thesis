@@ -16,7 +16,7 @@
   info: (:),
   // 其他参数
   keywords: (),
-  outline-title: "ABSTRACT",
+  outline-title: "Abstract",
   outlined: true,
   abstract-title-weight: "regular",
   stoke-width: 0.5pt,

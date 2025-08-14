@@ -1,15 +1,15 @@
 #import "../utils/invisible-heading.typ": invisible-heading
 #import "../utils/style.typ": get-fonts, 字号
 
-// 本科生目录生成
-#let bachelor-outline-page(
+// 目录生成
+#let outline-page(
   // documentclass 传入参数
   twoside: false,
   fontset: "mac",
   fonts: (:),
   // 其他参数
   depth: 4,
-  title: "目　　录",
+  title: [目#h(1em)录],
   outlined: false,
   title-vspace: 0pt,
   title-text-args: auto,

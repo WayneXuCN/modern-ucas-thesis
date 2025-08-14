@@ -1,9 +1,7 @@
 #import "@preview/i-figured:0.2.4"
 #import "../utils/style.typ": get-fonts, 字号
 #import "../utils/custom-numbering.typ": custom-numbering
-#import "../utils/custom-heading.typ": (
-  active-heading, current-heading, heading-display,
-)
+#import "../utils/custom-heading.typ": active-heading, current-heading, heading-display
 #import "../utils/unpairs.typ": unpairs
 
 #let mainmatter(
@@ -17,7 +15,7 @@
   spacing: 1.5 * 15.6pt - 0.7em,
   justify: true,
   first-line-indent: (amount: 2em, all: true),
-  numbering: custom-numbering.with(first-level: "第一章 ", depth: 4, "1.1 "),
+  numbering: custom-numbering.with(first-level: "第一章 ", depth: 3, "1.1 "),
   // 正文字体与字号参数
   text-args: auto,
   // 标题字体与字号
@@ -31,7 +29,7 @@
   // 页眉
   header-render: auto,
   header-vspace: 0em,
-  display-header: false,
+  display-header: true,
   skip-on-first-level: true,
   stroke-width: 0.5pt,
   reset-footnote: true,
@@ -49,8 +47,6 @@
 ) = {
   // 0.  标志前言结束
   set page(numbering: "1")
-
-  // 1.  默认参数
 
   // 1.  默认参数
   info = (
@@ -159,49 +155,37 @@
           // 判断是否为奇数页
           let is-odd-page = calc.odd(current-page)
 
+          // 初始化页眉
           let header-content = ""
 
           if is-odd-page {
-            // 奇数页：显示各章标题
-            // 查询所有一级标题
-            let all-chapters = query(heading.where(level: 1))
-            
-            // 只考虑当前位置之后的章节（正文部分）
-            let main-chapters = all-chapters
-              .filter(h => h.location().page() >= here().page())
-            
-            // 获取当前页或之前页的章节
-            let prev-chapters = main-chapters
-              .filter(h => h.location().page() <= current-page)
-            
-            // 获取当前页之后的章节
-            let next-chapters = main-chapters
-              .filter(h => h.location().page() > current-page)
-            
-            // 确定要显示的章节
-            let display-chapter = if prev-chapters.len() > 0 {
-              // 有之前的章节，取最后一个（最新的）
-              prev-chapters.last()
-            } else if next-chapters.len() > 0 {
-              // 没有之前的章节，取第一个之后的章节
-              next-chapters.first()
-            } else {
-              // 都没有找到合适的章节
-              none
-            }
-            
-            if display-chapter != none {
+            // 奇数页：显示当前页的一级标题
+
+            // 查询所有出现在目录中的一级标题
+            let all-headings = query(heading.where(level: 1))
+
+            // 查询当前的位置
+            let current-position = here().position().page
+
+            // 动态查询当前页所属的最近一级标题
+            let current-heading = all-headings.filter(h => h.location().page() <= current-position).last()
+
+            // 页眉渲染
+            if current-heading != none {
               // 构造章节标题显示内容
-              if display-chapter.has("numbering") and display-chapter.numbering != none {
-                let counter-values = counter(heading).at(display-chapter.location())
-                header-content = custom-numbering(
-                  first-level: "第一章 ",
-                  depth: 4,
-                  "1.1 ",
-                  ..counter-values
-                ) + " "
+              if current-heading.has("numbering") and current-heading.numbering != none {
+                let counter-values = counter(heading).at(current-heading.location())
+                header-content = (
+                  custom-numbering(
+                    first-level: "第一章 ",
+                    depth: 3,
+                    "1.1 ",
+                    ..counter-values,
+                  )
+                    + " "
+                )
               }
-              header-content += display-chapter.body
+              header-content += current-heading.body
             } else {
               header-content = "没有找到章标题"
             }
@@ -221,15 +205,15 @@
           }
 
           // 渲染页眉
-          set text(font: fonts.楷体, size: 字号.五号)
+          set text(font: fonts.宋体, size: 字号.小五)
 
           // 显示页眉内容
           stack(
             align(center, header-content),
-            v(0.25em),
+            v(0.5em),
             line(length: 100%, stroke: stroke-width + black),
           )
-          
+
           v(header-vspace)
         },
       )

@@ -9,6 +9,7 @@
 #import "pages/fonts-display-page.typ": fonts-display-page
 #import "pages/bachelor-cover.typ": bachelor-cover
 #import "pages/master-cover.typ": master-cover
+#import "pages/master-midterm-cover.typ": master-midterm-cover
 #import "pages/bachelor-decl-page.typ": bachelor-decl-page
 #import "pages/master-decl-page.typ": master-decl-page
 #import "pages/bachelor-abstract.typ": bachelor-abstract
@@ -22,15 +23,17 @@
 #import "pages/backmatter.typ": backmatter
 #import "utils/bilingual-bibliography.typ": bilingual-bibliography
 #import "utils/custom-numbering.typ": custom-numbering
-#import "utils/custom-heading.typ": active-heading, current-heading, heading-display
+#import "utils/custom-heading.typ": (
+  active-heading, current-heading, heading-display,
+)
 #import "@preview/i-figured:0.2.4": show-equation, show-figure
 #import "utils/style.typ": get-fonts, 字体组, 字号
 
 // 使用函数闭包特性，通过 `documentclass` 函数类进行全局信息配置，然后暴露出拥有了全局配置的、具体的 `layouts` 和 `templates` 内部函数。
 
 #let documentclass(
-  doctype: "doctor", // "bachelor" | "master" | "doctor" | "postdoc"，文档类型，默认为博士生 doctor
-  degree: "academic", // "academic" | "professional"，学位类型，默认为学术型 academic
+  doctype: "doctor", // "bachelor" | "master" | "master-midterm" | "doctor" | "postdoc"，文档类型，默认为博士生 doctor
+  degree: "professional", // "academic" | "professional"，学位类型，默认为学术型 academic
   nl-cover: false, // TODO: 是否使用国家图书馆封面，默认关闭
   twoside: false, // 双面模式，会加入空白页，便于打印
   anonymous: false, // 盲审模式
@@ -153,6 +156,17 @@
           fonts: fonts + args.named().at("fonts", default: (:)),
           info: info + args.named().at("info", default: (:)),
         )
+      } else if doctype == "master-midterm" {
+        master-midterm-cover(
+          doctype: doctype,
+          degree: degree,
+          nl-cover: nl-cover,
+          twoside: twoside,
+          fontset: fontset,
+          ..args,
+          fonts: fonts + args.named().at("fonts", default: (:)),
+          info: info + args.named().at("info", default: (:)),
+        )
       } else if doctype == "postdoc" {
         panic("postdoc has not yet been implemented.")
       } else {
@@ -168,7 +182,11 @@
     },
     // 声明页，通过 type 分发到不同函数
     decl-page: (..args) => {
-      if doctype == "master" or doctype == "doctor" {
+      if (
+        doctype == "master"
+          or doctype == "doctor"
+          or doctype == "master-midterm"
+      ) {
         master-decl-page(
           anonymous: anonymous,
           twoside: twoside,
@@ -191,7 +209,11 @@
     },
     // 中文摘要页，通过 type 分发到不同函数
     abstract: (..args) => {
-      if doctype == "master" or doctype == "doctor" {
+      if (
+        doctype == "master"
+          or doctype == "doctor"
+          or doctype == "master-midterm"
+      ) {
         master-abstract(
           doctype: doctype,
           degree: degree,
@@ -217,7 +239,11 @@
     },
     // 英文摘要页，通过 type 分发到不同函数
     abstract-en: (..args) => {
-      if doctype == "master" or doctype == "doctor" {
+      if (
+        doctype == "master"
+          or doctype == "doctor"
+          or doctype == "master-midterm"
+      ) {
         master-abstract-en(
           doctype: doctype,
           degree: degree,

@@ -8,7 +8,7 @@
   fontset: "mac",
   fonts: (:),
   // 其他参数
-  fallback: false, // 字体缺失时使用 fallback，不显示豆腐块
+  fallback: true, // 字体缺失时使用 fallback，不显示豆腐块
   lang: "zh",
   margin: (top: 2.54cm, bottom: 2.54cm, left: 3.17cm, right: 3.17cm),
   it,

@@ -15,7 +15,7 @@
   spacing: 1.5 * 15.6pt - 0.7em,
   justify: true,
   first-line-indent: (amount: 2em, all: true),
-  numbering: custom-numbering.with(first-level: "第一章 ", depth: 3, "1.1 "),
+  numbering: custom-numbering.with(first-level: "一 ", depth: 3, "1.1 "),
   // 正文字体与字号参数
   text-args: auto,
   // 标题字体与字号
@@ -139,95 +139,6 @@
     }
   }
 
-  // 5.  处理页眉
-  set page(..(
-    if display-header {
-      (
-        header: context {
-          // 重置 footnote 计数器
-          if reset-footnote {
-            counter(footnote).update(0)
-          }
-
-          // 获取当前页码
-          let current-page = counter(page).get().first()
-
-          // 判断是否为奇数页
-          let is-odd-page = calc.odd(current-page)
-
-          // 初始化页眉
-          let header-content = ""
-
-          if is-odd-page {
-            // 奇数页：显示当前页的一级标题
-
-            // 查询所有出现在目录中的一级标题
-            let all-headings = query(heading.where(level: 1))
-
-            // 查询当前的位置
-            let current-position = here().position().page
-
-            // 动态查询当前页所属的最近一级标题
-            let current-heading = all-headings.filter(h => h.location().page() <= current-position).last()
-
-            // 页眉渲染
-            if current-heading != none {
-              // 构造章节标题显示内容
-              if current-heading.has("numbering") and current-heading.numbering != none {
-                let counter-values = counter(heading).at(current-heading.location())
-                header-content = (
-                  custom-numbering(
-                    first-level: "第一章 ",
-                    depth: 3,
-                    "1.1 ",
-                    ..counter-values,
-                  )
-                    + " "
-                )
-              }
-              header-content += current-heading.body
-            } else {
-              header-content = "没有找到章标题"
-            }
-          } else {
-            // 偶数页：显示论文标题
-            let thesis-title = info.title
-            if thesis-title != none {
-              header-content = if type(thesis-title) == array {
-                thesis-title.join("")
-              } else {
-                str(thesis-title)
-              }
-            }
-            if header-content == "" {
-              header-content = "没有找到标题"
-            }
-          }
-
-          // 渲染页眉
-          set text(font: fonts.宋体, size: 字号.小五)
-
-          // 显示页眉内容
-          stack(
-            align(center, header-content),
-            v(0.5em),
-            line(length: 100%, stroke: stroke-width + black),
-          )
-
-          v(header-vspace)
-        },
-      )
-    } else {
-      (
-        header: {
-          // 重置 footnote 计数器
-          if reset-footnote {
-            counter(footnote).update(0)
-          }
-        },
-      )
-    }
-  ))
   context {
     if calc.even(here().page()) {
       set page(numbering: "I", header: none)

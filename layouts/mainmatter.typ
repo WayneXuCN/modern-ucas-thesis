@@ -42,8 +42,6 @@
   caption-size: 字号.五号,
   // figure 计数
   show-figure: i-figured.show-figure,
-  // equation 计数
-  show-equation: i-figured.show-equation,
   ..args,
   it,
 ) = {
@@ -93,7 +91,7 @@
   show heading: i-figured.reset-counters
   show figure: show-figure
   // 3.4 设置 equation 的编号和假段落首行缩进
-  show math.equation.where(block: true): show-equation
+  set math.equation(numbering: "(1)")
   // 3.5 表格表头置顶 + 不用冒号用空格分割 + 样式
   show figure.where(
     kind: table,

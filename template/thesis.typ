@@ -158,15 +158,9 @@
         columns: 4,
         stroke: none,
         table.hline(),
-        [t],
-        [1],
-        [2],
-        [3],
+        [t], [1], [2], [3],
         table.hline(stroke: .5pt),
-        [y],
-        [0.3s],
-        [0.4s],
-        [0.8s],
+        [y], [0.3s], [0.4s], [0.8s],
         table.hline(),
       ),
       caption: [三线表],
@@ -185,7 +179,7 @@
 
 $ phi.alt := (1 + sqrt(5)) / 2 $ <ratio>
 
-引用数学公式需要加上 `eqt:` 前缀，则由@eqt:ratio，我们有：
+引用数学公式不要加上 `eqt:` 前缀，则由@ratio，我们有：
 
 $ F_n = floor(1 / sqrt(5) phi.alt^n) $
 

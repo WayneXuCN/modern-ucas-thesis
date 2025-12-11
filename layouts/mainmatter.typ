@@ -1,7 +1,9 @@
 #import "@preview/i-figured:0.2.4"
 #import "../utils/style.typ": get-fonts, 字号
 #import "../utils/custom-numbering.typ": custom-numbering
-#import "../utils/custom-heading.typ": active-heading, current-heading, heading-display
+#import "../utils/custom-heading.typ": (
+  active-heading, current-heading, heading-display,
+)
 #import "../utils/unpairs.typ": unpairs
 
 #let mainmatter(
@@ -15,12 +17,12 @@
   spacing: 1.5 * 15.6pt - 0.7em,
   justify: true,
   first-line-indent: (amount: 2em, all: true),
-  numbering: custom-numbering.with(first-level: "一 ", depth: 3, "1.1 "),
+  numbering: custom-numbering.with(first-level: "一  ", depth: 3, "1.1 "),
   // 正文字体与字号参数
   text-args: auto,
   // 标题字体与字号
   heading-font: auto,
-  heading-size: (字号.四号,),
+  heading-size: (字号.四号, 字号.小四),
   heading-weight: ("regular",),
   heading-above: (2 * 15.6pt - 0.7em, 2 * 15.6pt - 0.7em),
   heading-below: (2 * 15.6pt - 0.7em, 1.5 * 15.6pt - 0.7em),

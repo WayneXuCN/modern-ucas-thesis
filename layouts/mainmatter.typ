@@ -63,7 +63,7 @@
     if process != "thesis" {
       heading-size = (字号.四号, 字号.小四)
     } else {
-      heading-size = (字号.四号)
+      heading-size = (字号.四号, 字号.四号)
     }
   }
   // 0.  标志前言结束

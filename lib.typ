@@ -108,6 +108,8 @@
     },
     preface: (..args) => {
       preface(
+        fonts: fonts,
+        fontset: fontset,
         twoside: twoside,
         ..args,
       )
@@ -298,6 +300,7 @@
     notation: (..args) => {
       notation(
         twoside: twoside,
+        fontset: fontset,
         ..args,
       )
     },

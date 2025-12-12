@@ -23,7 +23,8 @@
   acknowledgement,
   backmatter,
 ) = documentclass(
-  doctype: "master-midterm", // "bachelor" | "master" | "doctor" | "postdoc", 文档类型，默认为博士生 doctor
+  doctype: "master", // "bachelor" | "master" | "doctor" | "postdoc", 文档类型，默认为博士生 doctor
+  process: "interim", // "proposal" | "interim", 报告类型，默认为开题
   degree: "professional", // "academic" | "professional", 学位类型，默认为学术型 academic
   anonymous: false, // 盲审模式
   twoside: true, // 双面模式，会加入空白页，便于打印
@@ -51,8 +52,6 @@
     category: "工学硕士",
     category-en: "Master of Science in Engineering",
     supervisor: ("王卅", "副研究员"),
-    // supervisor-ii: ("王五", "副教授"),
-    // supervisor-ii-en: "Professor My Supervisor",
     submit-date: datetime.today(),
   ),
   // 参考文献源
@@ -104,33 +103,43 @@
   caption: [支持的Typst的编译环境和编辑器],
 )<tab:Typst_intro>
 
-== 本文主要工作<sec:work>
-
-哇哦，原来你也玩原神！
-
 = Typst使用说明<chap:guide>
 
 为了方便使用并更好地展示Typst的现代排版特性，本模板框架和文件结构经过精细设计，尽可能模块化各个功能和板块，以方便用户进行高效编辑。
 
 == 文档目录简介
+=== template目录
+- `thesis.typ` 文件: 你的论文源文件，可以随意更改这个文件的名字，甚至你可以将这个文件在同级目录下复制多份，维持多个版本。
+- `ref.bib` 文件: 用于放置参考文献。
+- `images` 目录: 用于放置图片。。
 
-原来，你也玩原神！
+=== 编译脚本
+为方便本地编译，提供适用于不同操作系统的命令：
+
+- Windows：通过 `typst compile thesis.typ` 生成PDF文件。
+- Linux或MacOS：在终端中运行 `typst compile thesis.typ` 来快速编译。
+
+在写作过程中，Typst支持实时预览，无需重复执行编译命令。
 
 == 功能介绍
 
 === 列表
+
+==== 无序列表
 
 - 无序列表项一
 - 无序列表项二
   - 无序子列表项一
   - 无序子列表项二
 
+==== 有序列表
+
 + 有序列表项一
 + 有序列表项二
   + 有序子列表项一
   + 有序子列表项二
 
-=== 术语列表
+==== 术语列表
 
 / 术语一: 术语解释
 / 术语二: 术语解释
@@ -158,9 +167,15 @@
         columns: 4,
         stroke: none,
         table.hline(),
-        [t], [1], [2], [3],
+        [t],
+        [1],
+        [2],
+        [3],
         table.hline(stroke: .5pt),
-        [y], [0.3s], [0.4s], [0.8s],
+        [y],
+        [0.3s],
+        [0.4s],
+        [0.8s],
         table.hline(),
       ),
       caption: [三线表],
@@ -173,13 +188,13 @@
   caption: [图片测试],
 ) <ucas-logo>
 
-== 数学公式
+=== 数学公式
 
 可以像 Markdown 一样写行内公式 $x + y$，以及带编号的行间公式：
 
 $ phi.alt := (1 + sqrt(5)) / 2 $ <ratio>
 
-引用数学公式不要加上 `eqt:` 前缀，则由@ratio，我们有：
+引用数学公式需要加上 `eqt:` 前缀，则由@eqt:ratio，我们有：
 
 $ F_n = floor(1 / sqrt(5) phi.alt^n) $
 
@@ -191,11 +206,11 @@ $ y = integral_1^2 x^2 dif x $ <->
 
 $ F_n = floor(1 / sqrt(5) phi.alt^n) $
 
-== 参考文献
+=== 参考文献
 
 可以像这样引用参考文献：图书#[@蒋有绪1998]和会议#[@中国力学学会1990]。
 
-== 代码块
+=== 代码块
 
 代码块支持语法高亮。引用时需要加上 `lst:` @lst:code
 

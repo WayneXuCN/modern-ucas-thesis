@@ -5,8 +5,7 @@
 // 硕士研究生封面
 #let master-midterm-cover(
   // documentclass 传入的参数
-  doctype: "master",
-  degree: "academic",
+  process: "proposal", // "proposal" | "interim"
   nl-cover: false,
   twoside: false,
   fontset: "mac",
@@ -56,14 +55,6 @@
     type(info.submit-date) == datetime,
     message: "submit-date must be datetime.",
   )
-  // 2.4 处理 degree
-  if (info.degree == auto) {
-    if (doctype == "doctor") {
-      info.degree = "工程博士"
-    } else {
-      info.degree = "工程硕士"
-    }
-  }
 
   // 3.  内置辅助函数
   let info-key(body, info-inset: info-inset, is-meta: false) = {
@@ -133,13 +124,22 @@
   image("../assets/vi/ucas-logo-H.svg", height: 2.26cm)
 
   v(-6pt)
+  let cover_title = (
+    "研究生学位论文"
+      + if process == "proposal" {
+        "开题"
+      } else {
+        "中期"
+      }
+      + "报告"
+  )
 
   text(
     size: 字号.一号,
     font: fonts.黑体,
     weight: "bold",
     top-edge: "ascender",
-    "研究生学位论文中期报告",
+    cover_title,
   )
 
   v(173pt)

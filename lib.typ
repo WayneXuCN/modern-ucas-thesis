@@ -9,7 +9,7 @@
 #import "pages/fonts-display-page.typ": fonts-display-page
 #import "pages/bachelor-cover.typ": bachelor-cover
 #import "pages/master-cover.typ": master-cover
-#import "pages/master-midterm-cover.typ": master-midterm-cover
+#import "pages/master-proposal-cover.typ": master-proposal-cover
 #import "pages/bachelor-decl-page.typ": bachelor-decl-page
 #import "pages/master-decl-page.typ": master-decl-page
 #import "pages/bachelor-abstract.typ": bachelor-abstract
@@ -32,7 +32,7 @@
 // 使用函数闭包特性，通过 `documentclass` 函数类进行全局信息配置，然后暴露出拥有了全局配置的、具体的 `layouts` 和 `templates` 内部函数。
 
 #let documentclass(
-  doctype: "doctor", // "bachelor" | "master" | "master-midterm" | "doctor" | "postdoc"，文档类型，默认为博士生 doctor
+  doctype: "doctor", // "bachelor" | "master" | "doctor" | "postdoc"，文档类型，默认为博士生 doctor
   process: "thesis", // "proposal" | "interim" | "thesis"
   degree: "professional", // "academic" | "professional"，学位类型，默认为学术型 academic
   nl-cover: false, // TODO: 是否使用国家图书馆封面，默认关闭
@@ -149,7 +149,7 @@
     cover: (..args) => {
       if doctype == "master" or doctype == "doctor" {
         if process != "thesis" {
-          master-midterm-cover(
+          master-proposal-cover(
             process: process,
             nl-cover: nl-cover,
             twoside: twoside,

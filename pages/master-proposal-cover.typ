@@ -3,7 +3,7 @@
 #import "../utils/style.typ": get-fonts, 字号
 
 // 硕士研究生封面
-#let master-midterm-cover(
+#let master-proposal-cover(
   // documentclass 传入的参数
   process: "proposal", // "proposal" | "interim"
   nl-cover: false,

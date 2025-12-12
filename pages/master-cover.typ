@@ -22,6 +22,7 @@
     x: 0pt,
     bottom: 0.5pt,
   ), // 控制信息区域的内边距。x 左右间距，bottom 底部间距
+  info-width-ratio: 100%, // 控制信息框整体宽度（即所有信息列的总宽），当内容信息太长时可以调整这个参数
   info-key-width: 70pt, // 控制信息标签（如“论文题目”、“作者姓名”）的宽度。
   info-column-gutter: 18pt, // 控制信息列之间的间距。
   info-row-gutter: 12pt, // 控制信息行之间的间距。
@@ -88,10 +89,12 @@
     info.title + range(min-title-lines - info.title.len()).map(it => "　")
   )
   info.reviewer = (
-    info.reviewer + range(min-reviewer-lines - info.reviewer.len()).map(it => "　")
+    info.reviewer
+      + range(min-reviewer-lines - info.reviewer.len()).map(it => "　")
   )
   info.supervisors = (
-    info.supervisors + range(min-supervisor-lines - info.supervisors.len()).map(it => "　")
+    info.supervisors
+      + range(min-supervisor-lines - info.supervisors.len()).map(it => "　")
   )
   // 2.3 处理日期
   assert(
@@ -262,7 +265,10 @@
       info-key("作者姓名："),
       info-value("author", info.author),
       info-key("指导教师："),
-      ..info.supervisors.map(s => info-value("supervisors", s)).intersperse(info-key("　")),
+      ..info
+        .supervisors
+        .map(s => info-value("supervisors", s))
+        .intersperse(info-key("　")),
       info-key("学位类别："),
       info-value("category", info.category),
       ..(
@@ -300,6 +306,7 @@
         }
       ),
     ),
+    width: info-width-ratio,
   )
 
   v(42pt)
@@ -329,8 +336,8 @@
     size: 字号.小三,
     weight: "bold",
     underline(offset: .4em, stroke: .05em, evade: false)[#(
-        info.title-en.intersperse("\n").sum()
-      )],
+      info.title-en.intersperse("\n").sum()
+    )],
   )
 
   if info.supervisor-ii-en != "" {
@@ -386,7 +393,8 @@
     // TODO: 丑陋的实现，但效果还行，有时间再优化
     text(
       weight: "bold",
-      "Supervisors: " + supers.intersperse("\n                               ").sum(),
+      "Supervisors: "
+        + supers.intersperse("\n                               ").sum(),
     )
   }
 

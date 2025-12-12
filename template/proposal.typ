@@ -7,27 +7,20 @@
   // 布局函数
   twoside,
   doc,
-  preface,
   mainmatter,
-  appendix,
   // 页面函数
   fonts-display-page,
   cover,
-  decl-page,
   abstract,
-  abstract-en,
   bilingual-bibliography,
   outline-page,
-  list-of-figures-and-tables,
-  notation,
-  acknowledgement,
-  backmatter,
 ) = documentclass(
-  doctype: "doctor", // "bachelor" | "master" | "doctor" | "postdoc", 文档类型，默认为博士生 doctor
+  doctype: "master", // "bachelor" | "master" | "doctor" | "postdoc", 文档类型，默认为博士生 doctor
+  process: "proposal", // "proposal" | "interim", 报告类型，默认为开题
   degree: "academic", // "academic" | "professional", 学位类型，默认为学术型 academic
   anonymous: false, // 盲审模式
   twoside: true, // 双面模式，会加入空白页，便于打印
-  fontset: "fandol", // 选择预定义的字体组："windows" | "mac" | "fandol" | "adobe"
+  fontset: "mac", // 选择预定义的字体组："windows" | "mac" | "fandol" | "adobe"
   // fonts参数可用于覆盖或补充fontset中的字体设置
   // 例如：仅想更改某一种字体时，可以这样设置
   // fonts: (楷体: ("Times New Roman", "FZKai-Z03S")),
@@ -46,6 +39,8 @@
     department-en: "Institutes of Science and Development",
     major: "管理科学与工程",
     major-en: "Management Science and Engineering",
+    interest: "Typst论文模板化",
+    interest-en: "Typst thesis template",
     category: "管理学博士",
     category-en: "Management Science",
     supervisor: ("李四", "教授"),
@@ -63,101 +58,18 @@
 // 字体展示测试页
 // #fonts-display-page()
 
-// 封面页
+// 封面页，如果内容太长可以调整信息展示宽度开保证排版正确
 #cover()
-
-// 声明页
-#decl-page()
-
-// 前言
-#show: preface
-
-// 中文摘要
-#abstract(keywords: ("中国科学院大学", "学位论文", "模板"))[
-  中文摘要、英文摘要、目录、论文正文、参考文献、附录、致谢、攻读学位期间 发表的学术论文与其他相关学术成果等均须由另页右页（奇数页）开始。
-]
-
-// 英文摘要
-#abstract-en(keywords: (
-  "University of Chinese Academy of Sciences",
-  "Thesis",
-  "Typst Template",
-))[
-  Chinese abstracts, English abstracts, table of contents, the main contents, references, appendix, acknowledgments,
-  author's resume and academic papers published during the degree study and other relevant academic achievements must
-  start with another right page (odd-numbered page).
-]
 
 // 目录
 #outline-page()
-
-// 图表目录
-#list-of-figures-and-tables()
-
-// 符号列表
-#notation()[
-
-  字符
-
-  #table(
-    columns: (1fr, auto, auto),
-    align: (left, left, left),
-    stroke: none,
-    // 表格内容与左边距的距离为 0，使其与正文完全左对齐
-    inset: (left: 0pt),
-    table.header()[*Symbol*][*Description*][*Unit*],
-    [$R$], [the gas constant], [$m^2 dot s^(-2) dot K^(-1)$],
-    [$C_v$], [specific heat capacity at constant volume], [$m^2 dot s^(-2) dot K^(-1)$],
-
-    [$C_p$], [specific heat capacity at constant pressure], [$m^2 dot s^(-2) dot K^(-1)$],
-
-    [$E$], [specific total energy], [$m^2 dot s^(-2)$],
-    [$e$], [specific internal energy], [$m^2 dot s^(-2)$],
-    [$h_T$], [specific total enthalpy], [$m^2 dot s^(-2)$],
-    [$h$], [specific enthalpy], [$m^2 dot s^(-2)$],
-    [$k$], [thermal conductivity], [$"kg" dot m dot s^(-3) dot K^(-1)$],
-    [$S_(i j)$], [deviatoric stress tensor], [$"kg" dot m^(-1) dot s^(-2)$],
-    [$tau_(i j)$], [viscous stress tensor], [$"kg" dot m^(-1) dot s^(-2)$],
-    [$delta_(i j)$], [Kronecker delta], [1],
-    [$I_(i j)$], [identity tensor], [1],
-  )
-
-  算子
-
-  #table(
-    columns: (1fr, auto),
-    align: (left, left),
-    stroke: none,
-    inset: (left: 0pt),
-    table.header()[*Symbol*][*Description*],
-    [$Delta$], [difference],
-    [$nabla$], [gradient operator],
-    [$delta^(plus.minus)$], [upwind-biased interpolation scheme],
-  )
-
-  缩写
-
-  #table(
-    columns: (1fr, auto),
-    align: (left, left),
-    stroke: none,
-    inset: (left: 0pt),
-    table.header()[*Symbol*][*Description*],
-    [CFD], [Computational Fluid Dynamics],
-    [CFL], [Courant-Friedrichs-Lewy],
-    [EOS], [Equation of State],
-    [JWL], [Jones-Wilkins-Lee],
-    [WENO], [Weighted Essentially Non-Oscillatory],
-    [ZND], [Zeldovich-von Neumann-Döring],
-  )
-]
 
 // 正文
 #show: mainmatter
 
 = 绪论<chap:introduction>
 
-== 背景
+== 研究背景
 
 2022年修订的《中国科学院大学 研究生学位论文撰写规范和指导意见》（以下简称《指导意见》）从2023年冬季批次开始实施。为方便各位同学使用，特提供此模板。
 
@@ -517,110 +429,3 @@ mm）打印、印刷或复印，按顺序装订成册。自中文摘要起双面
 // 中英双语参考文献
 // 默认使用 gb-7714-2015-numeric 样式
 #bilingual-bibliography(full: true)
-
-// 附录
-#show: appendix
-
-= 附录
-
-#align(center)[#strong[学位类别中英文对照表]]
-
-#let scd = [学术型\ 博士]
-#let scm = [学术型\ 硕士]
-#let pd = [专业学位\ 博士]
-#let pm = [专业学位\ 硕士]
-#let dp = [Doctor of Philosophy]
-#set par(leading: 0.65em)
-#table(
-  columns: (auto, auto, auto),
-  align: (center, center, center),
-  table.header([学位类别], [中文名称], [英文名称]),
-  table.cell(rowspan: 8, align: horizon, scd),
-  [哲学博士],
-  table.cell(rowspan: 8, align: horizon, dp),
-  [经济学博士],
-  [历史学博士],
-  [理学博士],
-  [工学博士],
-  [农学博士],
-  [医学博士],
-  [管理学博士],
-  table.cell(rowspan: 10, align: horizon, scm),
-  [哲学硕士],
-  [Master of Philosophy],
-  [经济学硕士], [Master of Economics],
-  [法学硕士], [Master of Law],
-  [文学硕士], [Master of Arts],
-  [历史学硕士], [Master of History],
-  [理学硕士], [Master of Natural Science],
-  [工学硕士], [Master of Science in Engineering],
-  [农学硕士], [Master of Agriculture],
-  [医学硕士], [Master of Medicine],
-  [管理学硕士], [Master of Management Science],
-  [专业学位\ 博士],
-  [材料与化工博士\*],
-  [Doctor of Materials and Chemical\ Engineering],
-  table.cell(rowspan: 17, align: horizon, pm),
-  [金融硕士], [Master of Finance],
-  [应用统计硕士], [Master of Applied Statistics],
-  [应用心理硕士], [Master of Applied Psychology],
-  [翻译硕士], [Master of Translation and Interpreting],
-  [工程硕士（调整前）\*], [Master of Engineering],
-  [电子信息硕士\*], [Master of Electronic and Information\ Engineering],
-  [机械硕士\*], [Master of Mechanical Engineering],
-  [材料与化工硕士\*], [Master of Materials and Chemical Engineering],
-  [资源与环境硕士\*], [Master of Resources and Environmental\ Engineering],
-  [能源动力硕士\*], [Master of Energy and Power Engineering],
-  [土木水利硕士\*], [Master of Civil and Hydraulic Engineering],
-  [生物与医药硕士\*], [Master of Biological and Pharmaceutical\ Engineering],
-  [农业硕士], [Master of Agriculture],
-  [药学硕士], [Master of Pharmacy],
-  [工商管理硕士], [Master of Business Administration],
-  [公共管理硕士], [Master of Public Administration],
-  [工程管理硕士], [Master of Engineering Management],
-)
-
-// 致谢
-#acknowledgement[
-  感谢 modern-ucas-thesis。
-]
-
-
-#backmatter[
-  // 作者简历部分
-  #strong[作者简历：]
-
-
-  ××××年××月——××××年××月，在××大学××院（系）获得学士学位。
-
-  ××××年××月——××××年××月，在××大学××院（系）获得硕士学位。
-
-  ××××年××月——××××年××月，在中国科学院××研究所（或中国科学院大学××院系）攻读博士/硕士学位。
-
-  工作经历：
-
-
-  // 学术论文部分
-  #v(1em)
-  #strong[已发表（或正式接受）的学术论文：（书写格式同参考文献）]
-
-  (1) 已发表工作 1
-
-  (2) 已发表工作 2
-
-  // 专利部分
-  #v(1em)
-  #strong[申请或已获得的专利：（无专利时此项不必列出）]
-
-  (1) 专利名称
-
-  (2) 专利名称
-
-  // 研究项目及获奖情况
-  #v(1em)
-  #strong[参加的研究项目及获奖情况：]
-
-  (1) 项目名称
-
-  (2) 获奖名称
-]

@@ -18,7 +18,7 @@
   spacing: 1.5 * 15.6pt - 0.7em,
   justify: true,
   first-line-indent: (amount: 2em, all: true),
-  numbering: auto,
+  numbering: none,
   // 正文字体与字号参数
   text-args: auto,
   // 标题字体与字号
@@ -48,7 +48,7 @@
   ..args,
   it,
 ) = {
-  if numbering == auto {
+  if numbering == none {
     if process != "thesis" {
       numbering = custom-numbering.with(first-level: "一  ", depth: 3, "1.1 ")
     } else {

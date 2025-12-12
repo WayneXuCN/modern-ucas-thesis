@@ -59,7 +59,7 @@
 // #fonts-display-page()
 
 // 封面页，如果内容太长可以调整信息展示宽度开保证排版正确
-#cover()
+#cover(info-width-ratio: 82%)
 
 // 目录
 #outline-page()

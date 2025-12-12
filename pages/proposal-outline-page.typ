@@ -2,7 +2,7 @@
 #import "../utils/style.typ": get-fonts, 字号
 
 // 目录生成
-#let outline-page-proposal(
+#let proposal-outline-page(
   // documentclass 传入参数
   twoside: false,
   fontset: "mac",

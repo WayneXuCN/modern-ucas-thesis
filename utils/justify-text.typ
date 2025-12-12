@@ -3,11 +3,11 @@
   if with-tail and tail != "" {
     stack(
       dir: ltr,
-      stack(dir: ltr, ..body.split("").filter(it => it != "")),
+      stack(dir: ltr, spacing: 1fr, ..body.split("").filter(it => it != "")),
       tail,
     )
   } else {
-    stack(dir: ltr, ..body.split("").filter(it => it != ""))
+    stack(dir: ltr, spacing: 1fr, ..body.split("").filter(it => it != ""))
   }
 }
 

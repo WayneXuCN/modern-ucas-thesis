@@ -17,7 +17,7 @@
 #import "pages/bachelor-abstract-en.typ": bachelor-abstract-en
 #import "pages/master-abstract-en.typ": master-abstract-en
 #import "pages/outline-page.typ": outline-page
-#import "pages/outline-page-proposal.typ": outline-page-proposal
+#import "pages/proposal-outline-page.typ": proposal-outline-page
 #import "pages/list-of-figures-and-tables.typ": list-of-figures-and-tables
 #import "pages/notation.typ": notation
 #import "pages/acknowledgement.typ": acknowledgement
@@ -272,7 +272,7 @@
     // 目录页
     outline-page: (..args) => {
       if process != "thesis" {
-        outline-page-proposal(
+        proposal-outline-page(
           twoside: twoside,
           fontset: fontset,
           ..args,

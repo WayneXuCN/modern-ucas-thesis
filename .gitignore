@@ -18,6 +18,7 @@
 
 # Ignore thesis.pdf in template folder
 template/thesis.pdf
+template/proposal.pdf
 
 # env
 .env

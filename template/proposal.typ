@@ -20,7 +20,7 @@
   degree: "academic", // "academic" | "professional", 学位类型，默认为学术型 academic
   anonymous: false, // 盲审模式
   twoside: true, // 双面模式，会加入空白页，便于打印
-  fontset: "mac", // 选择预定义的字体组："windows" | "mac" | "fandol" | "adobe"
+  fontset: "fandol", // 选择预定义的字体组："windows" | "mac" | "fandol" | "adobe"
   // fonts参数可用于覆盖或补充fontset中的字体设置
   // 例如：仅想更改某一种字体时，可以这样设置
   // fonts: (楷体: ("Times New Roman", "FZKai-Z03S")),

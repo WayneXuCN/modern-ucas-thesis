@@ -33,7 +33,7 @@
 
 #let documentclass(
   doctype: "doctor", // "bachelor" | "master" | "master-midterm" | "doctor" | "postdoc"，文档类型，默认为博士生 doctor
-  process: "proposal", // "proposal" | "interim"
+  process: "thesis", // "proposal" | "interim" | "thesis"
   degree: "professional", // "academic" | "professional"，学位类型，默认为学术型 academic
   nl-cover: false, // TODO: 是否使用国家图书馆封面，默认关闭
   twoside: false, // 双面模式，会加入空白页，便于打印
@@ -114,6 +114,7 @@
     mainmatter: (..args) => {
       if doctype == "master" or doctype == "doctor" {
         mainmatter(
+          process: process,
           twoside: twoside,
           display-header: true,
           ..args,
@@ -122,6 +123,7 @@
         )
       } else {
         mainmatter(
+          process: process,
           twoside: twoside,
           ..args,
           fonts: fonts + args.named().at("fonts", default: (:)),
@@ -146,15 +148,28 @@
     // 封面页，通过 type 分发到不同函数
     cover: (..args) => {
       if doctype == "master" or doctype == "doctor" {
-        master-midterm-cover(
-          process: process,
-          nl-cover: nl-cover,
-          twoside: twoside,
-          fontset: fontset,
-          ..args,
-          fonts: fonts + args.named().at("fonts", default: (:)),
-          info: info + args.named().at("info", default: (:)),
-        )
+        if process != "thesis" {
+          master-midterm-cover(
+            process: process,
+            nl-cover: nl-cover,
+            twoside: twoside,
+            fontset: fontset,
+            ..args,
+            fonts: fonts + args.named().at("fonts", default: (:)),
+            info: info + args.named().at("info", default: (:)),
+          )
+        } else {
+          master-cover(
+            doctype: doctype,
+            degree: degree,
+            nl-cover: nl-cover,
+            twoside: twoside,
+            fontset: fontset,
+            ..args,
+            fonts: fonts + args.named().at("fonts", default: (:)),
+            info: info + args.named().at("info", default: (:)),
+          )
+        }
       } else if doctype == "postdoc" {
         panic("postdoc has not yet been implemented.")
       } else {

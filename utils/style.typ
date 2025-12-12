@@ -17,42 +17,34 @@
   八号: 1.74mm,
 )
 
-#let 等宽字体 = (
-  "Noto Sans Mono CJK SC",
-)
-
 #let 字体组 = (
   windows: (
     宋体: ("Times New Roman", "SimSun"),
     黑体: ("Times New Roman", "SimHei"),
     楷体: ("Times New Roman", "KaiTi"),
     仿宋: ("Times New Roman", "FangSong"),
-    西文: ("Times New Roman"),
-    等宽: 等宽字体,
+    等宽: ("Courier New", "SimHei"),
   ),
   mac: (
     宋体: ("Times New Roman", "Songti SC"),
     黑体: ("Times New Roman", "Heiti SC"),
     楷体: ("Times New Roman", "Kaiti SC"),
     仿宋: ("Times New Roman", "STFangSong"),
-    西文: ("Times New Roman"),
-    等宽: 等宽字体,
+    等宽: ("Menlo", "Heiti SC", "STHeiti"),
   ),
   fandol: (
     宋体: ("Times New Roman", "FandolSong"),
     黑体: ("Times New Roman", "FandolHei"),
     楷体: ("Times New Roman", "FandolKai"),
     仿宋: ("Times New Roman", "FandolFang R"),
-    西文: ("Times New Roman"),
-    等宽: 等宽字体,
+    等宽: ("Noto Sans Mono CJK SC", "FandolHei"),
   ),
   adobe: (
     宋体: ("Times New Roman", "Adobe Song Std"),
     黑体: ("Times New Roman", "Adobe Heiti Std"),
     楷体: ("Times New Roman", "Adobe Kaiti Std"),
     仿宋: ("Times New Roman", "Adobe Fangsong Std"),
-    西文: ("Times New Roman"),
-    等宽: 等宽字体,
+    等宽: ("Source Han Sans HW SC", "Source Han Sans HW"),
   ),
 )
 

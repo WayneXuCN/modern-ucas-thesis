@@ -164,7 +164,8 @@
         info-value(info.author),
         info-key("学号"),
         // 纯英文的学号会上浮，暂时用spacing来解决
-        info-value([#v(1pt) #info.student-id]),
+        // 仅对Times New Roman比较合适，其他字体可能会有问题
+        info-value([#v(1.6pt) #info.student-id]),
         info-key("指导教师"),
         info-value(info.supervisor.at(0)),
         info-key("职称"),

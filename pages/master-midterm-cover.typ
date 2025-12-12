@@ -20,7 +20,7 @@
   ), // 控制信息区域的内边距。x 左右间距，bottom 底部间距
   info-width-ratio: 82%, // 控制信息框整体宽度（即所有信息列的总宽），当文章标题太长时可以调整这个参数
   info-column-gutter: 0pt, // 控制信息列之间的间距。
-  info-row-gutter: 10pt, // 控制信息行之间的间距。
+  info-row-gutter: 7pt, // 控制信息行之间的间距。
   defence-info-inset: (x: 0pt, bottom: 0pt), // 控制答辩信息区域的内边距。
   datetime-display: datetime-display, // 用于格式化日期显示。
 ) = {
@@ -117,32 +117,32 @@
   }
 
   // set page(
-  //   background: image("../中期报告扉页.svg", width: 100%),
+  //   background: image("../中期报告-朱家祺.svg", width: 100%),
   //   // 也可以调整 opacity 让背景淡一点，但 Typst 目前 image opacity 支持有限，
   //   // 通常直接用图就行，或者用图片编辑软件把图弄淡。
   // )
   // 4.  正式渲染
   pagebreak(weak: true)
 
-  v(47pt)
+  v(25pt)
 
   // 居中对齐
   set align(center)
 
   // 封面图标
-  image("../assets/vi/ucas-logo-H.svg", height: 2.17cm)
+  image("../assets/vi/ucas-logo-H.svg", height: 2.26cm)
 
-  v(-7pt)
+  v(-6pt)
 
   text(
     size: 字号.一号,
-    font: fonts.宋体,
+    font: fonts.黑体,
     weight: "bold",
     top-edge: "ascender",
     "研究生学位论文中期报告",
   )
 
-  v(142pt)
+  v(173pt)
 
   block(
     layout(size => {
@@ -184,7 +184,7 @@
     width: info-width-ratio,
   )
 
-  v(32pt)
+  v(38pt)
 
   text(font: fonts.宋体, size: 字号.小三, weight: "bold", "中国科学院大学制")
 

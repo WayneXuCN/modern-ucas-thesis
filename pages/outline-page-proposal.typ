@@ -2,37 +2,38 @@
 #import "../utils/style.typ": get-fonts, 字号
 
 // 目录生成
-#let outline-page(
+#let outline-page-proposal(
   // documentclass 传入参数
   twoside: false,
   fontset: "mac",
   fonts: (:),
   // 其他参数
   depth: 4,
-  title: [目#h(1em)录],
+  title: [报告提纲],
   outlined: false,
-  title-above: 24pt,
-  title-below: 18pt,
+  title-above: 0pt,
+  title-below: 0pt,
   title-text-args: auto,
   // 引用页数的字体，这里用于显示 Times New Roman
   reference-font: auto,
-  reference-size: 字号.小四,
+  reference-size: 字号.四号,
   // 字体与字号
   font: auto,
   size: (字号.四号, 字号.小四),
   // 垂直间距
-  above: (25pt, 14pt),
-  below: (14pt, 14pt),
-  indent: (0pt, 18pt, 28pt),
+  above: (22pt, 15pt),
+  below: (16pt, 15pt),
+  indent: (0pt, 12pt, 12pt),
   // 全都显示点号
-  fill: (repeat([.], gap: 0.15em),),
+  fill: (repeat([·], gap: 0.2em), repeat(text([·], size: 0.9em), gap: 0.15em)),
+  inset: ((left: 2pt, right: 24pt), (left: 0.3em, right: 18pt)),
   gap: .3em,
   ..args,
 ) = {
   // 1.  默认参数
   fonts = get-fonts(fontset) + fonts
   if title-text-args == auto {
-    title-text-args = (font: fonts.宋体, size: 字号.三号, weight: "bold")
+    title-text-args = (font: fonts.黑体, size: 字号.四号)
   }
   // 引用页数的字体，这里用于显示 Times New Roman
   if reference-font == auto {
@@ -40,7 +41,7 @@
   }
   // 字体与字号
   if font == auto {
-    font = (fonts.黑体, fonts.宋体)
+    font = (fonts.黑体, fonts.黑体)
   }
 
   // 2.  正式渲染
@@ -80,10 +81,14 @@
             entry.body()
           },
         )
-        box(width: 1fr, inset: (x: .25em), fill.at(
-          entry.level - 1,
-          default: fill.last(),
-        ))
+        box(
+          width: 1fr,
+          inset: inset.at(entry.level - 1, default: inset.last()),
+          fill.at(
+            entry.level - 1,
+            default: fill.last(),
+          ),
+        )
         entry.page()
       },
       gap: 0pt,

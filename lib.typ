@@ -17,6 +17,7 @@
 #import "pages/bachelor-abstract-en.typ": bachelor-abstract-en
 #import "pages/master-abstract-en.typ": master-abstract-en
 #import "pages/outline-page.typ": outline-page
+#import "pages/outline-page-proposal.typ": outline-page-proposal
 #import "pages/list-of-figures-and-tables.typ": list-of-figures-and-tables
 #import "pages/notation.typ": notation
 #import "pages/acknowledgement.typ": acknowledgement
@@ -242,11 +243,7 @@
     },
     // 英文摘要页，通过 type 分发到不同函数
     abstract-en: (..args) => {
-      if (
-        doctype == "master"
-          or doctype == "doctor"
-          or doctype == "master-midterm"
-      ) {
+      if doctype == "master" or doctype == "doctor" {
         master-abstract-en(
           doctype: doctype,
           degree: degree,
@@ -272,12 +269,21 @@
     },
     // 目录页
     outline-page: (..args) => {
-      outline-page(
-        twoside: twoside,
-        fontset: fontset,
-        ..args,
-        fonts: fonts + args.named().at("fonts", default: (:)),
-      )
+      if process != "thesis" {
+        outline-page-proposal(
+          twoside: twoside,
+          fontset: fontset,
+          ..args,
+          fonts: fonts + args.named().at("fonts", default: (:)),
+        )
+      } else {
+        outline-page(
+          twoside: twoside,
+          fontset: fontset,
+          ..args,
+          fonts: fonts + args.named().at("fonts", default: (:)),
+        )
+      }
     },
     // 图表目录页
     list-of-figures-and-tables: (..args) => {

@@ -39,11 +39,11 @@
     等宽: 等宽字体,
   ),
   fandol: (
-    宋体: ("XITS", "FandolSong"),
-    黑体: ("XITS", "FandolHei"),
-    楷体: ("XITS", "FandolKai"),
-    仿宋: ("XITS", "FandolFang R"),
-    西文: ("XITS"),
+    宋体: ("Times New Roman", "FandolSong"),
+    黑体: ("Times New Roman", "FandolHei"),
+    楷体: ("Times New Roman", "FandolKai"),
+    仿宋: ("Times New Roman", "FandolFang R"),
+    西文: ("Times New Roman"),
     等宽: 等宽字体,
   ),
   adobe: (

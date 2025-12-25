@@ -1,11 +1,14 @@
 #import "@preview/i-figured:0.2.4"
 #import "../utils/style.typ": get-fonts, 字号
 #import "../utils/custom-numbering.typ": custom-numbering
-#import "../utils/custom-heading.typ": active-heading, current-heading, heading-display
+#import "../utils/custom-heading.typ": (
+  active-heading, current-heading, heading-display,
+)
 #import "../utils/unpairs.typ": unpairs
 
 #let mainmatter(
   // documentclass 传入参数
+  process: "thesis", // "thesis" | "proposal" | "interim"
   twoside: false,
   info: (:),
   fonts: (:),
@@ -15,12 +18,12 @@
   spacing: 1.5 * 15.6pt - 0.7em,
   justify: true,
   first-line-indent: (amount: 2em, all: true),
-  numbering: custom-numbering.with(first-level: "第一章 ", depth: 3, "1.1 "),
+  numbering: none,
   // 正文字体与字号参数
   text-args: auto,
   // 标题字体与字号
   heading-font: auto,
-  heading-size: (字号.四号,),
+  heading-size: none,
   heading-weight: ("regular",),
   heading-above: (2 * 15.6pt - 0.7em, 2 * 15.6pt - 0.7em),
   heading-below: (2 * 15.6pt - 0.7em, 1.5 * 15.6pt - 0.7em),
@@ -45,6 +48,24 @@
   ..args,
   it,
 ) = {
+  if numbering == none {
+    if process != "thesis" {
+      numbering = custom-numbering.with(first-level: "一  ", depth: 3, "1.1 ")
+    } else {
+      numbering = custom-numbering.with(
+        first-level: "第一章 ",
+        depth: 3,
+        "1.1 ",
+      )
+    }
+  }
+  if heading-size == none {
+    if process != "thesis" {
+      heading-size = (字号.四号, 字号.小四)
+    } else {
+      heading-size = (字号.四号, 字号.四号)
+    }
+  }
   // 0.  标志前言结束
   set page(numbering: "1")
 
@@ -89,9 +110,21 @@
   show footnote.entry: set text(font: fonts.宋体, size: 字号.五号)
   // 3.3 设置 figure 的编号
   show heading: i-figured.reset-counters
-  show figure: show-figure
+  show figure: it => {
+    if process != "thesis" {
+      show-figure(it, numbering: "1-1")
+    } else {
+      show-figure(it)
+    }
+  }
   // 3.4 设置 equation 的编号和假段落首行缩进
-  show math.equation.where(block: true): show-equation
+  show math.equation: it => {
+    if process != "thesis" {
+      show-equation(it, level: 0, numbering: "(1)")
+    } else {
+      show-equation(it)
+    }
+  }
   // 3.5 表格表头置顶 + 不用冒号用空格分割 + 样式
   show figure.where(
     kind: table,
@@ -138,7 +171,10 @@
       it
     }
   }
-
+  // 如果非论文，则display-header设置无效
+  if process != "thesis" {
+    display-header = false
+  }
   // 5.  处理页眉
   set page(..(
     if display-header {
@@ -168,13 +204,20 @@
             let current-position = here().position().page
 
             // 动态查询当前页所属的最近一级标题
-            let current-heading = all-headings.filter(h => h.location().page() <= current-position).last()
+            let current-heading = all-headings
+              .filter(h => h.location().page() <= current-position)
+              .last()
 
             // 页眉渲染
             if current-heading != none {
               // 构造章节标题显示内容
-              if current-heading.has("numbering") and current-heading.numbering != none {
-                let counter-values = counter(heading).at(current-heading.location())
+              if (
+                current-heading.has("numbering")
+                  and current-heading.numbering != none
+              ) {
+                let counter-values = counter(heading).at(
+                  current-heading.location(),
+                )
                 header-content = (
                   custom-numbering(
                     first-level: "第一章 ",

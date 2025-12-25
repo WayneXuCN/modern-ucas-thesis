@@ -7,11 +7,13 @@ authors = ["Wenjie Xu <@WayneXuCN>"]
 # UCAS logos in assets/vi/ are copyrighted by UCAS and not covered by this license.
 # See LOGO_COPYRIGHT.md for details.
 license = "MIT"
-description = "Master's or doctoral thesis at the University of Chinese Academy of Sciences."
+description = "Master's or doctoral thesis/proposal/interim at the University of Chinese Academy of Sciences."
 repository = "https://github.com/WayneXuCN/modern-ucas-thesis"
 keywords = [
     "University of Chinese Academy of Sciences",
     "UCAS",
+    "proposal",
+    "interim",
     "thesis",
     "dissertation",
     "typst",

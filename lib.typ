@@ -9,6 +9,7 @@
 #import "pages/fonts-display-page.typ": fonts-display-page
 #import "pages/bachelor-cover.typ": bachelor-cover
 #import "pages/master-cover.typ": master-cover
+#import "pages/master-proposal-cover.typ": master-proposal-cover
 #import "pages/bachelor-decl-page.typ": bachelor-decl-page
 #import "pages/master-decl-page.typ": master-decl-page
 #import "pages/bachelor-abstract.typ": bachelor-abstract
@@ -16,13 +17,16 @@
 #import "pages/bachelor-abstract-en.typ": bachelor-abstract-en
 #import "pages/master-abstract-en.typ": master-abstract-en
 #import "pages/outline-page.typ": outline-page
+#import "pages/proposal-outline-page.typ": proposal-outline-page
 #import "pages/list-of-figures-and-tables.typ": list-of-figures-and-tables
 #import "pages/notation.typ": notation
 #import "pages/acknowledgement.typ": acknowledgement
 #import "pages/backmatter.typ": backmatter
 #import "utils/bilingual-bibliography.typ": bilingual-bibliography
 #import "utils/custom-numbering.typ": custom-numbering
-#import "utils/custom-heading.typ": active-heading, current-heading, heading-display
+#import "utils/custom-heading.typ": (
+  active-heading, current-heading, heading-display,
+)
 #import "@preview/i-figured:0.2.4": show-equation, show-figure
 #import "utils/style.typ": get-fonts, 字体组, 字号
 
@@ -30,7 +34,8 @@
 
 #let documentclass(
   doctype: "doctor", // "bachelor" | "master" | "doctor" | "postdoc"，文档类型，默认为博士生 doctor
-  degree: "academic", // "academic" | "professional"，学位类型，默认为学术型 academic
+  process: "thesis", // "proposal" | "interim" | "thesis"
+  degree: "professional", // "academic" | "professional"，学位类型，默认为学术型 academic
   nl-cover: false, // TODO: 是否使用国家图书馆封面，默认关闭
   twoside: false, // 双面模式，会加入空白页，便于打印
   anonymous: false, // 盲审模式
@@ -103,6 +108,8 @@
     },
     preface: (..args) => {
       preface(
+        fonts: fonts,
+        fontset: fontset,
         twoside: twoside,
         ..args,
         fonts: fonts + args.named().at("fonts", default: (:)),
@@ -111,6 +118,7 @@
     mainmatter: (..args) => {
       if doctype == "master" or doctype == "doctor" {
         mainmatter(
+          process: process,
           twoside: twoside,
           display-header: true,
           ..args,
@@ -119,6 +127,7 @@
         )
       } else {
         mainmatter(
+          process: process,
           twoside: twoside,
           ..args,
           fonts: fonts + args.named().at("fonts", default: (:)),
@@ -143,17 +152,28 @@
     // 封面页，通过 type 分发到不同函数
     cover: (..args) => {
       if doctype == "master" or doctype == "doctor" {
-        master-cover(
-          doctype: doctype,
-          degree: degree,
-          nl-cover: nl-cover,
-          anonymous: anonymous,
-          twoside: twoside,
-          fontset: fontset,
-          ..args,
-          fonts: fonts + args.named().at("fonts", default: (:)),
-          info: info + args.named().at("info", default: (:)),
-        )
+        if process != "thesis" {
+          master-proposal-cover(
+            process: process,
+            nl-cover: nl-cover,
+            twoside: twoside,
+            fontset: fontset,
+            ..args,
+            fonts: fonts + args.named().at("fonts", default: (:)),
+            info: info + args.named().at("info", default: (:)),
+          )
+        } else {
+          master-cover(
+            doctype: doctype,
+            degree: degree,
+            nl-cover: nl-cover,
+            twoside: twoside,
+            fontset: fontset,
+            ..args,
+            fonts: fonts + args.named().at("fonts", default: (:)),
+            info: info + args.named().at("info", default: (:)),
+          )
+        }
       } else if doctype == "postdoc" {
         panic("postdoc has not yet been implemented.")
       } else {
@@ -169,7 +189,11 @@
     },
     // 声明页，通过 type 分发到不同函数
     decl-page: (..args) => {
-      if doctype == "master" or doctype == "doctor" {
+      if (
+        doctype == "master"
+          or doctype == "doctor"
+          or doctype == "master-midterm"
+      ) {
         master-decl-page(
           anonymous: anonymous,
           twoside: twoside,
@@ -192,7 +216,11 @@
     },
     // 中文摘要页，通过 type 分发到不同函数
     abstract: (..args) => {
-      if doctype == "master" or doctype == "doctor" {
+      if (
+        doctype == "master"
+          or doctype == "doctor"
+          or doctype == "master-midterm"
+      ) {
         master-abstract(
           doctype: doctype,
           degree: degree,
@@ -244,12 +272,21 @@
     },
     // 目录页
     outline-page: (..args) => {
-      outline-page(
-        twoside: twoside,
-        fontset: fontset,
-        ..args,
-        fonts: fonts + args.named().at("fonts", default: (:)),
-      )
+      if process != "thesis" {
+        proposal-outline-page(
+          twoside: twoside,
+          fontset: fontset,
+          ..args,
+          fonts: fonts + args.named().at("fonts", default: (:)),
+        )
+      } else {
+        outline-page(
+          twoside: twoside,
+          fontset: fontset,
+          ..args,
+          fonts: fonts + args.named().at("fonts", default: (:)),
+        )
+      }
     },
     // 图表目录页
     list-of-figures-and-tables: (..args) => {
@@ -264,6 +301,7 @@
     notation: (..args) => {
       notation(
         twoside: twoside,
+        fontset: fontset,
         ..args,
         fonts: fonts + args.named().at("fonts", default: (:)),
       )

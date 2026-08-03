@@ -220,8 +220,9 @@
   header: (),
   label: none,
   numbering: "1-1",
-  supplement-zh: [表],
-  supplement-en: [Table],
+  // auto：按当前是否附录自动选"表/附表"。
+  supplement-zh: auto,
+  supplement-en: auto,
   level: 1,
   zero-fill: true,
   leading-zero: true,
@@ -248,6 +249,21 @@
   let table-named = args.named()
 
   context {
+    // 解析 supplement：附录中自动用"附表/Appendix Table"，正文用"表/Table"，
+    // 用户显式传参时尊重其选择。与 show-figure 对 bifigure/bitable 的改写保持一致，
+    // 使 auto-table 的正文标题、图表目录、续表页眉前缀全部统一。
+    let appendix = bilingual-figured.in-appendix()
+    let supp-zh = if supplement-zh == auto {
+      bilingual-figured.resolve-supplement("bitable", none, appendix)
+    } else {
+      supplement-zh
+    }
+    let supp-en = if supplement-en == auto {
+      if appendix { [Appendix Table] } else { [Table] }
+    } else {
+      supplement-en
+    }
+
     let anchor-figure = figure(
       block(width: 0pt, height: 0pt)[],
       kind: "bitable",
@@ -257,8 +273,8 @@
         zh: caption-zh,
         en: caption-en,
         note: note,
-        supplement_zh: supplement-zh,
-        supplement_en: supplement-en,
+        supplement_zh: supp-zh,
+        supplement_en: supp-en,
         render: false,
       )),
     )
@@ -306,8 +322,8 @@
                   number,
                   caption-zh,
                   caption-en,
-                  supplement-zh,
-                  supplement-en,
+                  supp-zh,
+                  supp-en,
                   auto-style,
                   continued: current-page > anchor-page,
                 )

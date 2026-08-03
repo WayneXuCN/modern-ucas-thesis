@@ -23,6 +23,18 @@ THE SOFTWARE.
 
 #let _prefix = "bilingual-figured-"
 
+// 附录模式标记。附录布局（layouts/appendix.typ）将其置为 true，
+// 使图表前缀由"图/表"切换为"附图/附表"。
+// bifigure/bitable 经 show-figure 重建时改写 caption metadata；
+// auto-table 等不经 show-figure 的工具在构造时读取此 state 自行解析。
+#let _appendix-state = state("bilingual-figured-appendix", false)
+
+// 标记进入附录模式，返回不可见内容，须插入文档流生效。
+#let enter-appendix-mode() = _appendix-state.update(true)
+
+// 在 context 内查询当前是否处于附录模式。
+#let in-appendix() = _appendix-state.get()
+
 #let prefixed-kind(kind) = {
   if type(kind) == str {
     _prefix + kind
@@ -86,6 +98,34 @@ THE SOFTWARE.
   dic + (numbering: n => _typst-numbering(numbering, ..numbers, n))
 }
 
+// 当原 caption 为双语 metadata 时，用给定 supplement 覆盖其中的
+// supplement_zh / supplement_en，返回新的 figure.caption；否则原样返回。
+// 供附录等需要改写图表前缀（如"图"→"附图"）的场景使用。
+#let _with-supplement(cap, supplement-zh, supplement-en) = {
+  if supplement-zh == none and supplement-en == none {
+    cap
+  } else if cap == none or not cap.has("body") {
+    cap
+  } else {
+    let body = cap.body
+    let is-meta = (
+      type(body) == metadata or (type(body) == content and body.has("value"))
+    )
+    if not is-meta or type(body.value) != dictionary {
+      cap
+    } else {
+      let new-value = body.value
+      if supplement-zh != none {
+        new-value = new-value + (supplement_zh: supplement-zh)
+      }
+      if supplement-en != none {
+        new-value = new-value + (supplement_en: supplement-en)
+      }
+      figure.caption(metadata(new-value))
+    }
+  }
+}
+
 #let show-figure(
   it,
   level: 1,
@@ -94,6 +134,10 @@ THE SOFTWARE.
   numbering: "1-1",
   extra-prefixes: (:),
   fallback-prefix: "fig:",
+  // 覆盖双语 caption 的 supplement（如附录用"附图/附表"）。
+  // 为 none 时不覆盖，保留调用方（bifigure/bitable）传入的原值。
+  supplement-zh: none,
+  supplement-en: none,
 ) = {
   if type(it.kind) == str and it.kind.starts-with(_prefix) {
     it
@@ -102,6 +146,11 @@ THE SOFTWARE.
       it.body,
       .._prepare-dict(it, level, zero-fill, leading-zero, numbering),
       kind: prefixed-kind(it.kind),
+      caption: _with-supplement(
+        it.caption,
+        supplement-zh,
+        supplement-en,
+      ),
     )
     if it.has("label") {
       let kind-key = if type(it.kind) == str { it.kind } else { repr(it.kind) }
@@ -193,6 +242,22 @@ THE SOFTWARE.
   (zh: [表], en: [Table])
 } else {
   (zh: [图], en: [Figure])
+}
+
+// 按图表种类与当前是否附录，解析 supplement 默认值。
+// supp 为 none 时按 kind 与附录状态返回"图/附图"或"表/附表"；
+// 非 none 时（用户显式指定）原样返回，尊重用户覆盖。
+// 供 auto-table 等不经 show-figure 重建的工具在构造时解析前缀。
+#let resolve-supplement(kind, supp, appendix) = {
+  if supp != none {
+    supp
+  } else if appendix {
+    if is-kind(kind, "bitable") or is-kind(kind, "table") { [附表] } else {
+      [附图]
+    }
+  } else {
+    _default-supplements(kind).zh
+  }
 }
 
 #let _bilingual-caption-data(

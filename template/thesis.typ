@@ -745,6 +745,123 @@ $] <app-taylor>
 
 由 @eqt:app-taylor 可以得到自然指数函数的 Taylor 展开。
 
+== 附录中的图表
+
+附录中的图表与正文使用相同的 `bifigure`/`bitable`/`auto-table`/`continued-table` 函数，无需额外传参。模板会自动将附录图表的前缀由正文的"图/表"切换为"附图/附表"（英文 `Appendix Figure`/`Appendix Table`），并使编号在附录内从 1 重新计数（如附图1-1、附表1-1），符合《撰写规范》"附录的图表参考正文的编号方式，如附图1-1或附表1-1"的要求。引用方式与正文一致，统一使用带前缀引用：`@fig:label`、`@tbl:label`。
+
+=== 附录中的图与表
+
+#bifigure(
+  image("images/ucas-emblem.svg", width: 10%),
+  caption-zh: [附录插图示例],
+  caption-en: [Appendix Figure Example],
+) <app-emblem>
+
+如 @fig:app-emblem 所示，附录插图自动以"附图1-1"编号。
+
+#bitable(
+  table(
+    columns: (auto, auto),
+    align: center + horizon,
+    stroke: none,
+    table.hline(),
+    [项目], [说明],
+    table.hline(stroke: .5pt),
+    [前缀], [附图 / 附表],
+    [编号], [附录内从 1 重新计数],
+    table.hline(),
+  ),
+  caption-zh: [附录表格示例],
+  caption-en: [Appendix Table Example],
+) <app-summary>
+
+如 @tbl:app-summary 所示，附录表格自动以"附表1-1"编号。
+
+=== 附录中的续表
+
+附录中的 `auto-table` 与 `continued-table` 同样会自动使用"附表"前缀。当附录表格数据较多需要跨页时，使用 `auto-table` 可自动在续页显示"续表"标记和表头；若希望精确控制续表位置，可先创建原表再用 `continued-table` 续接，其 `source` 参数须使用带前缀的标签 `<tbl:...>`。
+
+#auto-table(
+  caption-zh: [附录自动续表示例],
+  caption-en: [Appendix Auto-continued Table Example],
+  columns: 2,
+  align: center,
+  stroke: none,
+  header: (
+    table.hline(),
+    [序号],
+    [说明],
+    table.hline(stroke: .5pt),
+  ),
+  label: <app-auto>,
+  [1],
+  [附录续表第一项],
+  [2],
+  [附录续表第二项],
+  [3],
+  [附录续表第三项],
+  [4],
+  [附录续表第四项],
+  [5],
+  [附录续表第五项],
+  [6],
+  [附录续表第六项],
+  [7],
+  [附录续表第七项],
+  [8],
+  [附录续表第八项],
+  [9],
+  [附录续表第九项],
+  [10],
+  [附录续表第十项],
+  [11],
+  [附录续表第十一项],
+  [12],
+  [附录续表第十二项],
+  [13],
+  [附录续表第十三项],
+  [14],
+  [附录续表第十四项],
+  [15],
+  [附录续表第十五项],
+  [16],
+  [附录续表第十六项],
+  [17],
+  [附录续表第十七项],
+  [18],
+  [附录续表第十八项],
+  [19],
+  [附录续表第十九项],
+  [20],
+  [附录续表第二十项],
+  table.hline(),
+)
+
+自动续表示例可通过 @tbl:app-auto 引用。
+
+// 手动续表：source 须使用带前缀的标签 <tbl:...>
+#continued-table(
+  <tbl:app-summary>,
+  align(center)[
+    #table(
+      columns: (auto, auto),
+      align: center + horizon,
+      stroke: none,
+      table.hline(),
+      [项目], [补充说明],
+      table.hline(stroke: .5pt),
+      [前缀], [由"表"切换为"附表"],
+      [编号], [与原表一致，附表1-1],
+      table.hline(),
+    )
+  ],
+  note: [附录续表继承原表的"附表"前缀与编号。],
+)
+
+=== 无编号的展示性表格
+
+附录中的对照表、说明性表格若无需编号、无需收录于图表目录，可直接使用原生 `table` 函数，并用 `#align(center)[#strong[...]]` 手动添加居中加粗标题。此类表格不参与图表编号，与上文 `bitable`（编号为附表1-1、收录于图表目录）形成互补：需要引用的表格用 `bitable`，仅作展示的表格用原生 `table`。
+
 #align(center)[#strong[学位类别中英文对照表]]
 
 #let scd = [学术型\ 博士]

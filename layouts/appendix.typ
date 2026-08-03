@@ -1,18 +1,55 @@
 #import "../utils/bilingual-figured.typ"
 #import "../utils/custom-numbering.typ": custom-numbering
 
+// 附录图表"参考正文的编号方式，如附图1-1或附表1-1"，
+// 即附录中图/表的前缀须为"附图/附表"（英文 Appendix Figure / Appendix Table），
+// 与正文的"图/表"区分。supplement 写在双语 caption 的 metadata 中、绕开
+// Typst 原生 supplement 字段，故须在 show-figure 重建 figure 时改写 metadata。
+// 此函数按 kind 自动选择附图/附表前缀，再交由通用 show-figure 重建。
+#let _appendix-show-figure(
+  numbering: "1-1",
+  supplement-zh-figure: [附图],
+  supplement-en-figure: [Appendix Figure],
+  supplement-zh-table: [附表],
+  supplement-en-table: [Appendix Table],
+  it,
+) = {
+  let is-table = (
+    bilingual-figured.is-kind(it.kind, "bitable")
+      or bilingual-figured.is-kind(
+        it.kind,
+        "table",
+      )
+  )
+  bilingual-figured.show-figure(
+    it,
+    numbering: numbering,
+    supplement-zh: if is-table { supplement-zh-table } else {
+      supplement-zh-figure
+    },
+    supplement-en: if is-table { supplement-en-table } else {
+      supplement-en-figure
+    },
+  )
+}
+
 // 后记，重置 heading 计数器
 #let appendix(
   numbering: custom-numbering.with(first-level: "", depth: 4, "1.1 "),
-  // figure 计数
-  show-figure: bilingual-figured.show-figure.with(numbering: "1-1"),
+  // figure 计数（附录图表前缀为"附图/附表"，编号 1-1）
+  show-figure: _appendix-show-figure.with(numbering: "1-1"),
   // equation 计数
   show-equation: bilingual-figured.show-equation.with(numbering: "(1-1)"),
-  // 重置计数
-  reset-counter: false,
+  // 重置计数：附录作为独立编号单元，图表/公式编号从 1 开始（附图1-1、附表1-1），
+  // 而非继承正文章号（否则会显示附图4-1）。reset-counter 同时重置 heading 计数器，
+  // 不影响附录标题显示（first-level 为空）及后续致谢/简历（同样无章号）。
+  reset-counter: true,
   it,
 ) = {
   set heading(numbering: numbering)
+  // 标记附录模式：bifigure/bitable 经 _appendix-show-figure 改写前缀为"附图/附表"，
+  // auto-table 等通过 in-appendix() 读取此标记自行解析 supplement。
+  bilingual-figured.enter-appendix-mode()
   // UCAS 规范：附录在目录中只列一级标题（与参考文献/致谢等"其他"项一致），
   // 故将附录二、三、四级标题排除出目录。outlined: false 仅影响目录收录，
   // 不影响编号显示（附录子节仍按 1.1 / 1.1.1 编号）。

@@ -93,6 +93,6 @@
 
     #v(1em)
 
-    *关键词：*#(("",) + keywords.intersperse("；")).sum()
+    *关键词：*#(("",) + keywords.intersperse("，")).sum()
   ]
 }

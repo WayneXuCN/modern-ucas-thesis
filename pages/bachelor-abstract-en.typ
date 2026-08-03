@@ -80,6 +80,6 @@
 
     #v(1em)
 
-    KEYWORDS: #(("",) + keywords.intersperse("; ")).sum()
+    KEYWORDS: #(("",) + keywords.intersperse(", ")).sum()
   ]
 }

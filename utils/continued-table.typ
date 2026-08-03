@@ -330,6 +330,11 @@
   supplement-zh: auto,
   supplement-en: auto,
   note: none,
+  numbering: "1-1",
+  level: 1,
+  zero-fill: true,
+  leading-zero: true,
+  kind: "bitable",
   style: (:),
   body,
 ) = context {
@@ -357,10 +362,23 @@
     panic("continued-table 需要 caption-zh，或确保源表具有双语标题元数据")
   }
 
-  let number = bilingual-figured.display-figure-number(origin)
+  // 续表编号必须与原表一致（章节号 + 表序号），故沿用 auto-table 的
+  // _display-table-number，而非 display-figure-number——后者只取 figure
+  // 计数器单值，会把章节号位错填成表序号，渲染成「表 1」而非「表 1-1」。
+  let number = _display-table-number(
+    origin.location(),
+    numbering: numbering,
+    level: level,
+    zero-fill: zero-fill,
+    leading-zero: leading-zero,
+    kind: kind,
+  )
   let merged-style = _default-continuation-style + style
 
-  block(..merged-style.continued_block)[
+  // 外层 block 必须占满正文宽度（width: 100%），否则 block 按内容收缩后
+  // 被置于页面左侧，_render-caption 内部的 set align(center) 只能让标题在
+  // 收缩后的小 block 内居中，整体仍偏左。auto-table 同样以 width: 100% 解决。
+  block(width: 100%, ..merged-style.continued_block)[
     #_render-caption(
       number,
       zh,

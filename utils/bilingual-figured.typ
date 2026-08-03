@@ -32,8 +32,11 @@ THE SOFTWARE.
 }
 
 #let is-kind(kind-value, kind) = {
-  type(kind-value) == str and (
-    kind-value == kind or kind-value == prefixed-kind(kind)
+  (
+    type(kind-value) == str
+      and (
+        kind-value == kind or kind-value == prefixed-kind(kind)
+      )
   )
 }
 
@@ -103,11 +106,14 @@ THE SOFTWARE.
     if it.has("label") {
       let kind-key = if type(it.kind) == str { it.kind } else { repr(it.kind) }
       let prefixes = (
-        table: "tbl:",
-        raw: "lst:",
-        bitable: "tbl:",
-        bifigure: "fig:",
-      ) + extra-prefixes
+        (
+          table: "tbl:",
+          raw: "lst:",
+          bitable: "tbl:",
+          bifigure: "fig:",
+        )
+          + extra-prefixes
+      )
       let label-text = str(it.label)
       let prefix = prefixes.at(kind-key, default: fallback-prefix)
       let new-label = label(if label-text.starts-with(prefix) {
@@ -135,11 +141,11 @@ THE SOFTWARE.
 ) = {
   if (
     only-labeled and not it.has("label")
-    or it.has("label") and (
-      str(it.label).starts-with(prefix)
-      or str(it.label) == unnumbered-label
-    )
-    or not it.block
+      or it.has("label")
+        and (
+          str(it.label).starts-with(prefix) or str(it.label) == unnumbered-label
+        )
+      or not it.block
   ) {
     it
   } else {
@@ -195,12 +201,16 @@ THE SOFTWARE.
   note,
   supplement-zh,
   supplement-en,
+  // 当需要外部自定义渲染（如续表页眉）时可设为 false。
+  // 默认 true，保持 bilingual-figured 的原生渲染行为不变。
+  render: true,
 ) = (
   zh: caption-zh,
   en: caption-en,
   note: note,
   supplement_zh: supplement-zh,
   supplement_en: supplement-en,
+  render: render,
 )
 
 #let extract-bilingual-caption(fig) = {
@@ -213,8 +223,7 @@ THE SOFTWARE.
     } else {
       let body = caption.body
       let is-meta = (
-        type(body) == metadata
-          or (type(body) == content and body.has("value"))
+        type(body) == metadata or (type(body) == content and body.has("value"))
       )
       if not is-meta {
         none
@@ -226,13 +235,19 @@ THE SOFTWARE.
           none
         })
         if type(value) == dictionary {
-          let zh = value.at("zh", default: value.at("caption_zh", default: none))
+          let zh = value.at("zh", default: value.at(
+            "caption_zh",
+            default: none,
+          ))
           if zh == none {
             none
           } else {
             (
               zh: zh,
-              en: value.at("en", default: value.at("caption_en", default: none)),
+              en: value.at("en", default: value.at(
+                "caption_en",
+                default: none,
+              )),
               note: value.at("note", default: none),
               supplement_zh: value.at(
                 "supplement_zh",
@@ -242,6 +257,7 @@ THE SOFTWARE.
                 "supplement_en",
                 default: default-supp.en,
               ),
+              render: value.at("render", default: true),
             )
           }
         } else if type(value) == array and value.len() >= 1 {
@@ -251,6 +267,7 @@ THE SOFTWARE.
             note: value.at(2, default: none),
             supplement_zh: value.at(3, default: default-supp.zh),
             supplement_en: value.at(4, default: default-supp.en),
+            render: value.at(5, default: true),
           )
         } else {
           none
@@ -400,29 +417,37 @@ THE SOFTWARE.
     it
   } else {
     let merged-style = _default-bilingual-style + style
-    let number = it.counter.display(it.numbering)
-    let title = _render-bilingual-caption(data, number, merged-style)
-    let note = _render-bilingual-note(data, merged-style)
-    let stacked = if title_on_top {
-      [#title #it.body #note]
+    if data.render == false {
+      it
     } else {
-      [#it.body #title #note]
-    }
-    let rendered = if merged-style.keep_together {
-      block(breakable: false, stacked)
-    } else {
-      stacked
-    }
+      let number = it.counter.display(it.numbering)
+      let title = _render-bilingual-caption(data, number, merged-style)
+      let note = _render-bilingual-note(data, merged-style)
+      let stacked = if title_on_top {
+        [#title #it.body #note]
+      } else {
+        [#it.body #title #note]
+      }
+      let rendered = if merged-style.keep_together {
+        block(breakable: false, stacked)
+      } else {
+        stacked
+      }
 
-    if it.placement != none {
-      place(it.placement, float: true, clearance: merged-style.float_clearance)[
-        #align(
-          merged-style.float_align,
-          block(width: merged-style.float_width, rendered),
-        )
-      ]
-    } else {
-      rendered
+      if it.placement != none {
+        place(
+          it.placement,
+          float: true,
+          clearance: merged-style.float_clearance,
+        )[
+          #align(
+            merged-style.float_align,
+            block(width: merged-style.float_width, rendered),
+          )
+        ]
+      } else {
+        rendered
+      }
     }
   }
 }
@@ -494,7 +519,9 @@ THE SOFTWARE.
     it
   } else {
     let use-en = lang == "en" and data.en != none
-    let supplement = if use-en { data.supplement_en } else { data.supplement_zh }
+    let supplement = if use-en { data.supplement_en } else {
+      data.supplement_zh
+    }
     let title = if use-en { data.en } else { data.zh }
     let number = display-figure-number(fig)
     let row = it.indented(

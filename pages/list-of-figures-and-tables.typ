@@ -70,11 +70,13 @@
     )
 
     if is-bilingual {
-      bilingual-figured.show-bilingual-outline-entry.with(
-        lang: "zh",
-        above: actual-above,
-        below: actual-below,
-      )(it)
+      bilingual-figured
+        .show-bilingual-outline-entry
+        .with(
+          lang: "zh",
+          above: actual-above,
+          below: actual-below,
+        )(it)
     } else {
       it
     }

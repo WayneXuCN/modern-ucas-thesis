@@ -63,19 +63,27 @@
 
 #let _thesis-style(fonts) = thesis-bilingual-caption-style(fonts)
 
-#let show-bifigure(fonts, kind: "bifigure") = it => bilingual-figured.show-bifigure(
+#let show-bifigure(
+  fonts,
+  kind: "bifigure",
+) = it => bilingual-figured.show-bifigure(
   it,
   kind: kind,
   style: _thesis-style(fonts),
 )
 
-#let show-bitable(fonts, kind: "bitable") = it => bilingual-figured.show-bitable(
+#let show-bitable(
+  fonts,
+  kind: "bitable",
+) = it => bilingual-figured.show-bitable(
   it,
   kind: kind,
   style: _thesis-style(fonts),
 )
 
-#let show-bilingual-outline-entry(_fonts) = it => bilingual-figured.show-bilingual-outline-entry(
+#let show-bilingual-outline-entry(
+  _fonts,
+) = it => bilingual-figured.show-bilingual-outline-entry(
   it,
 )
 

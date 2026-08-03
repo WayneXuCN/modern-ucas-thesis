@@ -13,6 +13,8 @@
   it,
 ) = {
   set heading(numbering: numbering)
+  // 公式编号对齐到最后一行右侧（UCAS 规范：序号编于最后一行右顶格）
+  set math.equation(number-align: bottom + end)
   if reset-counter {
     counter(heading).update(0)
   }

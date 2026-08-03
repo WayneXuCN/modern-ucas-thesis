@@ -1,5 +1,5 @@
-#import "@preview/modern-ucas-thesis:0.2.0": documentclass
-// #import "../lib.typ": documentclass
+//#import "@preview/modern-ucas-thesis:0.2.0": documentclass
+#import "../lib.typ": documentclass
 // 你首先应该安装 fonts下的所有字体，或在编译的时候指定字体路径：
 // typst watch template/thesis.typ --font-path ./fonts
 // 如果是 Web App 上编辑，你应该手动上传所有字体文件，否则部分字体不能正常使用，导致显示错误。
@@ -24,6 +24,9 @@
   backmatter,
   bifigure,
   bitable,
+  continued-table,
+  auto-table,
+  aligned-equation,
 ) = documentclass(
   doctype: "doctor", // "bachelor" | "master" | "doctor" | "postdoc", 文档类型，默认为博士生 doctor
   degree: "academic", // "academic" | "professional", 学位类型，默认为学术型 academic
@@ -76,7 +79,7 @@
 
 // 中文摘要
 #abstract(keywords: ("中国科学院大学", "学位论文", "模板"))[
-  中文摘要、英文摘要、目录、论文正文、参考文献、附录、致谢、攻读学位期间 发表的学术论文与其他相关学术成果等均须由另页右页（奇数页）开始。
+  中文摘要、英文摘要、目录、论文正文、参考文献、附录、致谢、攻读学位期间发表的学术论文与其他相关学术成果等均须由另页右页（奇数页）开始。
 ]
 
 // 英文摘要
@@ -188,27 +191,119 @@
     [Emacs], [Emacs], [native], [webview], [是], [良好],
     [typst-cli], [任意编辑器], [native], [PDF阅读器], [否], [无],
   ),
-  caption-zh: [支持的Typst的编译环境和编辑器],
-  caption-en: [Supported Typst Compilation Environments and Editors],
-)<tab:Typst_intro>
+  kind: table,
+  caption: metadata((
+    [支持的Typst的编译环境和编辑器],
+    [Supported Typst Compilation Environments and Editors],
+    none,
+    [表],
+    [Table],
+  )),
+) <tbl:Typst_intro>
 
 = Typst使用说明<chap:guide>
 
 为了方便使用并更好地展示Typst的现代排版特性，本模板框架和文件结构经过精细设计，尽可能模块化各个功能和板块，以方便用户进行高效编辑。
 
-== 文档目录简介
-=== template目录
-- `thesis.typ` 文件: 你的论文源文件，可以随意更改这个文件的名字，甚至你可以将这个文件在同级目录下复制多份，维持多个版本。
-- `ref.bib` 文件: 用于放置参考文献。
-- `images` 目录: 用于放置图片。。
+== 项目结构简介
 
-=== 编译脚本
-为方便本地编译，提供适用于不同操作系统的命令：
+=== 编译方法
 
-- Windows：通过 `typst compile thesis.typ` 生成PDF文件。
-- Linux或MacOS：在终端中运行 `typst compile thesis.typ` 来快速编译。
+Typst CLI 提供两种编译方式：
 
-在写作过程中，Typst支持实时预览，无需重复执行编译命令。
+(a) `compile`：用于单次编译生成 PDF
+
+(b) `watch` ：持续监听文件变更并自动重新编译。
+
+本模板需配置并使用 `fonts/` 目录下的字体，可通过 `--font-path` 选项指定，即：```bash typst compile template/thesis.typ --font-path fonts```。此外，`--open` 选项可在编译完成后自动打开 PDF，`-o <FILE>` 可指定输出文件路径。
+
+
+=== 项目根目录
+
+(a) `lib.typ`：模板库入口文件，定义了 `documentclass` 函数，用于配置文档类型、字体、论文信息等全局参数。
+
+(b) `typst.toml`：模板配置文件，包含模板元数据、版本信息及导出配置。
+
+(c) `README.md`：模板说明文档。
+
+(d) `LICENSE`：开源许可证文件。
+
+(e) `Makefile`：编译脚本，提供便捷的编译命令。
+
+(f) `format-typst.sh`：代码格式化脚本。
+
+=== template 文件夹
+
+存放论文主文件及章节内容，是撰写论文时主要关注和修改的位置。当前结构仅供参考，用户可按个人习惯自由组织。
+
+(a) `thesis.typ`：论文主文件，包含文档配置、页面生成及章节引用。
+
+(b) `ref.bib`：参考文献数据库文件
+
+(c) `images/`：图片资源目录
+
+
+=== layouts 文件夹
+
+包含文档布局定义文件，控制论文各部分的页面布局。
+
+(a) `doc.typ`：文档整体布局设置，包含页面尺寸、页边距、页眉页脚等。
+
+(b) `preface.typ`：前言部分布局（摘要、目录等）。
+
+(c) `mainmatter.typ`：正文部分布局。
+
+(d) `appendix.typ`：附录部分布局。
+
+=== pages 文件夹
+
+包含各类页面的具体实现，如封面、声明、摘要等。
+
+(a) `master-cover.typ` / `bachelor-cover.typ`：研究生/本科生封面页。
+
+(b) `master-decl-page.typ` / `bachelor-decl-page.typ`：研究生/本科生声明页。
+
+(c) `master-abstract.typ` / `bachelor-abstract.typ`：中文摘要页。
+
+(d) `master-abstract-en.typ` / `bachelor-abstract-en.typ`：英文摘要页。
+
+(e) `outline-page.typ`：目录页。
+
+(f) `list-of-figures-and-tables.typ`：图表目录页。
+
+(g) `notation.typ`：符号表页。
+
+(h) `acknowledgement.typ`：致谢页。
+
+(i) `backmatter.typ`：后置部分（作者简介、学术成果等）。
+
+(j) `fonts-display-page.typ`：字体展示测试页。
+
+=== utils 文件夹
+
+包含各类工具函数和辅助模块。
+
+(a) `bilingual-bibliography.typ`：双语参考文献处理。
+
+(b) `custom-figure.typ`：模板内双语图表封装（`bifigure`, `bitable`，供论文正文直接调用，默认避免图表标题与主体跨页拆分）。
+
+(c) `bilingual-figured.typ`：通用图表编号/双语标题引擎（可独立作为外部包引用）。
+
+(d) `continued-table.typ`：续表工具（统一提供 `auto-table` 自动续表与 `continued-table` 手动续表）。
+
+(e) `aligned-equation.typ`：多行对齐公式。
+
+(f) `custom-numbering.typ` / `custom-heading.typ`：自定义编号和标题样式。
+
+(g) `style.typ`：字体和样式定义。
+
+=== 其他文件夹
+
+`fonts` 存放模板所需的字体文件，包括宋体、黑体、楷体、Times New Roman 等。编译时需通过 `--font-path` 指定此目录。
+
+`assets` 文件夹存放模板使用的静态资源，如校徽 `ucas-emblem.svg` 等。
+
+`docs` 文件夹存放模板的相关文档，如定制指南、版权声明等。
 
 == 功能介绍
 
@@ -233,7 +328,7 @@
 使用 `grid` 函数实现多图排列，每个子图仍使用 `bifigure` 函数以支持独立的双语标题。子图可通过 `note` 参数添加注释，注释会显示在子图标题下方，并以"注："开头。
 
 若需要调整双语标题行距、段前段后间距或跨页策略，可在
-`utils/thesis-bilingual-figure.typ` 中修改 `thesis-bilingual-caption-style`。
+`utils/custom-figure.typ` 中修改 `thesis-bilingual-caption-style`。
 
 === 表格
 
@@ -286,20 +381,112 @@
   caption-zh: [带注释的实验数据表],
   caption-en: [Experimental Data Table with Note],
   note: [所有数值均为三次测量的平均值。],
-) <tab:with-note>
+) <with-note>
 
-#bifigure(
-  image("images/ucas-emblem.svg", width: 20%),
-  caption-zh: [图片测试],
-  caption-en: [Image Test],
-) <ucas-logo>
+上述表示例可通过 @tbl:timing、@tbl:timing-tlt、@tbl:with-note 引用。
 
-#bifigure(
-  image("images/ucas-emblem.svg", width: 15%),
-  caption-zh: [带注释的校徽图],
-  caption-en: [UCAS Emblem with Note],
-  note: [这是中国科学院大学的校徽，采用SVG矢量格式绘制，可在任意分辨率下保持清晰。],
-) <fig:with-note>
+==== 自动续表
+
+当表格数据较多需要跨页时，使用 `auto-table` 可以自动在续页显示"续表"标记和表头。
+`auto-table` 会主动采用可分页渲染，因此不受 `bitable` 默认 `keep_together: true` 的防跨页约束，适合长表。
+
+#let regional-base = (
+  ([北京], [41611], [5.2], [2184], [190580]),
+  ([上海], [47218], [5.0], [2487], [189880]),
+  ([广东], [135010], [4.8], [12701], [106310]),
+  ([江苏], [128222], [5.8], [8515], [150520]),
+  ([浙江], [82553], [6.0], [6577], [125520]),
+  ([山东], [92069], [5.5], [10163], [90590]),
+  ([四川], [60133], [5.8], [8372], [71830]),
+  ([湖北], [55803], [5.6], [5775], [96620]),
+  ([福建], [54355], [5.1], [4188], [129800]),
+  ([湖南], [50015], [4.9], [6622], [75530]),
+  ([河北], [36137], [5.3], [5665], [64280]),
+  ([安徽], [38728], [5.7], [5142], [70820]),
+  ([河南], [48206], [5.4], [6478], [71050]),
+  ([广西], [23778], [4.6], [3038], [49320]),
+  ([江西], [26907], [5.0], [3481], [77230]),
+  ([山西], [23134], [5.1], [3056], [49780]),
+)
+
+#let regional-rows = ()
+#for round in range(1, 6) {
+  for row in regional-base {
+    regional-rows.push(row.at(0))
+    regional-rows.push(row.at(1))
+    regional-rows.push(row.at(2))
+    regional-rows.push(row.at(3))
+    regional-rows.push(row.at(4))
+  }
+}
+
+#auto-table(
+  caption-zh: [各地区经济指标],
+  caption-en: [Regional Economic Indicators],
+  columns: 5,
+  align: center,
+  stroke: none,
+  header: (
+    table.hline(),
+    [地区],
+    [GDP（亿元）],
+    [增长率（%）],
+    [人口（万）],
+    [人均GDP（元）],
+    table.hline(stroke: .5pt),
+  ),
+  label: <regional>,
+  ..regional-rows,
+  table.hline(),
+)
+
+自动续表示例可通过 @tbl:regional 引用。
+
+==== 手动续表
+
+如果不启用自动续表，或希望精确控制续表位置，可以使用 `continued-table`：
+
+// 先创建原表
+#bitable(
+  table(
+    columns: (auto, auto, auto, auto),
+    align: center + horizon,
+    stroke: none,
+    table.hline(),
+    [项目], [测试组], [数值], [单位],
+    table.hline(stroke: .5pt),
+    [A], [I], [10.5], [cm],
+    [B], [I], [20.3], [kg],
+    [C], [I], [15.2], [m/s],
+    [D], [I], [8.7], [kg],
+    table.hline(),
+  ),
+  caption-zh: [实验数据],
+  caption-en: [Experimental Data],
+) <manual-continued>
+
+// 手动续表
+#continued-table(
+  <tbl:manual-continued>,
+  note: [续表数据为补充实验结果。],
+  align(center)[
+    #table(
+      columns: (auto, auto, auto, auto),
+      align: center + horizon,
+      stroke: none,
+      table.hline(),
+      [项目], [测试组], [数值], [单位],
+      table.hline(stroke: .5pt),
+      [E], [II], [11.8], [cm],
+      [F], [II], [19.6], [kg],
+      [G], [II], [14.1], [m/s],
+      [H], [II], [9.2], [kg],
+      table.hline(),
+    )
+  ],
+)
+
+原表可通过 @tbl:manual-continued 引用。
 
 === 数学公式
 
@@ -307,17 +494,28 @@
 
 $ phi.alt := (1 + sqrt(5)) / 2 $ <ratio>
 
-引用数学公式需要加上 `eqt:` 前缀，则由@eqt:ratio，我们有：
+引用按章节编号的数学公式需要加上 `eqt:` 前缀，则由@eqt:ratio，我们有：
 
 $ F_n = floor(1 / sqrt(5) phi.alt^n) $
 
-我们也可以通过 `<->` 标签来标识该行间公式不需要编号
+也可以通过 `<->` 标签来标识该行间公式不需要编号
 
 $ y = integral_1^2 x^2 dif x $ <->
 
 而后续数学公式仍然能正常编号。
 
 $ F_n = floor(1 / sqrt(5) phi.alt^n) $
+
+较长的数学公式如必须分行书写，只能在`+,-,×,÷,＜,＞`等运算符
+之后转行，序号编于最后一行右顶格使用 `aligned-equation` 可将编号对齐到最后一行右侧：
+
+#aligned-equation[$
+  f(x) & = a x^2 + b x + c \
+       & = a(x^2 + b/a x) + c \
+       & = a(x + b/(2a))^2 + c - b^2/(4a)
+$] <quadratic>
+
+由 @eqt:quadratic 可知，任意二次函数都可以化为顶点式。
 
 === 参考文献
 
@@ -519,7 +717,7 @@ $ F_n = floor(1 / sqrt(5) phi.alt^n) $
 
 == 排版与印刷要求
 
-#bitable(
+#figure(
   table(
     align: center,
     columns: 2,
@@ -530,9 +728,15 @@ $ F_n = floor(1 / sqrt(5) phi.alt^n) $
     [页眉], [宋体小五号居中，英文和阿拉伯数字用Times New Roman体],
     [页码], [Times New Roman体小五号],
   ),
-  caption-zh: [排版和印刷要求],
-  caption-en: [Typesetting and Printing Requirements],
-)<tab:typo_and_print_require>
+  kind: table,
+  caption: metadata((
+    [排版和印刷要求],
+    [Typesetting and Printing Requirements],
+    none,
+    [表],
+    [Table],
+  )),
+)<tbl:typo_and_print_require>
 
 === 印刷及装订要求
 论文封面使用中国科学院大学统一的封面格式。学位论文用A4标准纸（210 mm×297
@@ -555,6 +759,17 @@ mm）打印、印刷或复印，按顺序装订成册。自中文摘要起双面
 #show: appendix
 
 = 附录
+
+== 附录中的多行公式
+
+附录中的多行公式使用 `aligned-equation` 函数，编号对齐到最后一行右侧：
+
+#aligned-equation[$
+  e^x & = sum_(n=0)^infinity x^n / n! \
+      & = 1 + x + x^2/2 + x^3/6 + dots.c
+$] <app-taylor>
+
+由 @eqt:app-taylor 可以得到自然指数函数的 Taylor 展开。
 
 #align(center)[#strong[学位类别中英文对照表]]
 

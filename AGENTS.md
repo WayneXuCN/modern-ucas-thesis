@@ -45,7 +45,7 @@ make lint                   # 需 typst/package-check（make lint-install 安装
   - `doc.typ`：全局 `set page`（A4，上下 2.54cm / 左右 3.17cm，页眉页脚距边界 1.5cm）、PDF 元信息、中文伪加粗（非 fandol 字体组经 `@preview/cuti:0.4.0` 的 `show-cn-fakebold` 启用——改 `doc.typ` 时不要漏掉这条 `show` 规则）。
   - `preface.typ`：前置部分，罗马数字页码。
   - `mainmatter.typ`：正文，阿拉伯页码，章节编号（`custom-numbering`，默认 `第1章` / `1.1`），1.25 倍行距，首行缩进 2em，页眉显示当前章名。一级标题前默认 `pagebreak(weak: true)`；若需禁止（如"致谢"紧接上文），给标题打标签 `<no-auto-pagebreak>`，`mainmatter.typ` 会识别。
-  - `appendix.typ`：附录。一级标题无编号（`custom-numbering` 的 `first-level: ""`），子节 `1.1`，图表 `1-1`，公式 `(1-1)`。附录公式加"附"前缀时调用 `aligned-equation(..., prefix: "附")`。
+  - `appendix.typ`：附录。一级标题无编号（`custom-numbering` 的 `first-level: ""`），子节 `1.1`，图表 `1-1`，公式 `(1-1)`。
 - `pages/`：具体页面内容实现，`bachelor-*` 与 `master-*` 成对存在。
 - `utils/`：可复用构件（见下）。
 
@@ -55,12 +55,12 @@ make lint                   # 需 typst/package-check（make lint-install 安装
 - `bilingual-figured.typ`：**通用双语图表引擎**（源自 RubixDev，可独立作为外部包使用）。提供 `bifigure`/`bitable`/`bilingual-caption-style` 及计数器重置逻辑，通过 `prefixed-kind` 区分双语图表种类。
 - `custom-figure.typ`：模板内层封装，用 `thesis-bilingual-caption-style` 给引擎套上 UCAS 规范样式（宋体五号加粗、`*注：*` 前缀、`keep_together: true` 默认防跨页）。修改双语标题行距/跨页策略改这里。
 - `continued-table.typ`：`auto-table`（自动跨页续表，主动分页，不受 `keep_together` 约束，适合长表）+ `continued-table`（手动续表，需先有原表 label）。
-- `aligned-equation.typ`：多行对齐公式，编号右对齐到最后一行；附录用 `prefix: "附"`。
+- `aligned-equation.typ`：多行对齐公式，纯透传（语义标记）；编号底部对齐由 `mainmatter`/`appendix` 全局 `set math.equation(number-align: bottom + end)` 提供。
 - `custom-heading.typ`：`active-heading`/`current-heading` 供页眉显示当前章名。
 
 ### 交叉引用约定
 
-正文统一使用带前缀引用：图 `@fig:label`、表 `@tbl:label`、行间公式 `@eqt:label`（`aligned-equation` 用 `@eq:label`）。行间公式加 `<->` 标签表示不编号。双语标题通过 `caption-zh`/`caption-en` 传入，或用 `caption: metadata((zh, en, none, [表], [Table]))` 形式（`bitable` 兼容原生 `figure` 的 metadata 写法）。
+正文统一使用带前缀引用：图 `@fig:label`、表 `@tbl:label`、行间公式 `@eqt:label`（`aligned-equation` 同样用 `@eqt:label`）。行间公式加 `<->` 标签表示不编号。双语标题通过 `caption-zh`/`caption-en` 传入，或用 `caption: metadata((zh, en, none, [表], [Table]))` 形式（`bitable` 兼容原生 `figure` 的 metadata 写法）。
 
 ### 外部依赖
 

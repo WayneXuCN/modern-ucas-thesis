@@ -122,6 +122,8 @@
   )
 
   // 3.4 设置 equation 的编号和假段落首行缩进
+  // 公式编号对齐到最后一行右侧（UCAS 规范：序号编于最后一行右顶格）
+  set math.equation(number-align: bottom + end)
   show math.equation.where(block: true): bilingual-figured.show-equation
 
   // 3.5 表格表头置顶 + 不用冒号用空格分割 + 样式

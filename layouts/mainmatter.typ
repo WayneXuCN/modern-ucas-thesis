@@ -21,7 +21,7 @@
   justify: true,
   first-line-indent: (amount: 2em, all: true),
   // 章节编号格式
-  numbering: custom-numbering.with(first-level: "第1章 ", depth: 3, "1.1 "),
+  numbering: custom-numbering.with(first-level: "第1章 ", depth: 4, "1.1 "),
   // 正文字体与字号参数
   text-args: auto,
   // 标题字体与字号
@@ -254,7 +254,7 @@
                 header-content = (
                   custom-numbering(
                     first-level: "第1章 ",
-                    depth: 3,
+                    depth: 4,
                     "1.1 ",
                     ..counter-values,
                   )

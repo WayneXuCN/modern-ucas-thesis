@@ -285,6 +285,7 @@
       acknowledgement(
         anonymous: anonymous,
         twoside: twoside,
+        date: info.at("submit-date", default: none),
         ..args,
       )
     },

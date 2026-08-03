@@ -80,6 +80,6 @@
 
     #v(1em)
 
-    KEYWORDS: #(("",) + keywords.intersperse(", ")).sum()
+    #strong[Key Words]: #(("",) + keywords.intersperse(", ")).sum()
   ]
 }

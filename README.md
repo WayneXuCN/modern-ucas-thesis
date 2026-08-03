@@ -39,10 +39,10 @@ git clone https://github.com/Vncntvx/modern-ucas-thesis.git
 cd modern-ucas-thesis
 
 # 编译论文
-typst compile template/thesis.typ
+typst compile template/thesis.typ --root . --font-path fonts
 
 # 或开启实时预览
-typst watch template/thesis.typ
+typst watch template/thesis.typ --root . --font-path fonts
 ```
 
 ### 3. 配置论文信息

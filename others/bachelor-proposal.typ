@@ -35,7 +35,7 @@
     [毕设类型],
     table.cell(
       colspan: 3,
-    )[#sym.ballot.x 毕业论文 #h(1fr) #sym.ballot 毕业设计（含毕业作品） #h(1fr)],
+    )[#sym.ballot.cross 毕业论文 #h(1fr) #sym.ballot 毕业设计（含毕业作品） #h(1fr)],
     [论文题目], table.cell(colspan: 3)[],
   )
 }

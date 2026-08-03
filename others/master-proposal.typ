@@ -137,8 +137,6 @@
 
   是否进入论文写作：#h(1em) 是 #sym.ballot #h(2em) 否 #sym.ballot
 
-  // 是否进入论文写作：#h(1em) 是 #sym.ballot.x #h(2em) 否 #sym.ballot
-
   #v(5em)
 
   签字：#underline("　" * 10) #h(1em) #underline("　" * 10) #h(1em) #underline("　" * 10) #h(1em)

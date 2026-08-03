@@ -4,14 +4,14 @@ This file provides guidance to Code Agent when working with code in this reposit
 
 ## 项目概览
 
-基于 Typst 的中国科学院大学（UCAS）学位论文模板，包名 `modern-ucas-thesis`（v0.2.0，入口 `lib.typ`，`typst.toml` 声明 `compiler = "0.14.0"`）。遵循《中国科学院大学研究生学位论文撰写规范指导意见（2022年）》。本地 Typst CLI 可能为更高版本（如 0.15.x），通常可正常编译。
+基于 Typst 的中国科学院大学（UCAS）学位论文模板，包名 `modern-ucas-thesis`（v0.2.0，入口 `lib.typ`，`typst.toml` 声明 `compiler = "0.15.0"`）。遵循《中国科学院大学研究生学位论文撰写规范指导意见（2022年）》。本地 Typst CLI 可能为更高版本（如 0.15.x），通常可正常编译。
 
 ## 常用命令
 
 ```bash
-# 编译（必须指定字体目录，否则中文会渲染为豆腐块）
-typst compile template/thesis.typ --font-path fonts
-typst watch   template/thesis.typ --font-path fonts   # 实时预览
+# 编译（必须指定字体目录，否则中文会渲染为豆腐块；必须指定 --root，否则 ../lib.typ 触发 sandbox 逃逸）
+typst compile template/thesis.typ --root . --font-path fonts
+typst watch   template/thesis.typ --root . --font-path fonts   # 实时预览
 
 # 格式化（工具为 typstyle，需先 brew install typstyle 或 cargo install typstyle）—— 提交前必跑
 make format                 # 格式化所有 .typ

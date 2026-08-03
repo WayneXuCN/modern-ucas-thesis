@@ -1,6 +1,6 @@
 #import "../utils/style.typ": get-fonts, 字号
 #import "../utils/invisible-heading.typ": invisible-heading
-#import "@preview/cuti:0.4.0": *
+#import "@preview/cuti:0.4.0": fakebold
 
 // 研究生中文摘要页
 #let master-abstract(

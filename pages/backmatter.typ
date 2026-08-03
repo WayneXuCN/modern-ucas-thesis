@@ -17,7 +17,7 @@
         outlined: outlined,
         title,
       ) <no-auto-pagebreak>
-      #set par(first-line-indent: 0em)
+      #set par(first-line-indent: (amount: 0pt, all: true))
 
       #body
     ]

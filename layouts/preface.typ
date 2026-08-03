@@ -65,11 +65,15 @@
 
           if is-odd-page {
             // 奇数页：显示当前页的一级标题
-            let all-headings = query(heading.where(level: 1))
-            let current-position = here().position().page
-            let filtered-headings = all-headings.filter(h => (
-              h.location().page() <= current-position
-            ))
+            let current-page = here().page()
+            let current-headings = query(heading.where(level: 1)).filter(
+              h => h.location().page() == current-page,
+            )
+            let filtered-headings = if current-headings.len() > 0 {
+              current-headings
+            } else {
+              query(selector(heading.where(level: 1)).before(here()))
+            }
             let current-heading = if filtered-headings.len() > 0 {
               filtered-headings.last()
             } else { none }

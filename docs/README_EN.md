@@ -39,10 +39,10 @@ git clone https://github.com/Vncntvx/modern-ucas-thesis.git
 cd modern-ucas-thesis
 
 # Compile the thesis
-typst compile template/thesis.typ
+typst compile template/thesis.typ --root . --font-path fonts
 
 # Or enable live preview
-typst watch template/thesis.typ
+typst watch template/thesis.typ --root . --font-path fonts
 ```
 
 ### 3. Configure Thesis Information

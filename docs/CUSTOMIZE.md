@@ -895,7 +895,7 @@ $ y = integral_1^2 x^2 dif x $ <->
 修改 `documentclass` 参数后，需要重新编译才能生效：
 
 ```bash
-typst compile template/thesis.typ
+typst compile template/thesis.typ --root . --font-path fonts
 ```
 
 ---

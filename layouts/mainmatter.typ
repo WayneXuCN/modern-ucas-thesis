@@ -136,7 +136,7 @@
 
   // 3.6 优化列表显示
   // 术语列表 terms 不应该缩进
-  show terms: set par(first-line-indent: 0pt)
+  show terms: set par(first-line-indent: (amount: 0pt, all: true))
 
   // 4.  处理标题
   // 4.1 设置标题的 Numbering
@@ -214,16 +214,16 @@
           if is-odd-page {
             // 奇数页：显示当前页的一级标题
 
-            // 查询所有出现在目录中的一级标题
-            let all-headings = query(heading.where(level: 1))
-
-            // 查询当前的位置
-            let current-position = here().position().page
-
-            // 动态查询当前页所属的最近一级标题
-            let filtered-headings = all-headings.filter(h => (
-              h.location().page() <= current-position
-            ))
+            // 查询当前页的一级标题；当前页没有则取当前位置之前最近的一级标题
+            let current-page = here().page()
+            let current-headings = query(heading.where(level: 1)).filter(
+              h => h.location().page() == current-page,
+            )
+            let filtered-headings = if current-headings.len() > 0 {
+              current-headings
+            } else {
+              query(selector(heading.where(level: 1)).before(here()))
+            }
             let current-heading = if filtered-headings.len() > 0 {
               filtered-headings.last()
             } else { none }

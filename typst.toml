@@ -16,7 +16,7 @@ keywords = [
 ]
 categories = ["thesis"]
 exclude = ["imgs"]
-compiler = "0.14.0"
+compiler = "0.15.0"
 
 [template]
 path = "template"

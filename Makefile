@@ -149,7 +149,7 @@ lint-quick:
 	@grep -q "^entrypoint = " typst.toml || (echo "❌ 缺少 entrypoint 字段"; exit 1)
 	@echo "✅ 基本字段完整"
 	@echo "检查入口文件..."
-	@entrypoint=$$(grep "^entrypoint = " typst.toml | sed 's/.*= "\(.*\)".*/\1/'); \
+	@entrypoint=$$(grep "^entrypoint = " typst.toml | head -1 | sed 's/.*= "\(.*\)".*/\1/'); \
 	if [ ! -f "$$entrypoint" ]; then \
 		echo "❌ 入口文件 '$$entrypoint' 不存在"; \
 		exit 1; \

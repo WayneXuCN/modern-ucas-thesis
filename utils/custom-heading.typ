@@ -17,23 +17,10 @@
 #let active-heading(level: 1, prev: true) = context {
   let current-page = here().page()
 
-  // 获取所有相关级别的标题
-  let all-headings = query(heading.where(level: level))
-
-  // 当前页面的标题（包括当前位置之前和之后的）
-  let cur-page-headings = all-headings.filter(it => (
-    it.location().page() == current-page
-  ))
-
-  // 当前页面之前所有页面的标题
-  let prev-headings = all-headings.filter(it => (
-    it.location().page() < current-page
-  ))
-
-  // 当前页面之后所有页面的标题
-  let after-headings = all-headings.filter(it => (
-    it.location().page() > current-page
-  ))
+  // 当前页面的标题
+  let cur-page-headings = query(heading.where(level: level)).filter(
+    it => it.location().page() == current-page,
+  )
 
   // 优先级：
   // 1. 如果当前页面有标题，使用当前页面的第一个标题
@@ -41,12 +28,18 @@
     return cur-page-headings.first()
   }
 
-  // 2. 如果当前页面没有标题，使用之前最近页面的最后一个标题
+  // 2. 如果当前页面没有标题，使用当前位置之前最近的一级标题
+  let prev-headings = query(
+    selector(heading.where(level: level)).before(here()),
+  )
   if prev-headings.len() > 0 {
     return prev-headings.last()
   }
 
-  // 3. 如果之前也没有标题，使用之后最近页面的第一个标题
+  // 3. 如果之前也没有标题，使用当前位置之后最近的第一个标题
+  let after-headings = query(
+    selector(heading.where(level: level)).after(here()),
+  )
   if after-headings.len() > 0 {
     return after-headings.first()
   }
@@ -59,13 +52,10 @@
 #let current-heading(level: 1) = context {
   let current-page = here().page()
 
-  // 获取所有相关级别的标题
-  let all-headings = query(heading.where(level: level))
-
   // 当前页面的标题
-  let cur-page-headings = all-headings.filter(it => (
-    it.location().page() == current-page
-  ))
+  let cur-page-headings = query(heading.where(level: level)).filter(
+    it => it.location().page() == current-page,
+  )
 
   if cur-page-headings.len() != 0 {
     return cur-page-headings.first()

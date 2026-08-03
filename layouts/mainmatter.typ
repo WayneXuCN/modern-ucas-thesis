@@ -29,12 +29,12 @@
   heading-size: (字号.四号, 字号.小四, 字号.小四, 字号.小四),
   heading-weight: ("bold", "regular", "regular", "regular"),
   // 标题段前段后间距（规范值）
-  // 一级标题：段前24pt，段后6pt
+  // 一级标题：段前24pt，段后18pt
   // 二级标题：段前24pt，段后6pt
   // 三级标题：段前12pt，段后6pt
   // 四级标题：段前12pt，段后6pt
   heading-above: (24pt, 24pt, 12pt, 12pt),
-  heading-below: (6pt, 6pt, 6pt, 6pt),
+  heading-below: (18pt, 6pt, 6pt, 6pt),
   heading-pagebreak: (true, false),
   heading-align: (center, auto),
   // 页眉

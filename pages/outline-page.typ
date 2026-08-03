@@ -25,7 +25,7 @@
   // 二级/三级：段前6pt，段后0pt
   above: (6pt, 6pt),
   below: (0pt, 0pt),
-  indent: (0pt, 18pt, 28pt),
+  indent: (0pt, 12pt, 12pt),
   // 全都显示点号
   fill: (repeat([.], gap: 0.15em),),
   gap: .3em,

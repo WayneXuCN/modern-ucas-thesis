@@ -14,7 +14,7 @@
   // 其他参数
   keywords: (),
   outline-title: "Abstract",
-  outlined: true,
+  outlined: false,
   title-above: 24pt,
   title-below: 18pt,
   abstract-title-weight: "regular",

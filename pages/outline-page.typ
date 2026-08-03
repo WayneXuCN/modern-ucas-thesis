@@ -8,7 +8,7 @@
   fontset: "mac",
   fonts: (:),
   // 其他参数
-  depth: 4,
+  depth: 3,
   title: [目#h(1em)录],
   outlined: false,
   title-above: 24pt,

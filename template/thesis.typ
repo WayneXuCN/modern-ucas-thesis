@@ -463,7 +463,7 @@ Typst CLI 提供两种编译方式：
       table.hline(),
     )
   ],
-  note: [续表数据为补充实验结果。]
+  note: [续表数据为补充实验结果。],
 )
 
 原表可通过 @tbl:manual-continued 引用。

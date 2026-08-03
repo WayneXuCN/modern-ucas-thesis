@@ -35,7 +35,7 @@
 
 // 后记，重置 heading 计数器
 #let appendix(
-  numbering: custom-numbering.with(first-level: "", depth: 4, "1.1 "),
+  numbering: custom-numbering.with(first-level: "", depth: 4, "1.1\u{3000}"),
   // figure 计数（附录图表前缀为"附图/附表"，编号 1-1）
   show-figure: _appendix-show-figure.with(numbering: "1-1"),
   // equation 计数

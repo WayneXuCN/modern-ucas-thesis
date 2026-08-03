@@ -16,7 +16,11 @@
   justify: true,
   first-line-indent: (amount: 2em, all: true),
   // 章节编号格式
-  numbering: custom-numbering.with(first-level: "第1章 ", depth: 3, "1.1 "),
+  numbering: custom-numbering.with(
+    first-level: "第1章\u{3000}",
+    depth: 3,
+    "1.1\u{3000}",
+  ),
   // 页眉
   header-render: auto,
   header-vspace: 0em,
@@ -82,19 +86,14 @@
                 current-heading.has("numbering")
                   and current-heading.numbering != none
               ) {
-                import "../utils/custom-numbering.typ": custom-numbering
                 let counter-values = counter(heading).at(
                   current-heading.location(),
                 )
-                header-content = (
-                  custom-numbering(
-                    first-level: "第1章 ",
-                    depth: 3,
-                    "1.1 ",
-                    ..counter-values,
-                  )
-                    + " "
-                )
+                // 直接调用 heading 自身的 numbering 渲染章序号，
+                // 而非硬编码"第1章"——附录等 first-level 为空的场景下
+                // 页眉不会错误显示"第1章"。序号与章名间的"一个汉字符"
+                // 由 numbering 模板内的全角空格 U+3000 提供。
+                header-content = (current-heading.numbering)(..counter-values)
               }
               header-content += current-heading.body
             } else {

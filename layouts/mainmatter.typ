@@ -21,7 +21,14 @@
   justify: true,
   first-line-indent: (amount: 2em, all: true),
   // 章节编号格式
-  numbering: custom-numbering.with(first-level: "第1章 ", depth: 4, "1.1 "),
+  // 序号与题名间"空一个汉字符"（=1em=1 全角汉字宽）。
+  // 用全角空格 U+3000（IDEOGRAPHIC SPACE）实现，其在 CJK 字体下宽度恒为 1em，
+  // 均精确等于 1em。半角空格 U+0020 仅约 0.25em，不满足规范。
+  numbering: custom-numbering.with(
+    first-level: "第1章\u{3000}",
+    depth: 4,
+    "1.1\u{3000}",
+  ),
   // 正文字体与字号参数
   text-args: auto,
   // 标题字体与字号
@@ -251,15 +258,12 @@
                 let counter-values = counter(heading).at(
                   current-heading.location(),
                 )
-                header-content = (
-                  custom-numbering(
-                    first-level: "第1章 ",
-                    depth: 4,
-                    "1.1 ",
-                    ..counter-values,
-                  )
-                    + " "
-                )
+                // 直接调用 heading 自身的 numbering 渲染章序号，
+                // 而非硬编码"第1章"——这样附录（first-level 为空）的页眉
+                // 不会错误显示"第1章"，而显示纯标题（如"附录"）。
+                // 序号与章名间的"一个汉字符"由 numbering 模板内的全角空格
+                // U+3000 提供，与正文标题保持一致。
+                header-content = (current-heading.numbering)(..counter-values)
               }
               header-content += current-heading.body
             } else {

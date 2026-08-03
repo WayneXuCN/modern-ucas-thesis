@@ -18,6 +18,8 @@
   note_block: (above: 6pt + 1.25em, below: 0pt + 1.25em, inset: (left: 2em)),
   continued_mark_zh: [（续表）],
   continued_mark_en: [(continued)],
+  // 续表表头中英文标题间距，与普通表 zh_block.below / en_block.above 取较大值的语义对齐
+  caption_gap: 1.25em,
   header_cell: (stroke: none, inset: (x: 0pt, top: 0pt, bottom: 0.6em)),
   auto_header_gap: 0.2em,
   table_align: center,
@@ -38,6 +40,7 @@
   note_block: note_block,
   continued_mark_zh: continued_mark_zh,
   continued_mark_en: continued_mark_en,
+  caption_gap: caption_gap,
   header_cell: header_cell,
   auto_header_gap: auto_header_gap,
   table_align: table_align,
@@ -71,7 +74,7 @@
     #if continued { [#style.continued_mark_zh] }
   ]
   #if caption_en != none {
-    v(0.15em)
+    v(style.caption_gap)
     set text(..style.en_text)
     block(above: 0pt, below: 0pt)[
       #supplement_en #number #style.separator #caption_en

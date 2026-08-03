@@ -104,6 +104,7 @@
 
   字符
 
+  // @typstyle off
   #table(
     columns: (1fr, auto, auto),
     align: (left, left, left),
@@ -112,14 +113,8 @@
     inset: (left: 0pt),
     table.header()[*Symbol*][*Description*][*Unit*],
     [$R$], [the gas constant], [$m^2 dot s^(-2) dot K^(-1)$],
-    [$C_v$],
-    [specific heat capacity at constant volume],
-    [$m^2 dot s^(-2) dot K^(-1)$],
-
-    [$C_p$],
-    [specific heat capacity at constant pressure],
-    [$m^2 dot s^(-2) dot K^(-1)$],
-
+    [$C_v$], [specific heat capacity at constant volume], [$m^2 dot s^(-2) dot K^(-1)$],
+    [$C_p$], [specific heat capacity at constant pressure], [$m^2 dot s^(-2) dot K^(-1)$],
     [$E$], [specific total energy], [$m^2 dot s^(-2)$],
     [$e$], [specific internal energy], [$m^2 dot s^(-2)$],
     [$h_T$], [specific total enthalpy], [$m^2 dot s^(-2)$],
@@ -180,26 +175,20 @@
 
 当前，Typst 官方已提供跨平台支持，兼容 Windows、Linux、macOS 以及网页版（Typst Web App）。用户可通过各软件的官方网站获取最新版本，建议避免使用非官方渠道下载。编辑器与 Typst CLI 安装完成后，即可实现本地编译，无需额外配置。对于初学者，推荐直接使用 Typst Web App 进行在线编辑与预览，无需本地环境配置，且支持多人协作。值得注意的是，Typst 不依赖于传统 LaTeX 编译引擎，而基于 WebAssembly 技术实现高效渲染，具备良好的跨平台兼容性，能够满足绝大多数用户的学术写作需求。
 
-#bitable(
-  table(
-    columns: 6,
-    align: center,
-    table.header()[名称][编辑器][编译器环境][预览方案][是否支持即时编译][语言服务],
-    [WebAPP], [Code Mirror], [wasm], [渲染图片], [是], [优秀],
-    [VSCode], [VSCode], [native], [webview], [是], [良好],
-    [neovim], [neovim], [native], [webview], [是], [良好],
-    [Emacs], [Emacs], [native], [webview], [是], [良好],
-    [typst-cli], [任意编辑器], [native], [PDF阅读器], [否], [无],
-  ),
-  kind: table,
-  caption: metadata((
-    [支持的Typst的编译环境和编辑器],
-    [Supported Typst Compilation Environments and Editors],
-    none,
-    [表],
-    [Table],
-  )),
-) <tbl:Typst_intro>
+// @typstyle off
+#auto-table(
+  caption-zh: [支持的Typst的编译环境和编辑器],
+  caption-en: [Supported Typst Compilation Environments and Editors],
+  columns: 6,
+  align: center,
+  header: ([名称], [编辑器], [编译器环境], [预览方案], [是否支持即时编译], [语言服务]),
+  label: <tbl:Typst_intro>,
+  [WebAPP], [Code Mirror], [wasm], [渲染图片], [是], [优秀],
+  [VSCode], [VSCode], [native], [webview], [是], [良好],
+  [neovim], [neovim], [native], [webview], [是], [良好],
+  [Emacs], [Emacs], [native], [webview], [是], [良好],
+  [typst-cli], [任意编辑器], [native], [PDF阅读器], [否], [无],
+)
 
 = Typst使用说明<chap:guide>
 
@@ -347,20 +336,15 @@ Typst CLI 提供两种编译方式：
   ][
     #h(50pt)
   ][
+    // @typstyle off
     #bitable(
       table(
         columns: 4,
         stroke: none,
         table.hline(),
-        [t],
-        [1],
-        [2],
-        [3],
+        [t], [1], [2], [3],
         table.hline(stroke: .5pt),
-        [y],
-        [0.3s],
-        [0.4s],
-        [0.8s],
+        [y], [0.3s], [0.4s], [0.8s],
         table.hline(),
       ),
       caption-zh: [三线表],
@@ -420,6 +404,7 @@ Typst CLI 提供两种编译方式：
   }
 }
 
+// @typstyle off
 #auto-table(
   caption-zh: [各地区经济指标],
   caption-en: [Regional Economic Indicators],
@@ -427,12 +412,7 @@ Typst CLI 提供两种编译方式：
   align: center,
   stroke: none,
   header: (
-    table.hline(),
-    [地区],
-    [GDP（亿元）],
-    [增长率（%）],
-    [人口（万）],
-    [人均GDP（元）],
+    table.hline(), [地区], [GDP（亿元）], [增长率（%）], [人口（万）], [人均GDP（元）],
     table.hline(stroke: .5pt),
   ),
   label: <regional>,
@@ -717,7 +697,7 @@ $] <quadratic>
 
 == 排版与印刷要求
 
-#figure(
+#bitable(
   table(
     align: center,
     columns: 2,
@@ -728,15 +708,9 @@ $] <quadratic>
     [页眉], [宋体小五号居中，英文和阿拉伯数字用Times New Roman体],
     [页码], [Times New Roman体小五号],
   ),
-  kind: table,
-  caption: metadata((
-    [排版和印刷要求],
-    [Typesetting and Printing Requirements],
-    none,
-    [表],
-    [Table],
-  )),
-)<tbl:typo_and_print_require>
+  caption-zh: [排版和印刷要求],
+  caption-en: [Typesetting and Printing Requirements],
+) <tbl:typo_and_print_require>
 
 === 印刷及装订要求
 论文封面使用中国科学院大学统一的封面格式。学位论文用A4标准纸（210 mm×297
@@ -779,23 +753,16 @@ $] <app-taylor>
 #let pm = [专业学位\ 硕士]
 #let dp = [Doctor of Philosophy]
 #set par(leading: 0.65em)
+// @typstyle off
 #table(
   columns: (auto, auto, auto),
   align: (center, center, center),
   table.header([学位类别], [中文名称], [英文名称]),
-  table.cell(rowspan: 8, align: horizon, scd),
-  [哲学博士],
-  table.cell(rowspan: 8, align: horizon, dp),
-  [经济学博士],
-  [历史学博士],
-  [理学博士],
-  [工学博士],
-  [农学博士],
-  [医学博士],
+  table.cell(rowspan: 8, align: horizon, scd), [哲学博士], table.cell(rowspan: 8, align: horizon, dp),
+  [经济学博士], [历史学博士], [理学博士],
+  [工学博士], [农学博士], [医学博士],
   [管理学博士],
-  table.cell(rowspan: 10, align: horizon, scm),
-  [哲学硕士],
-  [Master of Philosophy],
+  table.cell(rowspan: 10, align: horizon, scm), [哲学硕士], [Master of Philosophy],
   [经济学硕士], [Master of Economics],
   [法学硕士], [Master of Law],
   [文学硕士], [Master of Arts],
@@ -805,11 +772,8 @@ $] <app-taylor>
   [农学硕士], [Master of Agriculture],
   [医学硕士], [Master of Medicine],
   [管理学硕士], [Master of Management Science],
-  [专业学位\ 博士],
-  [材料与化工博士\*],
-  [Doctor of Materials and Chemical\ Engineering],
-  table.cell(rowspan: 17, align: horizon, pm),
-  [金融硕士], [Master of Finance],
+  [专业学位\ 博士], [材料与化工博士\*], [Doctor of Materials and Chemical\ Engineering],
+  table.cell(rowspan: 17, align: horizon, pm), [金融硕士], [Master of Finance],
   [应用统计硕士], [Master of Applied Statistics],
   [应用心理硕士], [Master of Applied Psychology],
   [翻译硕士], [Master of Translation and Interpreting],

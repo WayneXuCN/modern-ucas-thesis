@@ -192,7 +192,20 @@
     }
   }
 
-  // 5.  处理页眉
+  // 5.  处理页眉y页脚
+  // 5.1 正文页码
+  //     Typst 的 number-align 不支持奇偶页交替，需自定义 footer 查询页码计数器。
+  //     单面打印时居中；双面打印时奇数页(右页)右对齐、偶数页(左页)左对齐。
+  set page(footer: context {
+    let pn = counter(page).get().first()
+    set text(font: fonts.宋体, size: 字号.小五)
+    align(
+      if twoside and calc.even(pn) { left } else if twoside { right } else {
+        center
+      },
+      counter(page).display("1"),
+    )
+  })
   set page(..(
     if display-header {
       (
@@ -294,7 +307,7 @@
   context {
     if calc.even(here().page()) {
       // 双面打印时，如果当前页是偶数，插入空白页使正文从奇数页开始
-      set page(numbering: none, header: none)
+      set page(numbering: none, header: none, footer: none)
       pagebreak() + " "
     }
   }

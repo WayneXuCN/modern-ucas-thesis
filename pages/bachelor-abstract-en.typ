@@ -1,6 +1,7 @@
 #import "../utils/style.typ": get-fonts, 字号
 #import "../utils/double-underline.typ": double-underline
 #import "../utils/invisible-heading.typ": invisible-heading
+#import "../utils/supervisor.typ": normalize-supervisors
 
 // 本科生英文摘要页
 #let bachelor-abstract-en(
@@ -14,7 +15,7 @@
   keywords: (),
   outline-title: "Abstract",
   outlined: false,
-  anonymous-info-keys: ("author-en", "supervisor-en", "supervisor-ii-en"),
+  anonymous-info-keys: ("author-en", "supervisors-en"),
   leading: 1.28em,
   spacing: 1.38em,
   body,
@@ -27,7 +28,9 @@
       author-en: "Zhang San",
       department-en: "XX Department",
       major-en: "XX Major",
-      supervisor-en: "Professor Li Si",
+      supervisors-en: (
+        (name: "Si Li", title: "Professor", affiliation: ""),
+      ),
     )
       + info
   )
@@ -37,6 +40,8 @@
   if type(info.title-en) == str {
     info.title-en = info.title-en.split("\n")
   }
+  // 2.2 导师信息归一化为字典列表
+  info.supervisors-en = normalize-supervisors(info.supervisors-en)
 
   // 3.  内置辅助函数
   let info-value(key, body) = {
@@ -74,7 +79,13 @@
 
     UNDERGRADUATE: #info-value("author-en", info.author-en)
 
-    MENTOR: #info-value("supervisor-en", info.supervisor-en) #(if info.supervisor-ii-en != "" [#h(1em) #info-value("supervisor-ii-en", info.supervisor-ii-en)])
+    MENTOR: #info-value(
+      "supervisors-en",
+      info.supervisors-en.map(s => {
+        // 英文习惯职称在前（如 "Professor Si Li"），与英文封面一致
+        (s.at("title", default: ""), s.at("name", default: "")).filter(x => x != "").join(" ")
+      }).filter(s => s != "").join(", "),
+    )
 
     ABSTRACT: #body
 

@@ -1,5 +1,6 @@
 #import "../utils/datetime-display.typ": datetime-display
 #import "../utils/style.typ": get-fonts, 字号
+#import "../utils/supervisor.typ": normalize-supervisors
 
 // 本科生封面
 #let bachelor-cover(
@@ -22,8 +23,7 @@
     "grade",
     "student-id",
     "author",
-    "supervisor",
-    "supervisor-ii",
+    "supervisors",
   ),
   bold-info-keys: ("title",),
   bold-level: "bold",
@@ -39,7 +39,9 @@
       author: "张三",
       department: "某学院",
       major: "某专业",
-      supervisor: ("李四", "教授"),
+      supervisors: (
+        (name: "李四", title: "教授", affiliation: ""),
+      ),
       submit-date: datetime.today(),
     )
       + info
@@ -50,7 +52,9 @@
   if type(info.title) == str {
     info.title = info.title.split("\n")
   }
-  // 2.2 根据 min-title-lines 填充标题
+  // 2.2 导师信息归一化为字典列表 (name:, title:, affiliation:)
+  info.supervisors = normalize-supervisors(info.supervisors)
+  // 2.3 根据 min-title-lines 填充标题
   info.title = (
     info.title + range(min-title-lines - info.title.len()).map(it => "　")
   )
@@ -167,20 +171,22 @@
     info-short-value("student-id", info.student-id),
     info-key("学生姓名"),
     info-long-value("author", info.author),
-    info-key("指导教师"),
-    info-short-value("supervisor", info.supervisor.at(0)),
-    info-key("职　　称"),
-    info-short-value("supervisor", info.supervisor.at(1)),
-    ..(
-      if info.supervisor-ii != () {
+    // 导师：每位占两栏（指导教师|姓名 + 职称栏|职称值），多导师依次列出，
+    // 第一导师用"指导教师"，其后用"第二导师"。本科生规范不设工作单位栏，
+    // 故只取 name/title（affiliation 留作研究生封面使用）。
+    ..info
+      .supervisors
+      .enumerate()
+      .map(((i, sup)) => {
+        let label = if i == 0 { "指导教师" } else { "第二导师" }
         (
-          info-key("第二导师"),
-          info-short-value("supervisor-ii", info.supervisor-ii.at(0)),
+          info-key(label),
+          info-short-value("supervisors", sup.at("name", default: "")),
           info-key("职　　称"),
-          info-short-value("supervisor-ii", info.supervisor-ii.at(1)),
+          info-short-value("supervisors", sup.at("title", default: "")),
         )
-      } else { () }
-    ),
+      })
+      .flatten(),
     info-key("提交日期"),
     info-long-value("submit-date", info.submit-date),
   ))

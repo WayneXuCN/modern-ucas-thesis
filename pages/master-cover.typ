@@ -1,6 +1,9 @@
 #import "../utils/datetime-display.typ": datetime-display, datetime-en-display
 #import "../utils/justify-text.typ": justify-text
 #import "../utils/style.typ": get-fonts, 字号
+#import "../utils/supervisor.typ": (
+  normalize-supervisors, supervisor-en-line, supervisor-line,
+)
 
 // 硕士研究生封面
 #let master-cover(
@@ -38,8 +41,6 @@
     "author-en",
     "supervisors",
     "supervisors-en",
-    "supervisor-ii",
-    "supervisor-ii-en",
     "chairman",
     "reviewer",
     "department",
@@ -53,15 +54,20 @@
     (
       title: "基于 Typst 的中国科学院大学学位论文",
       title-en: "Typst Thesis Template of UCAS",
-      supervisors: ("李四 教授", "王五 研究员"),
-      supervisors-en: ("Professor Si Li", "Professor Wu Wang"),
+      supervisors: (
+        (name: "李四", title: "教授", affiliation: "中国科学院××研究所"),
+        (name: "王五", title: "研究员", affiliation: "中国科学院××研究所"),
+      ),
+      supervisors-en: (
+        (name: "Si Li", title: "Professor", affiliation: "×× Institute, CAS"),
+        (name: "Wu Wang", title: "Professor", affiliation: "×× Institute, CAS"),
+      ),
       reviewer: (),
       grade: "20XX",
       student-id: "1234567890",
       author: "张三",
       department: "XX 研究所",
       major: "某专业",
-      supervisor: ("李四", "教授"),
       submit-date: datetime.today(),
     )
       + info
@@ -75,12 +81,9 @@
   if type(info.title-en) == str {
     info.title-en = info.title-en.split("\n")
   }
-  if type(info.supervisors) == str {
-    info.supervisors = info.supervisors.split("\n")
-  }
-  if type(info.supervisors-en) == str {
-    info.supervisors-en = info.supervisors-en.split("\n")
-  }
+  // 2.1 导师信息校验并归一化为字典列表 (name:, title:, affiliation:)。
+  info.supervisors = normalize-supervisors(info.supervisors)
+  info.supervisors-en = normalize-supervisors(info.supervisors-en)
   // 2.2 根据 min-title-lines 和 min-reviewer-lines 填充标题和评阅人
   info.title = (
     info.title + range(min-title-lines - info.title.len()).map(it => "　")
@@ -89,9 +92,14 @@
     info.reviewer
       + range(min-reviewer-lines - info.reviewer.len()).map(it => "　")
   )
+  // 填充导师列表至 min-supervisor-lines 行，空行用空字典占位（渲染为空下划线栏）
   info.supervisors = (
     info.supervisors
-      + range(min-supervisor-lines - info.supervisors.len()).map(it => "　")
+      + range(min-supervisor-lines - info.supervisors.len()).map(it => (
+        name: "",
+        title: "",
+        affiliation: "",
+      ))
   )
   // 2.3 处理日期
   assert(
@@ -261,9 +269,11 @@
       info-key("作者姓名："),
       info-value("author", info.author),
       info-key("指导教师："),
+      // 每位导师渲染为"姓名 职称 工作单位"单行（UCAS 规范：三项填于同一栏），
+      // 多导师依次列出，第一导师在前。空字段自动跳过，空字典占位行渲染为空下划线栏。
       ..info
         .supervisors
-        .map(s => info-value("supervisors", s))
+        .map(s => info-value("supervisors", supervisor-line(s)))
         .intersperse(info-key("　")),
       info-key("学位类别："),
       info-value("category", info.category),
@@ -288,19 +298,6 @@
       ),
       info-key("培养单位："),
       info-value("department", info.department),
-      ..(
-        if info.supervisor-ii != () {
-          (
-            info-key("　"),
-            info-value(
-              "supervisor-ii",
-              info.supervisor-ii.intersperse(" ").sum(),
-            ),
-          )
-        } else {
-          ()
-        }
-      ),
     ),
   )
 
@@ -335,17 +332,6 @@
     )],
   )
 
-  if info.supervisor-ii-en != "" {
-    v(-4pt)
-
-    text(font: fonts.黑体, size: 字号.四号, anonymous-text(
-      "supervisor-ii-en",
-      info.supervisor-ii-en,
-    ))
-
-    v(-9pt)
-  }
-
   v(85pt)
 
   strong[
@@ -369,26 +355,28 @@
   strong[
     \ By \ #text(anonymous-text("author-en", info.author-en)) \
   ]
-  // 处理 info.supervisors-en
-  if type(info.supervisors-en) == str {
-    // 只有一个supervisor
+  // 英文导师：每位渲染为"title name affiliation"单行（英文职称在前，如 "Professor Si Li"），
+  // 多导师依次列出。单导师用 "Supervisor: "，多导师用 "Supervisors: " + 换行缩进。
+  // 无导师时整行省略，避免悬空冒号。
+  let supers = info.supervisors-en.map(s => anonymous-text(
+    "supervisors-en",
+    supervisor-en-line(s),
+  ))
+  if supers.len() >= 1 {
     text(
       weight: "bold",
-      "Supervisor: " + anonymous-text("supervisors-en", info.supervisors-en),
-    )
-  } else {
-    // 多个supervisor
-    // 先把所有的supervisors转为匿名处理后的字符串列表
-    let supers = info.supervisors-en.map(s => anonymous-text(
-      "supervisors-en",
-      s,
-    ))
-
-    // 利用 intersperse 在各个supervisor之间加入换行和空格（缩进）
-    text(
-      weight: "bold",
-      "Supervisors: "
-        + supers.intersperse("\n                               ").sum(),
+      if supers.len() == 1 {
+        "Supervisor: " + supers.at(0)
+      } else {
+        (
+          "Supervisors: "
+            + supers
+              .intersperse(
+                "\n                               ",
+              )
+              .sum()
+        )
+      },
     )
   }
 

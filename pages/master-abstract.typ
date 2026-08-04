@@ -26,7 +26,7 @@
   grid-inset: 0pt,
   column-gutter: 0pt,
   row-gutter: 10pt,
-  anonymous-info-keys: ("author", "grade", "supervisor", "supervisor-ii"),
+  anonymous-info-keys: ("author", "grade", "supervisors"),
   leading: 1.25em,
   spacing: 1.25em,
   body,
@@ -40,7 +40,9 @@
       grade: "20XX",
       department: "某学院",
       major: "某专业",
-      supervisor: ("李四", "教授"),
+      supervisors: (
+        (name: "李四", title: "教授", affiliation: "中国科学院××研究所"),
+      ),
     )
       + info
   )

@@ -1,6 +1,7 @@
 #import "../utils/style.typ": get-fonts, 字号
 #import "../utils/double-underline.typ": double-underline
 #import "../utils/invisible-heading.typ": invisible-heading
+#import "../utils/supervisor.typ": normalize-supervisors
 
 
 // 本科生中文摘要页
@@ -15,7 +16,7 @@
   keywords: (),
   outline-title: [摘#h(1em)要],
   outlined: false,
-  anonymous-info-keys: ("author", "supervisor", "supervisor-ii"),
+  anonymous-info-keys: ("author", "supervisors"),
   leading: 1.28em,
   spacing: 1.28em,
   body,
@@ -28,7 +29,9 @@
       author: "张三",
       department: "某学院",
       major: "某专业",
-      supervisor: ("李四", "教授"),
+      supervisors: (
+        (name: "李四", title: "教授", affiliation: ""),
+      ),
     )
       + info
   )
@@ -38,6 +41,8 @@
   if type(info.title) == str {
     info.title = info.title.split("\n")
   }
+  // 2.2 导师信息归一化为字典列表
+  info.supervisors = normalize-supervisors(info.supervisors)
 
   // 3.  内置辅助函数
   let info-value(key, body) = {
@@ -74,13 +79,10 @@
     *本科生姓名：*#info-value("author", info.author)
 
     *指导教师（姓名、职称）：*#info-value(
-      "supervisor",
-      info.supervisor.at(0) + info.supervisor.at(1),
-    ) #(
-      if info.supervisor-ii != () [#h(1em) #info-value(
-          "supervisor-ii",
-          info.supervisor-ii.at(0) + info.supervisor-ii.at(1),
-        )]
+      "supervisors",
+      info.supervisors.map(s => {
+        (s.at("name", default: ""), s.at("title", default: "")).filter(x => x != "").join(" ")
+      }).filter(s => s != "").join("，"),
     )
 
     *摘要：*

@@ -11,7 +11,7 @@
   allow-comma-in-name: false,
   // 如果使用的 CSL 中，英文姓名中会出现逗号，请设置为 true
   // 双面印刷时参考文献须由奇数页（右页）开始
-  // 单面时退化为普通分页。默认 false 保持向后兼容。
+  // 单面时退化为普通分页。默认 false（单面）。
   twoside: false,
 ) = {
   assert(

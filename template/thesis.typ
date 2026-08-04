@@ -41,21 +41,26 @@
   info: (
     title: ("基于 Typst 的", "中国科学院大学学位论文"),
     title-en: "Thesis/Dissertation of UCAS Based on Typst",
-    supervisors: ("李四 教授", "王五 研究员"),
-    supervisors-en: ("Professor Si Li", "Professor Wu Wang"),
+    // 导师信息：结构化字典列表 (name:, title:, affiliation:)，多导师第一导师在前。
+    // 完整填写"姓名、专业技术职务、工作单位"三项（《指导意见》一·（一）·4）。
+    supervisors: (
+      (name: "李四", title: "教授", affiliation: "中国科学院××研究所"),
+      (name: "王五", title: "研究员", affiliation: "中国科学院××研究所"),
+    ),
+    supervisors-en: (
+      (name: "Si Li", title: "Professor", affiliation: "×× Institute, CAS"),
+      (name: "Wu Wang", title: "Professor", affiliation: "×× Institute, CAS"),
+    ),
     grade: "20XX",
     student-id: "1234567890",
     author: "张三",
     author-en: "Zhang San",
-    department: "中国科学院xxxx研究所",
+    department: "中国科学院科技战略咨询研究院",
     department-en: "Institutes of Science and Development",
     major: "管理科学与工程",
     major-en: "Management Science and Engineering",
     category: "管理学博士",
     category-en: "Management Science",
-    supervisor: ("李四", "教授"),
-    // supervisor-ii: ("王五", "副教授"),
-    // supervisor-ii-en: "Professor My Supervisor",
     submit-date: datetime.today(),
   ),
   // 参考文献源

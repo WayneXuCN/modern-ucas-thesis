@@ -29,6 +29,9 @@
 #import "utils/custom-heading.typ": (
   active-heading, current-heading, heading-display,
 )
+#import "utils/supervisor.typ": (
+  normalize-supervisors, supervisor-en-line, supervisor-line,
+)
 #import "utils/style.typ": get-fonts, 字体组, 字号
 
 // 使用函数闭包特性，通过 `documentclass` 函数类进行全局信息配置，然后暴露出拥有了全局配置的、具体的 `layouts` 和 `templates` 内部函数。
@@ -66,10 +69,13 @@
       major-en: "xx major",
       category: "学科门类或专业学位类别",
       category-en: "XX category",
-      supervisor: ("李四", "教授"),
-      supervisor-en: "Professor Li Si",
-      supervisor-ii: (),
-      supervisor-ii-en: "",
+      // 导师信息：字典列表 (name:, title:, affiliation:)，多导师第一导师在前。
+      supervisors: (
+        (name: "李四", title: "教授", affiliation: "中国科学院××研究所"),
+      ),
+      supervisors-en: (
+        (name: "Si Li", title: "Professor", affiliation: "×× Institute, CAS"),
+      ),
       submit-date: datetime.today(),
       // 以下为研究生项
       defend-date: datetime.today(),
@@ -80,7 +86,6 @@
       clc: "O643.12",
       udc: "544.4",
       secret-level: "公开",
-      supervisor-contact: "中国科学院大学 北京市海淀区中关村东路80号",
       email: "xyz@mails.ucas.ac.cn",
       school-code: "14430",
       degree: auto,

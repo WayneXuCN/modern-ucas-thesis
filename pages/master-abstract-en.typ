@@ -25,7 +25,7 @@
   grid-inset: 0pt,
   column-gutter: 2pt,
   row-gutter: 10pt,
-  anonymous-info-keys: ("author-en", "supervisor-en", "supervisor-ii-en"),
+  anonymous-info-keys: ("author-en", "supervisors-en"),
   leading: 1.25em,
   spacing: 1.25em,
   body,
@@ -38,7 +38,9 @@
       author-en: "Zhang San",
       department-en: "XX Department",
       major-en: "XX Major",
-      supervisor-en: "Professor Li Si",
+      supervisors-en: (
+        (name: "Si Li", title: "Professor", affiliation: "×× Institute, CAS"),
+      ),
     )
       + info
   )

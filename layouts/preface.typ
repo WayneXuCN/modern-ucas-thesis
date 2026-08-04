@@ -48,7 +48,13 @@
   counter(page).update(0)
   set page(numbering: "I")
 
-  // 3. 处理页眉
+  // 3  前言页码
+  set page(footer: context {
+    set text(font: fonts.宋体, size: 字号.小五)
+    align(center, counter(page).display("I"))
+  })
+
+  // 4. 处理页眉
   set page(..(
     if display-header {
       (

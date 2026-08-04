@@ -5,6 +5,7 @@
 #import "../utils/custom-heading.typ": (
   active-heading, current-heading, heading-display,
 )
+#import "../utils/citation-range-hyphen.typ": citation-range-hyphen
 #import "../utils/unpairs.typ": unpairs
 
 #let mainmatter(
@@ -141,7 +142,13 @@
   show figure.caption: caption-style
   show figure.caption: set text(font: fonts.宋体, size: 字号.五号)
 
-  // 3.6 优化列表显示
+  // 3.6 顺序编码制参考文献引用：连续序号分隔符修正
+  //     gb-7714-2015-numeric CSL 默认用 en dash"–"连接连续序号，UCAS 规范要求用 hyphen"-"。
+  //     仅对参考文献引用（it.element == none）生效，图表/公式/标题引用原样返回。
+  //     序号上标与多篇合并（[1,2]/[1-4]）由 CSL 默认提供，需用 @a@b 紧邻书写触发合并。
+  show ref: citation-range-hyphen
+
+  // 3.7 优化列表显示
   // 术语列表 terms 不应该缩进
   show terms: set par(first-line-indent: (amount: 0pt, all: true))
 

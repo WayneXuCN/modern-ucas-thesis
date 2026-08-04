@@ -1,5 +1,6 @@
 #import "../utils/bilingual-figured.typ"
 #import "../utils/custom-numbering.typ": custom-numbering
+#import "../utils/citation-range-hyphen.typ": citation-range-hyphen
 
 // 附录图表"参考正文的编号方式，如附图1-1或附表1-1"，
 // 即附录中图/表的前缀须为"附图/附表"（英文 Appendix Figure / Appendix Table），
@@ -71,5 +72,7 @@
   show figure: show-figure
   // 设置 equation 的编号
   show math.equation.where(block: true): show-equation
+  // 顺序编码制参考文献引用：连续序号分隔符修正（与正文 mainmatter 一致）
+  show ref: citation-range-hyphen
   it
 }

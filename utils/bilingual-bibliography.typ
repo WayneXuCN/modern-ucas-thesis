@@ -10,11 +10,17 @@
   // 用于控制多位译者时表现为 `et al. tran`(false) 还是 `et al., tran`(true)
   allow-comma-in-name: false,
   // 如果使用的 CSL 中，英文姓名中会出现逗号，请设置为 true
+  // 双面印刷时参考文献须由奇数页（右页）开始
+  // 单面时退化为普通分页。默认 false 保持向后兼容。
+  twoside: false,
 ) = {
   assert(
     bibliography != none,
     message: "请传入带有 source 的 bibliography 函数。",
   )
+
+  // 另页右页（奇数页）开始：与摘要/目录/致谢等部分统一的分页策略。
+  pagebreak(weak: true, to: if twoside { "odd" })
 
   // Please fill in the remaining mapping table here
   mapping = (

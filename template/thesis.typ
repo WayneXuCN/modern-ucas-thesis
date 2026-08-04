@@ -720,13 +720,10 @@ mm）打印、印刷或复印，按顺序装订成册。自中文摘要起双面
 学位论文的书脊用黑体，英文和阿拉伯数字用Times New Roman体，字号一般为小四号，可根据论文厚度适当调整。上方写论文题目，中间写作者姓名，下方写“中国科学院大学”，距上下边界均为3cm左右。
 
 
-// 手动分页
-#if twoside {
-  pagebreak() + " "
-}
-
 // 中英双语参考文献
 // 默认使用 gb-7714-2015-numeric 样式
+// bilingual-bibliography 已内置奇数页起始分页（见 utils/bilingual-bibliography.typ），
+// 无需在此额外 pagebreak，否则会产生多余空白页。
 #bilingual-bibliography(full: true)
 
 // 附录

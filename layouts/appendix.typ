@@ -35,6 +35,8 @@
 
 // 后记，重置 heading 计数器
 #let appendix(
+  // documentclass 传入参数
+  twoside: false,
   numbering: custom-numbering.with(first-level: "", depth: 4, "1.1\u{3000}"),
   // figure 计数（附录图表前缀为"附图/附表"，编号 1-1）
   show-figure: _appendix-show-figure.with(numbering: "1-1"),
@@ -46,6 +48,10 @@
   reset-counter: true,
   it,
 ) = {
+  // 附录须由另页右页（奇数页）开始（双面印刷时）。
+  // 与摘要/目录/致谢/简历等部分一致，由函数内部 pagebreak(to:"odd") 自包含处理，
+  // 单面时 to:"odd" 退化为普通分页（无奇偶概念）。
+  pagebreak(weak: true, to: if twoside { "odd" })
   set heading(numbering: numbering)
   // 标记附录模式：bifigure/bitable 经 _appendix-show-figure 改写前缀为"附图/附表"，
   // auto-table 等通过 in-appendix() 读取此标记自行解析 supplement。

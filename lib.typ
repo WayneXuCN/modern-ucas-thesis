@@ -133,6 +133,7 @@
     },
     appendix: (..args) => {
       appendix(
+        twoside: twoside,
         ..args,
       )
     },
@@ -277,6 +278,7 @@
     bilingual-bibliography: (..args) => {
       bilingual-bibliography(
         bibliography: bibliography,
+        twoside: twoside,
         ..args,
       )
     },

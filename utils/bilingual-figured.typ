@@ -470,8 +470,18 @@ THE SOFTWARE.
       set par(..note-par)
     }
     #set text(..style.note_text)
+    // 注续行缩进：用 grid 两列把"注："前缀与注释正文分列。前缀列 auto 取自身
+    // 宽度，正文列 1fr 填满剩余，换行时续行自然落在前缀之后，几何上保证缩进至
+    // "注："后。block 的 inset 仍提供整体左缩进。不用 par(hanging-indent)——
+    // block 内纯文本不形成段落（Typst 规定容器需含 block 级内容才包裹段落），
+    // 且 inset 会压平 hanging-indent，实测无效。
     #block(..note-block)[
-      #style.note_prefix #data.note
+      #grid(
+        columns: (auto, 1fr),
+        column-gutter: 0pt,
+        align: (left, left),
+        style.note_prefix, data.note,
+      )
     ]
   ]
 }

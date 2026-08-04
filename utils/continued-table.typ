@@ -125,8 +125,15 @@
       set par(..note-par)
     }
     #set text(..style.note_text)
+    // 注续行缩进：grid 两列分置"注："前缀与注释正文，续行几何对齐至前缀之后。
+    // 与 bilingual-figured._render-bilingual-note 同构，详见该处说明。
     #block(..style.note_block)[
-      #style.note_prefix #note
+      #grid(
+        columns: (auto, 1fr),
+        column-gutter: 0pt,
+        align: (left, left),
+        style.note_prefix, note,
+      )
     ]
   ]
 }

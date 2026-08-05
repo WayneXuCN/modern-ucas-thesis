@@ -41,9 +41,12 @@
   )
   fonts = get-fonts(fontset) + fonts
 
-  // 2. 分页
+  // 2. 分页：双面印刷时，自摘要起进入双面对开，强制摘要从奇数页（右页）开始。
+  //    封面段（封面/英文封面/声明页）已改为单面连续分页，不再依赖 to:odd 隐式保证
+  //    声明页落在奇数页，故此处须显式 pagebreak(to: "odd") 强制摘要奇数页起始。
+  //    单面时 twoside 为 false，不分页，摘要紧接声明页。
   if twoside {
-    pagebreak() + " "
+    pagebreak(to: "odd")
   }
   counter(page).update(0)
   set page(numbering: "I")

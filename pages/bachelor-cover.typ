@@ -118,9 +118,8 @@
     )
   }
 
-  // 4.  正式渲染
-
-  pagebreak(weak: true, to: if twoside { "odd" })
+  // 4.  正式渲染（封面段单面：不强制奇偶页，连续分页）
+  pagebreak(weak: true)
 
   // 居中对齐
   set align(center)

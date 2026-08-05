@@ -15,10 +15,8 @@
   // 1.  默认参数
   fonts = get-fonts(fontset) + fonts
 
-  // 2.  正式渲染
-  pagebreak(weak: true, to: if twoside {
-    "odd"
-  })
+  // 2.  正式渲染（封面段单面：不强制奇偶页，连续分页）
+  pagebreak(weak: true)
 
   v(48pt)
 

@@ -307,15 +307,7 @@
     info.submit-date,
   ))
 
-  // 第二页
-  if twoside {
-    pagebreak(
-      weak: true,
-      to: "odd",
-    )
-  }
-
-  // 第三页英文封面页
+  // 第二页英文封面页（封面段单面：不插空白页，连续分页）
   pagebreak(weak: true)
 
   set text(font: fonts.楷体, size: 字号.四号)

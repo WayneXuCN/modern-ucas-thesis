@@ -132,6 +132,10 @@
   // 3.4 设置 equation 的编号和假段落首行缩进
   // 公式编号对齐到最后一行右侧（UCAS 规范：序号编于最后一行右顶格）
   set math.equation(number-align: bottom + end)
+  // 公式编号字体：宋体。编号是 equation 元素渲染的文本部分，随 set text 生效；
+  // 数学符号仍由 math 字体控制，不受影响。字号继承正文小四（规范要求五号 10.5pt，
+  // 但 Typst 无法单独设编号字号而不影响公式正文，固有限制，详见 docs/CUSTOMIZE.md）。
+  show math.equation.where(block: true): set text(font: fonts.宋体)
   show math.equation.where(block: true): bilingual-figured.show-equation
 
   // 3.5 表格表头置顶 + 不用冒号用空格分割 + 样式

@@ -1,4 +1,5 @@
 #import "../utils/bilingual-figured.typ"
+#import "../utils/style.typ": get-fonts, 字号
 #import "../utils/custom-numbering.typ": custom-numbering
 #import "../utils/citation-range-hyphen.typ": citation-range-hyphen
 
@@ -38,6 +39,8 @@
 #let appendix(
   // documentclass 传入参数
   twoside: false,
+  fontset: "mac",
+  fonts: (:),
   numbering: custom-numbering.with(first-level: "", depth: 4, "1.1\u{3000}"),
   // figure 计数（附录图表前缀为"附图/附表"，编号 1-1）
   show-figure: _appendix-show-figure.with(numbering: "1-1"),
@@ -53,6 +56,7 @@
   // 与摘要/目录/致谢/简历等部分一致，由函数内部 pagebreak(to:"odd") 自包含处理，
   // 单面时 to:"odd" 退化为普通分页（无奇偶概念）。
   pagebreak(weak: true, to: if twoside { "odd" })
+  fonts = get-fonts(fontset) + fonts
   set heading(numbering: numbering)
   // 标记附录模式：bifigure/bitable 经 _appendix-show-figure 改写前缀为"附图/附表"，
   // auto-table 等通过 in-appendix() 读取此标记自行解析 supplement。
@@ -65,6 +69,8 @@
   show heading.where(level: 4): set heading(outlined: false)
   // 公式编号对齐到最后一行右侧（UCAS 规范：序号编于最后一行右顶格）
   set math.equation(number-align: bottom + end)
+  // 公式编号字体：宋体（与正文 mainmatter 一致；字号继承正文，Typst 固有限制）
+  show math.equation.where(block: true): set text(font: fonts.宋体)
   if reset-counter {
     counter(heading).update(0)
   }

@@ -140,7 +140,9 @@
     appendix: (..args) => {
       appendix(
         twoside: twoside,
+        fontset: fontset,
         ..args,
+        fonts: fonts + args.named().at("fonts", default: (:)),
       )
     },
     // 字体展示页

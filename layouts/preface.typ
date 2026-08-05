@@ -44,11 +44,21 @@
   // 2. 分页：双面印刷时，自摘要起进入双面对开，强制摘要从奇数页（右页）开始。
   //    封面段（封面/英文封面/声明页）已改为单面连续分页，不再依赖 to:odd 隐式保证
   //    声明页落在奇数页，故此处须显式 pagebreak(to: "odd") 强制摘要奇数页起始。
-  //    单面时 twoside 为 false，不分页，摘要紧接声明页。
+  //    单面时 twoside 为 false，用 pagebreak(weak: true) 确保摘要从新页开始（若声明页
+  //    末尾已在页首则不重复换页），使下方 counter(page).update(1) 在摘要首页起始处生效。
+  //
+  //    counter(page).update(1) 而非 update(0)：page counter 在 pagebreak 后的新页起始处
+  //    生效，update(1) 使摘要首页 counter=1（奇），与物理奇数页一致——页码显示"I"、
+  //    页眉按 odd(counter) 判定为奇数页显示"摘要"（而非论文题目）。若用 update(0)，
+  //    摘要首页 counter=0（偶），页码渲染为"N"（numbering("I",0)="N"）、页眉误显论文题目。
+  //    两种模式下 update(1) 均使首页 counter=1（双面因 pagebreak(to:odd) 后 update 在新页
+  //    起点生效；单面因 pagebreak(weak) 后同理），行为统一。
   if twoside {
     pagebreak(to: "odd")
+  } else {
+    pagebreak(weak: true)
   }
-  counter(page).update(0)
+  counter(page).update(1)
   set page(numbering: "I")
 
   // 3  页眉与页脚：页眉、页脚距页边界 1.5cm）

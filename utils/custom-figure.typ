@@ -25,18 +25,21 @@
   } else {
     note_par
   }
+  // 块外间距取规范值；block.above/below 与 par.spacing 取 max 不叠加，
+  // 无需为 caption 段内行距（leading）额外补偿。与底层 bilingual-figured
+  // 默认值 (above: 6pt, below: 0pt) / (above: 0pt, below: 12pt) 对齐。
   let zh = if zh_block == auto {
-    (above: 6pt + leading, below: 0pt + leading)
+    (above: 6pt, below: 0pt)
   } else {
     zh_block
   }
   let en = if en_block == auto {
-    (above: 0pt + leading, below: 12pt)
+    (above: 0pt, below: 12pt)
   } else {
     en_block
   }
   let note = if note_block == auto {
-    (above: 6pt + leading, below: 0pt + leading, inset: note_inset)
+    (above: 6pt, below: 0pt, inset: note_inset)
   } else if "inset" in note_block {
     note_block
   } else {

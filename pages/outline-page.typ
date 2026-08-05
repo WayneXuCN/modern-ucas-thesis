@@ -71,10 +71,10 @@
     // 获取当前级别规范值
     let current-above = above.at(entry.level - 1, default: above.last())
     let current-below = below.at(entry.level - 1, default: below.last())
-    // 计算段前段后间距：规范值 + 单倍行距（字体大小）
-    // 段前不加行距，优化视觉效果 (不知道为什么，不去除会导致间距过大)
+    // 段前段后间距取规范值。block.above/below 与 par.spacing 取 max 不叠加，
+    // 无需为行距额外补偿（与 mainmatter 标题间距同源修正）。
     let actual-above = current-above
-    let actual-below = current-below + current-size
+    let actual-below = current-below
     block(
       above: actual-above,
       below: actual-below,

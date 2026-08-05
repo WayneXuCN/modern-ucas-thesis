@@ -158,11 +158,10 @@
 
   // 4.2 设置标题的段前段后间距
   show heading: it => {
-    // 获取当前级别字体大小
-    let current-size = array-at(heading-size, it.level)
-    // 计算实际间距 = 规范值 + 单倍行距(1em = 字体大小)
-    let actual-above = array-at(heading-above, it.level) + current-size
-    let actual-below = array-at(heading-below, it.level) + current-size
+    // block.above/below（块外间距）与 par.spacing（块内段落间距）取 max 而非叠加，
+    // 故标题块外间距直接取规范值，无需为块内行距（leading 1em）额外补偿。
+    let actual-above = array-at(heading-above, it.level)
+    let actual-below = array-at(heading-below, it.level)
     set block(
       above: actual-above,
       below: actual-below,

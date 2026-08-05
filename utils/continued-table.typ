@@ -13,9 +13,11 @@
   note_text: (size: 字号.五号),
   note_prefix: [*注：* ],
   note_align: left,
-  zh_block: (above: 6pt + 1.25em, below: 0pt + 1.25em),
-  en_block: (above: 0pt + 1.25em, below: 12pt),
-  note_block: (above: 6pt + 1.25em, below: 0pt + 1.25em, inset: (left: 2em)),
+  // 块外间距取规范值，与 custom-figure / 底层 bilingual-figured 默认对齐。
+  // block.above/below 与 par.spacing 取 max 不叠加，无需为行距额外补偿。
+  zh_block: (above: 6pt, below: 0pt),
+  en_block: (above: 0pt, below: 12pt),
+  note_block: (above: 6pt, below: 0pt, inset: (left: 2em)),
   continued_mark_zh: [（续表）],
   continued_mark_en: [(continued)],
   // 续表表头中英文标题间距，与普通表 zh_block.below / en_block.above 取较大值的语义对齐

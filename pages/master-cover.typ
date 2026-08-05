@@ -323,14 +323,19 @@
 
   v(80pt)
 
-  text(
-    font: "Times New Roman",
-    size: 字号.小三,
-    weight: "bold",
-    underline(offset: .4em, stroke: .05em, evade: false)[#(
-      info.title-en.intersperse("\n").sum()
-    )],
-  )
+  // 英文题目单倍行距：用 block 限定 set par 作用域，覆盖页面级 1.3em。
+  // 题目下方英文正文段落仍用页面级 1.3em（在该 block 之外）。
+  block[
+    #set par(leading: 1em)
+    #text(
+      font: "Times New Roman",
+      size: 字号.小三,
+      weight: "bold",
+      underline(offset: .4em, stroke: .05em, evade: false)[#(
+        info.title-en.intersperse("\n").sum()
+      )],
+    )
+  ]
 
   v(85pt)
 

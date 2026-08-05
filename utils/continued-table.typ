@@ -13,11 +13,12 @@
   note_text: (size: 字号.五号),
   note_prefix: [*注：* ],
   note_align: left,
-  // 块外间距取规范值，与 custom-figure / 底层 bilingual-figured 默认对齐。
-  // block.above/below 与 par.spacing 取 max 不叠加，无需为行距额外补偿。
-  zh_block: (above: 6pt, below: 0pt),
-  en_block: (above: 0pt, below: 12pt),
-  note_block: (above: 6pt, below: 0pt, inset: (left: 2em)),
+  // 块外间距：规范值 + 行距（1.25em），与 custom-figure 同口径。相邻 block 取 max，
+  // 中英标题间距恰为 1.25em（规范"1.25 倍行距"）。仅 _render-caption（手动续表）
+  // 使用 zh_block/en_block；_render-auto-header-caption 用显式 v(caption_gap) 分隔。
+  zh_block: (above: 6pt + 1.25em, below: 0pt + 1.25em),
+  en_block: (above: 0pt + 1.25em, below: 12pt),
+  note_block: (above: 6pt + 1.25em, below: 0pt + 1.25em, inset: (left: 2em)),
   continued_mark_zh: [（续表）],
   continued_mark_en: [(continued)],
   // 续表表头中英文标题间距，与普通表 zh_block.below / en_block.above 取较大值的语义对齐
@@ -236,6 +237,10 @@
   zero-fill: true,
   leading-zero: true,
   style: (:),
+  // 卧排（landscape）：true 时整表逆时针旋转 90°，顶左底右，适用于宽表。
+  // 旋转内容不跨页，故强制 breakable:false 保证整体不分页。与 bifigure/bitable
+  // 的 landscape 同语义，但 auto-table 不经 show-figure，须在此自行包裹 rotate。
+  landscape: false,
   ..args,
 ) = {
   if caption-zh == none {
@@ -294,9 +299,14 @@
       anchor-figure
     }
 
-    [
-      #anchor
-      #block(breakable: true, width: 100%, above: 0pt, below: 0.9em, {
+    // 表块（含续表表头 caption 与 note）。卧排时强制不分页——旋转内容不跨页，
+    // breakable:false 保证整体在一页内；非卧排保持 breakable:true 支持长表跨页。
+    let table-block = block(
+      breakable: not landscape,
+      width: 100%,
+      above: 0pt,
+      below: 0.9em,
+      {
         set align(merged-style.table_align)
         table(
           columns: resolved-columns,
@@ -343,8 +353,19 @@
           ..args.pos(),
         )
         _render-note(note, merged-style)
-      })
-    ]
+      },
+    )
+
+    // 卧排（landscape）：整表逆时针旋转 90°，使表顶朝页面左侧、表底朝右侧，
+    // 符合 UCAS 规范"顶左底右"。reflow: true 让旋转后包围盒重算，正确影响布局
+    // （Typst 官方 tables 指南方案）。auto-table 的 caption 在表头内渲染（非
+    // figure.caption），随 table-block 一同旋转，方位一致。旋转内容不跨页，
+    // 上方已 breakable:false。
+    if landscape {
+      [#anchor #rotate(-90deg, reflow: true, table-block)]
+    } else {
+      [#anchor #table-block]
+    }
   }
 }
 

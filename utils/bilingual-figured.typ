@@ -269,6 +269,10 @@ THE SOFTWARE.
   // 当需要外部自定义渲染（如续表页眉）时可设为 false。
   // 默认 true，保持 bilingual-figured 的原生渲染行为不变。
   render: true,
+  // 卧排表（landscape）：true 时整个图表（含标题与注释）逆时针旋转 90°，
+  // 使表顶朝页面左侧、表底朝右侧，符合 UCAS 规范"顶左底右"。适用于宽表。
+  // 旋转内容不跨页，故卧排表应控制在一页之内。
+  landscape: false,
 ) = (
   zh: caption-zh,
   en: caption-en,
@@ -276,6 +280,7 @@ THE SOFTWARE.
   supplement_zh: supplement-zh,
   supplement_en: supplement-en,
   render: render,
+  landscape: landscape,
 )
 
 #let extract-bilingual-caption(fig) = {
@@ -323,6 +328,7 @@ THE SOFTWARE.
                 default: default-supp.en,
               ),
               render: value.at("render", default: true),
+              landscape: value.at("landscape", default: false),
             )
           }
         } else if type(value) == array and value.len() >= 1 {
@@ -333,6 +339,7 @@ THE SOFTWARE.
             supplement_zh: value.at(3, default: default-supp.zh),
             supplement_en: value.at(4, default: default-supp.en),
             render: value.at(5, default: true),
+            landscape: value.at(6, default: false),
           )
         } else {
           none
@@ -351,6 +358,9 @@ THE SOFTWARE.
   supplement-zh: [图],
   supplement-en: [Figure],
   numbering: "1-1",
+  // 卧排（landscape）：true 时整图逆时针旋转 90°，顶左底右，适用于宽图。
+  // 旋转内容不跨页，故卧排图表应控制在一页之内。详见 _render-bilingual。
+  landscape: false,
   ..args,
 ) = {
   figure(
@@ -363,6 +373,7 @@ THE SOFTWARE.
       note,
       supplement-zh,
       supplement-en,
+      landscape: landscape,
     )),
     numbering: numbering,
     ..args,
@@ -378,6 +389,9 @@ THE SOFTWARE.
   supplement-zh: [表],
   supplement-en: [Table],
   numbering: "1-1",
+  // 卧排（landscape）：true 时整表逆时针旋转 90°，顶左底右，适用于宽表。
+  // 旋转内容不跨页，故卧排表应控制在一页之内。详见 _render-bilingual。
+  landscape: false,
   ..args,
 ) = {
   figure(
@@ -390,6 +404,7 @@ THE SOFTWARE.
       note,
       supplement-zh,
       supplement-en,
+      landscape: landscape,
     )),
     numbering: numbering,
     ..args,
@@ -507,6 +522,15 @@ THE SOFTWARE.
         block(breakable: false, stacked)
       } else {
         stacked
+      }
+
+      // 卧排（landscape）：整图/表逆时针旋转 90°，使表顶朝页面左侧、表底朝右侧，
+      // 符合 UCAS 规范"顶左底右"。caption 与 note 随 stacked 一同旋转，保持整体
+      // 方位一致。reflow: true 让旋转后包围盒重算，正确影响布局（Typst 官方 tables
+      // 指南方案）。旋转内容不跨页，故 keep_together 默认 true 下 breakable:false
+      // 已保证整体不分页；keep_together:false 的卧排由用户自担跨页风险。
+      if data.landscape {
+        rendered = rotate(-90deg, reflow: true, rendered)
       }
 
       if it.placement != none {

@@ -474,6 +474,32 @@ Typst CLI 提供两种编译方式：
 
 原表可通过 @tbl:manual-continued 引用。
 
+==== 卧排表
+
+当表格列数较多、横向宽度超出版心时，可使用 `landscape: true` 将整表逆时针旋转 90°，使表顶朝页面左侧、表底朝右侧，符合《撰写规范》"顶左底右"的方位要求（见@tbl:landscape-table）。卧排表不跨页，应控制在一页之内；其标题与注释随表格一同旋转，方位保持一致。`bitable` 与 `auto-table` 均支持该参数。
+
+#bitable(
+  table(
+    columns: 7 * (auto,),
+    align: center + horizon,
+    stroke: none,
+    table.hline(),
+    [序号], [样本编号], [测量项目], [测量值], [单位], [方法], [备注],
+    table.hline(stroke: .5pt),
+    [1], [S-001], [长度], [12.45], [cm], [游标卡尺], [室温],
+    [2], [S-002], [质量], [34.80], [g], [电子天平], [三次平均],
+    [3], [S-003], [温度], [25.3], [℃], [热电偶], [稳态读数],
+    [4], [S-004], [压强], [101.3], [kPa], [气压计], [海拔修正],
+    [5], [S-005], [频率], [50.0], [Hz], [频率计], [市电标称],
+    table.hline(),
+  ),
+  caption-zh: [多列宽表（卧排）],
+  caption-en: [Wide Multi-column Table (Landscape)],
+  landscape: true,
+) <landscape-table>
+
+卧排表可通过 @tbl:landscape-table 引用，引用文本仍按常规横排渲染。
+
 === 数学公式
 
 可以像 Markdown 一样写行内公式 $x + y$，以及带编号的行间公式：

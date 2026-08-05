@@ -21,10 +21,10 @@
   min-title-lines: 2, // 控制标题行数的最小值。
   min-supervisor-lines: 2, // 控制指导教师区域的最小行数。
   min-reviewer-lines: 5, // 控制评审人区域的最小行数。
-  info-inset: (x: 0pt, bottom: 0.5pt), // 控制信息区域的内边距。x 左右间距，bottom 底部间距
+  info-inset: (x: 0pt, bottom: 0pt), // 信息区域内边距；2 倍行距由 row-gutter 控制，bottom 清零避免干扰
   info-key-width: 70pt, // 控制信息标签（如“论文题目”、“作者姓名”）的宽度。
   info-column-gutter: 6pt, // 控制信息列之间的间距。
-  info-row-gutter: 1.2em, // 控制信息行之间的间距，2 倍行距(1~1.2 em)
+  info-row-gutter: 1em, // 2 倍行距：相邻行 baseline 间距 = 行高(1em) + gutter(1em) = 2em
   meta-block-inset: (left: -15pt), // 控制元数据块的内边距。
   meta-info-inset: (x: 0pt, bottom: 2pt), // 控制元信息区域的内边距。
   meta-info-key-width: 35pt, // 控制元信息标签的宽度（如“学位”、“提交日期”）。

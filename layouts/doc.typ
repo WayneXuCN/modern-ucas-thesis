@@ -13,8 +13,10 @@
   // 页面边距设置，上、下2.54cm，左、右3.17cm，
   margin: (top: 2.54cm, bottom: 2.54cm, left: 3.17cm, right: 3.17cm),
   // 页眉、页脚距页边界 1.5cm
-  header-ascent: 1.5cm, // 页眉高度 + 页眉与正文间距
-  footer-descent: 1.5cm, // 正文与页脚间距
+  // 不使用 page 的 header-ascent/footer-descent：它们的语义是"页眉/页脚侵入正文 margin 的量"，
+  // 会挤压正文区高度，且与"距边界 1.5cm"非等价。改由 preface/mainmatter 的 page.foreground +
+  // place(top+center, dy:1.5cm) / place(bottom+center, dy:-1.5cm) 绝对定位精确实现，
+  // 既保证距边界 1.5cm，又完全不侵入正文 margin。
   it,
 ) = {
   // 1.  默认参数
@@ -38,8 +40,6 @@
   set page(
     paper: "a4",
     margin: margin,
-    header-ascent: header-ascent,
-    footer-descent: footer-descent,
   )
 
   // 4.  PDF 元信息

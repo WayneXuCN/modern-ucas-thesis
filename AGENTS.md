@@ -42,7 +42,7 @@ make lint                   # 需 typst/package-check（make lint-install 安装
 ### 分层职责
 
 - `layouts/`：页面级布局，控制页码制式、页眉页脚、标题编号。
-  - `doc.typ`：全局 `set page`（A4，上下 2.54cm / 左右 3.17cm，页眉页脚距边界 1.5cm）、PDF 元信息、中文伪加粗（非 fandol 字体组经 `@preview/cuti:0.4.0` 的 `show-cn-fakebold` 启用——改 `doc.typ` 时不要漏掉这条 `show` 规则）。
+  - `doc.typ`：全局 `set page`（A4，上下 2.54cm / 左右 3.17cm）、PDF 元信息、中文伪加粗（非 fandol 字体组经 `@preview/cuti:0.4.0` 的 `show-cn-fakebold` 启用——改 `doc.typ` 时不要漏掉这条 `show` 规则）。页眉/页脚距页边界 1.5cm 不在 `doc.typ`，而由 `preface.typ`/`mainmatter.typ` 的 `page.foreground` + `place(top+center, dy:1.5cm)` / `place(bottom+center, dy:-1.5cm)` 绝对定位实现（不使用 `header-ascent`/`footer-descent`——其语义是侵入 margin 的量，非距边界）。
   - `preface.typ`：前置部分，罗马数字页码。
   - `mainmatter.typ`：正文，阿拉伯页码，章节编号（`custom-numbering`，默认 `第1章` / `1.1`），1.25 倍行距，首行缩进 2em，页眉显示当前章名。一级标题前默认 `pagebreak(weak: true)`；若需禁止（如"致谢"紧接上文），给标题打标签 `<no-auto-pagebreak>`，`mainmatter.typ` 会识别。
   - `appendix.typ`：附录。一级标题无编号（`custom-numbering` 的 `first-level: ""`），子节 `1.1`，图表 `1-1`，公式 `(1-1)`。
@@ -53,8 +53,8 @@ make lint                   # 需 typst/package-check（make lint-install 安装
 
 - `style.typ`：`字号`（中文字号→pt 字典）、`字体组`（`windows`/`mac`/`fandol`/`adobe` 四套预设，每套含宋体/黑体/楷体/仿宋/等宽）、`get-fonts(fontset)`。`documentclass` 的 `fontset` 选预设、`fonts` 字典覆盖单项（如 `fonts: (楷体: (...))`），二者合并。
 - `bilingual-figured.typ`：**通用双语图表引擎**（源自 RubixDev，可独立作为外部包使用）。提供 `bifigure`/`bitable`/`bilingual-caption-style` 及计数器重置逻辑，通过 `prefixed-kind` 区分双语图表种类。
-- `custom-figure.typ`：模板内层封装，用 `thesis-bilingual-caption-style` 给引擎套上 UCAS 规范样式（宋体五号加粗、`*注：*` 前缀、`keep_together: true` 默认防跨页）。修改双语标题行距/跨页策略改这里。
-- `continued-table.typ`：`auto-table`（自动跨页续表，主动分页，不受 `keep_together` 约束，适合长表）+ `continued-table`（手动续表，需先有原表 label）。
+- `custom-figure.typ`：模板内层封装，用 `thesis-bilingual-caption-style` 给引擎套上 UCAS 规范样式（宋体五号加粗、`*注：*` 前缀、`keep_together: true` 默认防跨页、块外间距"规范值 + 1.25em 行距"舒展口径）。修改双语标题行距/跨页策略改这里。
+- `continued-table.typ`：`auto-table`（自动跨页续表，主动分页，不受 `keep_together` 约束，适合长表；`landscape: true` 时改为整表卧排并强制 `breakable: false`）+ `continued-table`（手动续表，需先有原表 label）。`bifigure`/`bitable`/`auto-table` 三者均有 `landscape` 参数，由 `bilingual-figured._render-bilingual` 的 `rotate(-90deg, reflow: true, ...)` 实现卧排（顶左底右）。
 - `aligned-equation.typ`：多行对齐公式，纯透传（语义标记）；编号底部对齐由 `mainmatter`/`appendix` 全局 `set math.equation(number-align: bottom + end)` 提供。
 - `custom-heading.typ`：`active-heading`/`current-heading` 供页眉显示当前章名。
 
@@ -66,7 +66,7 @@ make lint                   # 需 typst/package-check（make lint-install 安装
 
 `@preview/cuti:0.4.0`（中文伪加粗）、`@preview/tablex:0.0.9`。升级这些依赖或 Typst compiler 版本时需同步核验兼容性。
 
-### 查 Typst 文档（积极使用 Context7）
+### 工作要求
 
 Typst 是较新的语言，语法和 API 演进快，**不要凭记忆写 Typst**。涉及语法、函数签名、参数、包用法时，先用 Context7 查证再写：
 

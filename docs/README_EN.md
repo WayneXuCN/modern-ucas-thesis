@@ -53,11 +53,15 @@ Edit `template/thesis.typ`:
 #import "../lib.typ": *
 
 #show: documentclass.with(
-  title: "Thesis Title",
-  author: "Author Name",
-  supervisor: "Supervisor Name",
-  degree: "Doctor",
-  major: "Computer Science and Technology",
+  info: (
+    title: "Thesis Title",
+    author: "Author Name",
+    supervisors: (
+      (name: "Si Li", title: "Professor", affiliation: "XX Institute, CAS"),
+    ),
+    degree: "Doctor",
+    major: "Computer Science and Technology",
+  ),
 )
 
 // Start writing...
